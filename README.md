@@ -1,5 +1,5 @@
 # typeflow-editor
-
+### build with the vue and mxGraph
 ## Project setup
 ```
 npm install
@@ -14,11 +14,3 @@ npm run serve
 ```
 npm run build
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

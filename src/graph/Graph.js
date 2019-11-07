@@ -281,25 +281,25 @@ export class Graph extends mxGraph {
     }
 
 
-    _configCoder() {
-        const codec = new mxObjectCodec(new PokeElement());
-
-        codec.encode = function (enc, obj) {
-            const node = enc.document.createElement('PokeElement');
-            mxUtils.setTextContent(node, JSON.stringify(obj));
-
-            return node;
-        };
-
-        codec.decode = function (dec, node, into) {
-            const obj = JSON.parse(mxUtils.getTextContent(node));
-            obj.constructor = PokeElement;
-
-            return obj;
-        };
-
-        mxCodecRegistry.register(codec);
-    }
+    // _configCoder() {
+    //     const codec = new mxObjectCodec(new PokeElement());
+    //
+    //     codec.encode = function (enc, obj) {
+    //         const node = enc.document.createElement('PokeElement');
+    //         mxUtils.setTextContent(node, JSON.stringify(obj));
+    //
+    //         return node;
+    //     };
+    //
+    //     codec.decode = function (dec, node, into) {
+    //         const obj = JSON.parse(mxUtils.getTextContent(node));
+    //         obj.constructor = PokeElement;
+    //
+    //         return obj;
+    //     };
+    //
+    //     mxCodecRegistry.register(codec);
+    // }
 
     getDom(cell) {
         const state = this.view.getState(cell);

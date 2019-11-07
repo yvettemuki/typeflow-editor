@@ -1,6 +1,14 @@
 <template>
   <Panel title="typeflow-container">
     <div id="mxContainer"></div>
+<!--    <div v-if="isFormShow"-->
+<!--      class="fill-form">-->
+<!--      fill form-->
+<!--    </div>-->
+    <span>{{fromChild}}</span>
+    <br>
+    <br>
+    <FillForm :title="fromChild" v-on:getValueFromForm="getValueFromForm"></FillForm>
     <ul id="definitionList">
       <li
         v-for="(ele, idx) in resElements"
@@ -18,6 +26,7 @@
 <script>
 import mxgraph from "../graph/index";
 import Panel from "./Panel";
+import FillForm from "./FillForm";
 import {genGraph} from "../graph/Graph";
 import {resElements} from "../common/data";
 
@@ -53,6 +62,7 @@ const makeDraggable = (sourceElements) => {
   //after drop success, create something
   const dropSuccessAndCreate = function (graph, evt, target, x, y) {
     insertVertex(this.element, target, x, y);
+    this._displayFillForm(this.elements);
   };
 
   //add the drag event for every definition element
@@ -85,16 +95,24 @@ export default {
 
   data() {
     return {
-    resElements
+    resElements,
+    isFormShow: false,
+    fromChild: "fist in Parents"
   };
   },
 
   components: {
+    FillForm,
     Panel
   },
 
   methods: {
+     _displayFillForm(element) {
 
+     },
+    getValueFromForm: function(childValue) {
+       this.fromChild = childValue;
+    }
   },
 
   mounted() {
@@ -129,5 +147,11 @@ export default {
     width: 150px;
     line-height: 40px;
     border-radius: 4px;
+  }
+  .fill-form {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    z-index: 1000;
   }
 </style>

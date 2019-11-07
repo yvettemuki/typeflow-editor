@@ -1,7 +1,7 @@
 export const resElements = [{
-    type: 'InputEndpoint'
+    defiType: 'InputEndpoint'
 }, {
-    type: 'PureFunction'
+    defiType: 'PureFunction'
 }, {
-    type: 'OutputEndpoint'
+    defiType: 'OutputEndpoint'
 }]

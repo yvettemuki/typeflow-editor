@@ -171,6 +171,26 @@ export class Graph extends mxGraph {
         };
         this.getStylesheet().putCellStyle('node', nodeStyle);
 
+        const defiNodeStyle = {
+            [mxConstants.STYLE_SHAPE]: mxConstants.SHAPE_LABEL,
+            [mxConstants.STYLE_PERIMETER]: mxPerimeter.RectanglePerimeter,
+            [mxConstants.STYLE_ROUNDED]: true,
+            [mxConstants.STYLE_ARCSIZE]: 8, // 设置圆角程度
+
+            // [mxConstants.STYLE_STROKECOLOR]: '#333333',
+            [mxConstants.STYLE_FONTCOLOR]: '#42b983',
+            [mxConstants.STYLE_FILLCOLOR]: '#2c3e50',
+            //
+            [mxConstants.STYLE_LABEL_BACKGROUNDCOLOR]: '#2c3e50',
+
+            // [mxConstants.STYLE_ALIGN]: mxConstants.ALIGN_CENTER,
+            // [mxConstants.STYLE_VERTICAL_ALIGN]: mxConstants.ALIGN_TOP,
+            // [mxConstants.STYLE_IMAGE_ALIGN]: mxConstants.ALIGN_CENTER,
+            // [mxConstants.STYLE_IMAGE_VERTICAL_ALIGN]: mxConstants.ALIGN_TOP,
+
+        };
+        this.getStylesheet().putCellStyle('defi_node', defiNodeStyle);
+
         // 设置选中状态节点的边角为圆角，默认是直角
         const oldCreateSelectionShape = mxVertexHandler.prototype.createSelectionShape;
         mxVertexHandler.prototype.createSelectionShape = function createSelectionShape(...args) {

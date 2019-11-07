@@ -6,9 +6,9 @@
         v-for="(ele, idx) in resElements"
         :key="idx">
         <div
-          class="mxResElement"
-          v-bind="ele">
-          {{ele.type}}
+          :data-type="ele.defiType"
+          class="mxResElement">
+          {{ele.defiType}}
         </div>
       </li>
     </ul>
@@ -27,52 +27,58 @@ const {
   mxCell,
   mxGeometry,
   mxUtils,
-  mxDragSource,
 } = mxgraph;
 
 let graph = null;
 
 const initGraph = () => {
   graph = genGraph(document.getElementById('mxContainer'));
-  makeDraggable(document.getElementById('mxDraggableRes'));
+  makeDraggable(document.getElementsByClassName('mxResElement'))
 }
 
-const makeDraggable = (draggableRes) => {
-  var dragEle = createDraggableEle();
-  var ds = mxUtils.makeDraggable(draggableRes, dropGraph, dropSuccessCb, dragEle, null, null, graph);
-  ds.createDragElement = mxDragSource.prototype.createDragElement;
+const makeDraggable = (sourceElements) => {
+  //decide drop validate
+  const dropValidate = function(evt) {
+    const x = mxEvent.getClientX(evt);
+    const y = mxEvent.getClientY(evt);
+    //use x and y to attain the ele
+    const ele = document.elementFromPoint(x, y);
+    //decide whether is dropped inside the graph container
+    if(mxUtils.isAncestorNode(graph.container, ele)) {
+      return graph;
+    }
+    return null;
+  };
+
+  //after drop success, create something
+  const dropSuccessAndCreate = function (graph, evt, target, x, y) {
+    insertVertex(this.element, target, x, y);
+  };
+
+  //add the drag event for every definition element
+  Array.from(sourceElements).forEach((ele) => {
+    const afterEle = ele;
+    mxUtils.makeDraggable(ele, dropValidate, dropSuccessAndCreate, afterEle,
+            null, null, null, true);
+  });
+
+
 }
 
-const createDraggableEle = () => {
-  var dragEle = document.createElement('div');
-  dragEle.style.border = 'dashed black 1px';
-  dragEle.style.width = '120px';
-  dragEle.style.height = '40px';
-  return dragEle;
-}
+const insertVertex = (dom, target, x, y) => {
+  const defiType = dom.getAttribute('data-type');
+  var defiVertex;
+  defiVertex = new mxCell(defiType, new mxGeometry(0, 0, 150, 40), `defi_node`);
+  defiVertex.vertex = true;
 
-// 判断drop是否有效
-const dropGraph = function (evt) {
-  const x = mxEvent.getClientX(evt);
-  const y = mxEvent.getClientY(evt);
-  // 获取 x,y 所在的元素
-  const elt = document.elementFromPoint(x, y);
-  // 如果鼠标落在graph容器
-  if (mxUtils.isAncestorNode(graph.container, elt)) {
-    return graph;
-  }
-  // 鼠标落在其他地方
-  return null;
-};
-// drop成功后新建一个节点
-const dropSuccessCb = function (graph, evt, target, x, y) {
-  const cell = new mxCell('Test', new mxGeometry(0, 0, 120, 40));
-  cell.vertex = true;
-  const cells = graph.importCells([cell], x, y, target);
-  if (cells != null && cells.length > 0) {
+  const cells = graph.importCells([defiVertex], x, y, target);
+  if(cells != null && cells.length > 0) {
     graph.setSelectionCells(cells);
   }
+
 };
+
+
 
 export default {
   name: "Editor",
@@ -93,7 +99,6 @@ export default {
 
   mounted() {
     initGraph();
-    makeDraggable(document.getElementById('mxDraggableRes'))
   }
 }
 

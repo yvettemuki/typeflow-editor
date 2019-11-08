@@ -1,9 +1,10 @@
 <template>
   <Panel title="typeflow-container">
     <div id="mxContainer"></div>
-    <div v-if="isFormShow"
+    <div
+      v-if="isFormShow"
       class="form-cover">
-      <FillForm :title="fromChild" v-on:getValueFromForm="getValueFromForm"></FillForm>
+      <FillForm :type="nowDefiType" v-on:getValueFromForm="_getValueFromForm"></FillForm>
     </div>
     <ul id="definitionList">
       <li
@@ -18,12 +19,11 @@
     </ul>
   </Panel>
 </template>
-
 <script>
 import mxgraph from "../graph/index";
 import Panel from "./Panel";
 import FillForm from "./FillForm";
-import {genGraph} from "../graph/Graph";
+import {genGraph, destroyGraph, Graph} from "../graph/Graph";
 import {resElements} from "../common/data";
 
 const {
@@ -32,6 +32,8 @@ const {
   mxGeometry,
   mxUtils,
 } = mxgraph;
+
+const FROM_EDITOR_LOG = "FROM_EDITOR_LOG";
 
 let graph = null;
 
@@ -57,7 +59,7 @@ const makeDraggable = (sourceElements) => {
   //after drop success, create something
   const dropSuccessAndCreate = function (graph, evt, target, x, y) {
     insertVertex(this.element, target, x, y);
-    this._displayFillForm(this.elements);
+    //this._displayFillForm();
   };
 
   //add the drag event for every definition element
@@ -72,8 +74,8 @@ const makeDraggable = (sourceElements) => {
 
 const insertVertex = (dom, target, x, y) => {
   const defiType = dom.getAttribute('data-type');
-  var defiVertex;
-  defiVertex = new mxCell(defiType, new mxGeometry(0, 0, 150, 40), `defi_node`);
+  window.console.log(FROM_EDITOR_LOG + defiType);
+  var defiVertex = new mxCell(defiType, new mxGeometry(0, 0, 150, 40), `defi_node`);
   defiVertex.vertex = true;
 
   const cells = graph.importCells([defiVertex], x, y, target);
@@ -83,16 +85,15 @@ const insertVertex = (dom, target, x, y) => {
 
 };
 
-
-
 export default {
   name: "Editor",
 
   data() {
     return {
     resElements,
-    isFormShow: true,
-    fromChild: "fist in Parents"
+    isFormShow: false,
+    nowDefiType: "Definition",
+    definitions: [],
   };
   },
 
@@ -102,16 +103,38 @@ export default {
   },
 
   methods: {
-     _displayFillForm(element) {
-
+    _displayFillForm: function() {
+      this.isFormShow = true;
+      window.console.log(this.isFormShow)
      },
-    getValueFromForm: function(childValue) {
-       this.fromChild = childValue;
+    _getValueFromForm: function(defiName, inputs, outputs) {
+       //use the data from form to create new definition
+      window.console.log(defiName)
+      window.console.log(inputs)
+      window.console.log(outputs)
+      this.isFormShow = false;
+    },
+
+    //listen to graph event
+    _listenEvent: function () {
+      //listen Add cell event
+      graph.addListener(mxEvent.CELLS_ADDED, (sender, evt) => {
+        const cell = evt.properties.cells[0];
+        if (graph.isPart(cell)) {
+          return;
+        }
+        if (cell.vertex) {
+          this.isFormShow = true;
+        }
+      });
+
     }
+
   },
 
   mounted() {
     initGraph();
+    this._listenEvent();
   }
 }
 

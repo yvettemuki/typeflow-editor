@@ -1,5 +1,7 @@
 <template>
 	<div class="defi-form">
+		<label><strong>{{type}}</strong></label>
+		<input v-model="defiName" class="defi-name" placeholder="Definition Name"/>
 		<div class="defi-main-content">
 			<div class="defi-input-section">
 			<ul class="defi-input-ul">
@@ -7,7 +9,7 @@
 					v-for="(input, idx) in inputs"
 					:key="idx"
 					class="input-desc">
-					<label>input{{input.index+1}}</label>
+					<label><strong>input{{input.index+1}}</strong></label>
 					<input v-model="input.msg" class="inputs-field"/>
 					<button class="minus-btn" @click="deleteInput(idx)"></button>
 				</li>
@@ -20,7 +22,7 @@
 					v-for="(output, idx) in outputs"
 					:key="idx"
 					class="input-desc">
-					<label>output{{output.index+1}}</label>
+					<label><strong>output{{output.index+1}}</strong></label>
 					<input v-model="output.msg" class="inputs-field"/>
 					<button class="minus-btn" @click="deleteOutput(idx)"></button>
 				</li>
@@ -28,7 +30,6 @@
 			<button class="add-btn" @click="addOneOutput">add output</button>
 			</div>
 		</div>
-
 
 		<input class="confirm-btn" type="button" value="确认" @click="sendToEditor"/>
 
@@ -40,13 +41,13 @@
 		name: "FillForm",
 
 		props: {
-			title: String,
+			type: String,
 		},
 
 		data() {
 			return {
 				childValue: String,
-				desc: "",
+				defiName: "",
 				inputs: [
 					{
 						index: 0,
@@ -64,7 +65,7 @@
 
 		methods: {
 			sendToEditor() {
-				this.$emit('getValueFromForm', this.desc);
+				this.$emit('getValueFromForm', this.defiName, this.inputs, this.outputs);
 			},
 
 			addOneInput() {
@@ -110,10 +111,17 @@
 		display: flex;
 		flex-direction: column;
 	}
+	.defi-name {
+		height: 30px;
+		width: 100%;
+		border-radius: 4px;
+		border: 1px solid #d5d5d5;
+		margin-top: 10px;
+		padding: 0 5px 0 5px;
+	}
 	.defi-main-content {
 		display: flex;
 		flex-direction: row;
-
 	}
 	.input-desc {
 		display: flex;
@@ -140,7 +148,7 @@
 		height: 24px;
 		width: 150px;
 		border-radius: 4px;
-		border: 1px solid #333333;
+		border: 1px solid #d5d5d5;
 		padding: 0 10px;
 		margin: 2.5px 5px 2.5px 5px;
 	}
@@ -158,6 +166,9 @@
 		border-radius: 4px;
 		border: none;
 		color: #ffffff;
+	}
+	.confirm-btn:hover {
+		background: #2c3e50;
 	}
 
 </style>

@@ -9,12 +9,12 @@
 					v-for="(input, idx) in inputs"
 					:key="idx"
 					class="input-desc">
-					<label><strong>input{{input.index+1}}</strong></label>
+					<label class="input-label"><strong>input{{input.index+1}}</strong></label>
 					<input v-model="input.msg" class="inputs-field"/>
 					<button class="minus-btn" @click="deleteInput(idx)"></button>
 				</li>
 			</ul>
-			<button class="add-btn" @click="addOneInput">add input</button>
+				<button class="add-btn" @click="addOneInput"><b>add input</b></button>
 			</div>
 			<div class="defi-input-section">
 			<ul class="defi-input-ul">
@@ -22,16 +22,16 @@
 					v-for="(output, idx) in outputs"
 					:key="idx"
 					class="input-desc">
-					<label><strong>output{{output.index+1}}</strong></label>
+					<label class="input-label"><strong>output{{output.index+1}}</strong></label>
 					<input v-model="output.msg" class="inputs-field"/>
 					<button class="minus-btn" @click="deleteOutput(idx)"></button>
 				</li>
 			</ul>
-			<button class="add-btn" @click="addOneOutput">add output</button>
+				<button class="add-btn" @click="addOneOutput"><b>add output</b></button>
 			</div>
 		</div>
-
-		<input class="confirm-btn" type="button" value="确认" @click="sendToEditor"/>
+		<button class="close-btn" @click="sendToEditorWhenCancel"></button>
+		<input class="confirm-btn" type="button" value="Confirm" @click="sendToEditor"/>
 
 	</div>
 </template>
@@ -46,7 +46,6 @@
 
 		data() {
 			return {
-				childValue: String,
 				defiName: "",
 				inputs: [
 					{
@@ -65,7 +64,11 @@
 
 		methods: {
 			sendToEditor() {
-				this.$emit('getValueFromForm', this.defiName, this.inputs, this.outputs);
+				this.$emit('getValueFromForm', this.type, this.defiName, this.inputs, this.outputs);
+			},
+
+			sendToEditorWhenCancel() {
+				this.$emit('closeForm', false);
 			},
 
 			addOneInput() {
@@ -83,18 +86,18 @@
 			},
 
 			addOneOutput() {
-					this.outputs.push({
-							index: this.outputs.length,
-							msg: ""
-					})
+				this.outputs.push({
+					index: this.outputs.length,
+					msg: ""
+				})
 			},
 
 			deleteOutput(index) {
-					this.outputs.splice(index, 1)
-					this.outputs.map( ele => {
-							ele.index = this.outputs.indexOf(ele)
-					})
-			}
+				this.outputs.splice(index, 1)
+				this.outputs.map( ele => {
+					ele.index = this.outputs.indexOf(ele)
+				})
+			},
 		}
 	};
 </script>
@@ -113,10 +116,9 @@
 	}
 	.defi-name {
 		height: 30px;
-		width: 100%;
 		border-radius: 4px;
 		border: 1px solid #d5d5d5;
-		margin-top: 10px;
+		margin-top: 20px;
 		padding: 0 5px 0 5px;
 	}
 	.defi-main-content {
@@ -144,6 +146,16 @@
 		background-repeat: no-repeat;
 		background-size: 100%;
 	}
+	.close-btn {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		height: 25px;
+		width: 25px;
+		background-image: url("../assets/close_btn.png");
+		background-repeat: no-repeat;
+		background-size: 100%;
+	}
 	.inputs-field {
 		height: 24px;
 		width: 150px;
@@ -162,6 +174,7 @@
 		bottom: 40px;
 		height: 30px;
 		width: 100px;
+		font-weight: bold;
 		background: #42b983;
 		border-radius: 4px;
 		border: none;
@@ -169,6 +182,9 @@
 	}
 	.confirm-btn:hover {
 		background: #2c3e50;
+	}
+	.input-label {
+		color: #a5a5a5;
 	}
 
 </style>

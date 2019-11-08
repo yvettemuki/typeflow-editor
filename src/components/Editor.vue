@@ -4,7 +4,10 @@
     <div
       v-if="isFormShow"
       class="form-cover">
-      <FillForm :type="nowDefiType" v-on:getValueFromForm="_getValueFromForm"></FillForm>
+      <FillForm :type="nowDefiType" v-on="{
+        getValueFromForm: _getValueFromForm,
+        closeForm: _closeForm
+        }"/>
     </div>
     <ul id="definitionList">
       <li
@@ -59,7 +62,6 @@ const makeDraggable = (sourceElements) => {
   //after drop success, create something
   const dropSuccessAndCreate = function (graph, evt, target, x, y) {
     insertVertex(this.element, target, x, y);
-    //this._displayFillForm();
   };
 
   //add the drag event for every definition element
@@ -103,20 +105,20 @@ export default {
   },
 
   methods: {
-    _displayFillForm: function() {
-      this.isFormShow = true;
-      window.console.log(this.isFormShow)
-     },
-    _getValueFromForm: function(defiName, inputs, outputs) {
+    _getValueFromForm: function(defiType, defiName, inputs, outputs) {
        //use the data from form to create new definition
-      window.console.log(defiName)
-      window.console.log(inputs)
-      window.console.log(outputs)
+      this.definitions.push({
+        type: defiType,
+        name: defiName,
+        inputs: inputs,
+        outputs: outputs
+      })
+      window.console.log(this.definitions);
       this.isFormShow = false;
     },
 
-    //listen to graph event
     _listenEvent: function () {
+      //listen to graph event
       //listen Add cell event
       graph.addListener(mxEvent.CELLS_ADDED, (sender, evt) => {
         const cell = evt.properties.cells[0];
@@ -124,10 +126,15 @@ export default {
           return;
         }
         if (cell.vertex) {
+          this.nowDefiType = cell.getValue();
           this.isFormShow = true;
         }
       });
+    },
 
+    _closeForm: function (isFormShow) {
+      window.console.log("test the show" + isFormShow)
+      this.isFormShow = isFormShow;
     }
 
   },

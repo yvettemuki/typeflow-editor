@@ -1,14 +1,10 @@
 <template>
   <Panel title="typeflow-container">
     <div id="mxContainer"></div>
-<!--    <div v-if="isFormShow"-->
-<!--      class="fill-form">-->
-<!--      fill form-->
-<!--    </div>-->
-    <span>{{fromChild}}</span>
-    <br>
-    <br>
-    <FillForm :title="fromChild" v-on:getValueFromForm="getValueFromForm"></FillForm>
+    <div v-if="isFormShow"
+      class="form-cover">
+      <FillForm :title="fromChild" v-on:getValueFromForm="getValueFromForm"></FillForm>
+    </div>
     <ul id="definitionList">
       <li
         v-for="(ele, idx) in resElements"
@@ -30,7 +26,6 @@ import FillForm from "./FillForm";
 import {genGraph} from "../graph/Graph";
 import {resElements} from "../common/data";
 
-// eslint-disable-next-line no-unused-vars
 const {
   mxEvent,
   mxCell,
@@ -96,7 +91,7 @@ export default {
   data() {
     return {
     resElements,
-    isFormShow: false,
+    isFormShow: true,
     fromChild: "fist in Parents"
   };
   },
@@ -148,10 +143,18 @@ export default {
     line-height: 40px;
     border-radius: 4px;
   }
-  .fill-form {
-    height: 100%;
+  .form-cover {
     width: 100%;
-    position: relative;
-    z-index: 1000;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.5);
   }
 </style>

@@ -182,10 +182,10 @@ export class Graph extends mxGraph {
             [mxConstants.STYLE_FILLCOLOR]: '#2c3e50',
             //
             [mxConstants.STYLE_LABEL_BACKGROUNDCOLOR]: '#2c3e50',
-
-            // [mxConstants.STYLE_ALIGN]: mxConstants.ALIGN_CENTER,
-            // [mxConstants.STYLE_VERTICAL_ALIGN]: mxConstants.ALIGN_TOP,
-            // [mxConstants.STYLE_IMAGE_ALIGN]: mxConstants.ALIGN_CENTER,
+            [mxConstants.STYLE_FONTSIZE]: 12,
+            [mxConstants.STYLE_ALIGN]: mxConstants.ALIGN_CENTER,
+            [mxConstants.STYLE_VERTICAL_ALIGN]: mxConstants.ALIGN_TOP,
+            //[mxConstants.STYLE_IMAGE_ALIGN]: mxConstants.ALIGN_CENTER,
             // [mxConstants.STYLE_IMAGE_VERTICAL_ALIGN]: mxConstants.ALIGN_TOP,
 
         };
@@ -250,12 +250,6 @@ export class Graph extends mxGraph {
             new mxConnectionConstraint(new mxPoint(0.25, 0), true),
             new mxConnectionConstraint(new mxPoint(0.5, 0), true),
             new mxConnectionConstraint(new mxPoint(0.75, 0), true),
-            new mxConnectionConstraint(new mxPoint(0, 0.25), true),
-            new mxConnectionConstraint(new mxPoint(0, 0.5), true),
-            new mxConnectionConstraint(new mxPoint(0, 0.75), true),
-            new mxConnectionConstraint(new mxPoint(1, 0.25), true),
-            new mxConnectionConstraint(new mxPoint(1, 0.5), true),
-            new mxConnectionConstraint(new mxPoint(1, 0.75), true),
             new mxConnectionConstraint(new mxPoint(0.25, 1), true),
             new mxConnectionConstraint(new mxPoint(0.5, 1), true),
             new mxConnectionConstraint(new mxPoint(0.75, 1), true)];

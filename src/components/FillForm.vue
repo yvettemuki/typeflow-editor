@@ -41,6 +41,7 @@
 		name: "FillForm",
 
 		props: {
+			id: String,
 			type: String,
 		},
 
@@ -64,7 +65,7 @@
 
 		methods: {
 			sendToEditor() {
-				this.$emit('getValueFromForm', this.type, this.defiName, this.inputs, this.outputs);
+				this.$emit('getValueFromForm', this.id, this.type, this.defiName, this.inputs, this.outputs);
 			},
 
 			sendToEditorWhenCancel() {

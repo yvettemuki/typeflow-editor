@@ -4,7 +4,7 @@
     <div
       v-if="isFormShow"
       class="form-cover">
-      <FillForm :type="nowDefiType" v-on="{
+      <FillForm :type="nowDefiType" :id="nowVertexId" v-on="{
         getValueFromForm: _getValueFromForm,
         closeForm: _closeForm
         }"/>
@@ -39,6 +39,7 @@ const {
 const FROM_EDITOR_LOG = "FROM_EDITOR_LOG";
 
 let graph = null;
+let idSeed = -1;
 
 const initGraph = () => {
   graph = genGraph(document.getElementById('mxContainer'));
@@ -76,9 +77,13 @@ const makeDraggable = (sourceElements) => {
 
 const insertVertex = (dom, target, x, y) => {
   const defiType = dom.getAttribute('data-type');
-  window.console.log(FROM_EDITOR_LOG + defiType);
-  var defiVertex = new mxCell(defiType, new mxGeometry(0, 0, 150, 40), `defi_node`);
+  var defiVertex = new mxCell(defiType, new mxGeometry(0, 0, 150, 50), `defi_node`);
+  idSeed++;
   defiVertex.vertex = true;
+  //customize new type data, to store vertex id \ type \ content
+  defiVertex.data = {
+    definition: null,
+  }
 
   const cells = graph.importCells([defiVertex], x, y, target);
   if(cells != null && cells.length > 0) {
@@ -86,6 +91,28 @@ const insertVertex = (dom, target, x, y) => {
   }
 
 };
+
+const updateVertex = (vertexId, definition) => {
+  var defiVertex = graph.getModel().getCell(vertexId);
+  //看看需不需要记录下来x和y
+  const titleVertex = graph.insertVertex(defiVertex, null, definition.name,
+    0, 0.35, 150, 20,
+    'constituent=1;whiteSpace=wrap;strokeColor=none;fillColor=none;fontColor=#ffffff;fontSize=22',
+    true);
+  titleVertex.setConnectable(false);
+
+  const model = graph.getModel();
+  var parent = graph.getDefaultParent();
+  model.beginUpdate();
+  try {
+    var v2 = graph.insertVertex(parent, null, 'inputV', 200, 150, 80, 30, `defi_node`);
+    var e1 = graph.insertEdge(parent, 1, '', defiVertex, v2);
+  } finally {
+    model.endUpdate();
+  }
+
+}
+
 
 export default {
   name: "Editor",
@@ -95,7 +122,10 @@ export default {
     resElements,
     isFormShow: false,
     nowDefiType: "Definition",
+    nowVertexId: -1,
     definitions: [],
+    nowX: -1,
+    nowY: -1,
   };
   },
 
@@ -105,15 +135,17 @@ export default {
   },
 
   methods: {
-    _getValueFromForm: function(defiType, defiName, inputs, outputs) {
+    _getValueFromForm: function(vertexId, defiType, defiName, inputs, outputs) {
        //use the data from form to create new definition
-      this.definitions.push({
+      let definition = {
         type: defiType,
         name: defiName,
         inputs: inputs,
         outputs: outputs
-      })
+      }
+      this.definitions.push(definition);
       window.console.log(this.definitions);
+      updateVertex(vertexId, definition);
       this.isFormShow = false;
     },
 
@@ -121,19 +153,20 @@ export default {
       //listen to graph event
       //listen Add cell event
       graph.addListener(mxEvent.CELLS_ADDED, (sender, evt) => {
-        const cell = evt.properties.cells[0];
+        const cell = evt.properties.cells[0]; //root?
         if (graph.isPart(cell)) {
           return;
         }
         if (cell.vertex) {
           this.nowDefiType = cell.getValue();
+          this.nowVertexId = cell.getId();
           this.isFormShow = true;
         }
       });
     },
 
     _closeForm: function (isFormShow) {
-      window.console.log("test the show" + isFormShow)
+      window.console.log("test the show " + isFormShow)
       this.isFormShow = isFormShow;
     }
 

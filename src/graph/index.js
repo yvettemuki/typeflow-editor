@@ -1,6 +1,5 @@
 import mx from 'mxgraph';
 const mxgraph = mx({
-    mxImageBasePath: 'static/images',
     mxBasePath: '/static/mxgraph'
 });
 // decode bug https://github.com/jgraph/mxgraph/issues/49

@@ -94,24 +94,50 @@ const insertVertex = (dom, target, x, y) => {
 
 const updateVertex = (vertexId, definition) => {
   var defiVertex = graph.getModel().getCell(vertexId);
-  //看看需不需要记录下来x和y
-  const titleVertex = graph.insertVertex(defiVertex, null, definition.name,
+  let x = defiVertex.getGeometry().x;
+  let y = defiVertex.getGeometry().y;
+
+  var titleVertex = graph.insertVertex(defiVertex, null, definition.name,
     0, 0.35, 150, 20,
     'constituent=1;whiteSpace=wrap;strokeColor=none;fillColor=none;fontColor=#ffffff;fontSize=22',
     true);
   titleVertex.setConnectable(false);
 
-  const model = graph.getModel();
+  var model = graph.getModel();
   var parent = graph.getDefaultParent();
   model.beginUpdate();
   try {
-    var v2 = graph.insertVertex(parent, null, 'inputV', 200, 150, 80, 30, `defi_node`);
-    var e1 = graph.insertEdge(parent, 1, '', defiVertex, v2);
+    //can't figure out why it can extract to function in this transaction
+    //update inputs
+    let inputs = definition.inputs;
+    let len = inputs.length;
+    let mid = Math.floor(len / 2);
+    let relativePosi = -mid;
+    for(let idx = 0; idx < len; idx++) {
+      var inVertex = graph.insertVertex(parent, null, inputs[idx].msg, x+relativePosi*85, y-80, 80, 30, `inout_node`);
+      graph.insertEdge(parent, null, '', inVertex, defiVertex);
+      relativePosi++;
+    }
+
+    //update outputs
+    let outputs = definition.outputs;
+    let len2 = outputs.length;
+    let mid2 = Math.floor(len2 / 2);
+    let relativePosi2 = -mid2;
+    for(let idx = 0; idx < len2; idx++) {
+      var outVertex = graph.insertVertex(parent, null, outputs[idx].msg, x+relativePosi2*85, y+80, 80, 30, `inout_node`);
+      graph.insertEdge(parent, null, '', defiVertex, outVertex);
+      relativePosi2++;
+    }
+
+
+
   } finally {
     model.endUpdate();
   }
 
-}
+};
+
 
 
 export default {
@@ -168,7 +194,8 @@ export default {
     _closeForm: function (isFormShow) {
       window.console.log("test the show " + isFormShow)
       this.isFormShow = isFormShow;
-    }
+    },
+
 
   },
 

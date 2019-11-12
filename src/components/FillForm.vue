@@ -52,19 +52,24 @@
 					{
 						index: 0,
 						msg: "UserInput"
-					}
+					},
+					{
+						index: 1,
+						msg: "SomeInput"
+					},
 				],
 				outputs: [
 					{
 						index: 0,
 						msg: "ErrorOutput"
-					}
+					},
 				]
 			};
 		},
 
 		methods: {
 			sendToEditor() {
+				window.console.log("in the fill form" + typeof this.inputs);
 				this.$emit('getValueFromForm', this.id, this.type, this.defiName, this.inputs, this.outputs);
 			},
 

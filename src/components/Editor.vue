@@ -77,7 +77,7 @@ const makeDraggable = (sourceElements) => {
 
 const insertVertex = (dom, target, x, y) => {
   const defiType = dom.getAttribute('data-type');
-  var defiVertex = new mxCell(defiType, new mxGeometry(0, 0, 150, 50), `defi_node`);
+  var defiVertex = new mxCell(defiType, new mxGeometry(0, 0, 160, 50), `defi_node`);
   idSeed++;
   defiVertex.vertex = true;
   //customize new type data, to store vertex id \ type \ content
@@ -114,7 +114,7 @@ const updateVertex = (vertexId, definition) => {
     let mid = Math.floor(len / 2);
     let relativePosi = -mid;
     for(let idx = 0; idx < len; idx++) {
-      var inVertex = graph.insertVertex(parent, null, inputs[idx].msg, x+relativePosi*85, y-80, 80, 30, `inout_node`);
+      var inVertex = graph.insertVertex(parent, null, inputs[idx].msg, x+relativePosi*90+40, y-90, 80, 30, `inout_node`);
       graph.insertEdge(parent, null, '', inVertex, defiVertex);
       relativePosi++;
     }
@@ -125,7 +125,7 @@ const updateVertex = (vertexId, definition) => {
     let mid2 = Math.floor(len2 / 2);
     let relativePosi2 = -mid2;
     for(let idx = 0; idx < len2; idx++) {
-      var outVertex = graph.insertVertex(parent, null, outputs[idx].msg, x+relativePosi2*85, y+80, 80, 30, `inout_node`);
+      var outVertex = graph.insertVertex(parent, null, outputs[idx].msg, x+relativePosi2*90+40, y+90, 80, 30, `inout_node`);
       graph.insertEdge(parent, null, '', defiVertex, outVertex);
       relativePosi2++;
     }

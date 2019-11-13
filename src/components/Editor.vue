@@ -35,6 +35,7 @@ const {
   mxCell,
   mxGeometry,
   mxUtils,
+  mxGraph,
 } = mxgraph;
 
 const FROM_EDITOR_LOG = "FROM_EDITOR_LOG";
@@ -83,9 +84,8 @@ const insertVertex = (dom, target, x, y) => {
   defiVertex.vertex = true;
   //customize new type data, to store vertex id \ type \ content
   defiVertex.data = {
-    definition: null,
+    definition: null
   }
-
   const cells = graph.importCells([defiVertex], x, y, target);
   if(cells != null && cells.length > 0) {
     graph.setSelectionCells(cells);
@@ -95,6 +95,7 @@ const insertVertex = (dom, target, x, y) => {
 
 const updateVertex = (vertexId, definition) => {
   var defiVertex = graph.getModel().getCell(vertexId);
+  defiVertex.data.definition = definition;
   let x = defiVertex.getGeometry().x;
   let y = defiVertex.getGeometry().y;
 
@@ -115,7 +116,11 @@ const updateVertex = (vertexId, definition) => {
     let mid = Math.floor(len / 2);
     let relativePosi = -mid;
     for(let idx = 0; idx < len; idx++) {
-      var inVertex = graph.insertVertex(parent, null, inputs[idx].msg, x+relativePosi*90+40, y-90, 80, 30, `inout_node`);
+      var inVertex = graph.insertVertex(parent, null, inputs[idx].id, x+relativePosi*90+40, y-90, 80, 30, `inout_node`);
+      //add the 'data' to identify the vertex for the connection validation
+      inVertex.data = {
+        input: inputs[idx]
+      }
       graph.insertEdge(parent, null, '', inVertex, defiVertex);
       relativePosi++;
     }
@@ -126,18 +131,31 @@ const updateVertex = (vertexId, definition) => {
     let mid2 = Math.floor(len2 / 2);
     let relativePosi2 = -mid2;
     for(let idx = 0; idx < len2; idx++) {
-      var outVertex = graph.insertVertex(parent, null, outputs[idx].msg, x+relativePosi2*90+40, y+90, 80, 30, `inout_node`);
+      var outVertex = graph.insertVertex(parent, null, outputs[idx].id, x+relativePosi2*90+40, y+90, 80, 30, `inout_node`);
+      outVertex.data = {
+        output: outputs[idx]
+      }
       graph.insertEdge(parent, null, '', defiVertex, outVertex);
       relativePosi2++;
     }
-
-
-
   } finally {
     model.endUpdate();
   }
 
 };
+
+const setConnectValidation = (vm) => {
+  //validate the connection
+  mxGraph.prototype.isValidConnection = (source, target) => {
+    //here source and target is object of cell
+    const sourceElement = source.data;
+    const targetElement = target.data;
+    if(sourceElement.hasOwnProperty('output') && targetElement.hasOwnProperty('input')) {
+      return sourceElement.output.id == targetElement.input.id;
+    }
+    return false;
+  }
+}
 
 
 
@@ -151,8 +169,6 @@ export default {
     nowDefiType: "Definition",
     nowVertexId: -1,
     definitions: [],
-    nowX: -1,
-    nowY: -1,
   };
   },
 
@@ -172,6 +188,7 @@ export default {
       this.definitions.push(definition);
       window.console.log(this.definitions);
       updateVertex(vertexId, definition);
+      window.console.log(graph.getChildEdges(graph.getDefaultParent()));
       this.isFormShow = false;
     },
 
@@ -188,7 +205,12 @@ export default {
           this.nowVertexId = cell.getId();
           this.isFormShow = true;
         }
+        if(cell.edge) {
+          this._adjustConnection(cell);
+        }
       });
+
+
     },
 
     _closeForm: function (isFormShow) {
@@ -196,12 +218,16 @@ export default {
       this.isFormShow = isFormShow;
     },
 
+    _adjustConnection: function (edge) {
+
+    }
 
   },
 
   mounted() {
     initGraph();
     this._listenEvent();
+    setConnectValidation(this);
   }
 }
 
@@ -215,6 +241,7 @@ export default {
   #mxContainer {
     background: #efefef;
     width: 100%;
+    overflow: scroll;
     height: calc(75vh);
   }
   .mxResElement {

@@ -10,7 +10,7 @@
 					:key="idx"
 					class="input-desc">
 					<label class="input-label"><strong>input{{input.index+1}}</strong></label>
-					<input v-model="input.msg" class="inputs-field"/>
+					<input v-model="input.id" class="inputs-field"/>
 					<button class="minus-btn" @click="deleteInput(idx)"></button>
 				</li>
 			</ul>
@@ -23,7 +23,7 @@
 					:key="idx"
 					class="input-desc">
 					<label class="input-label"><strong>output{{output.index+1}}</strong></label>
-					<input v-model="output.msg" class="inputs-field"/>
+					<input v-model="output.id" class="inputs-field"/>
 					<button class="minus-btn" @click="deleteOutput(idx)"></button>
 				</li>
 			</ul>
@@ -51,17 +51,17 @@
 				inputs: [
 					{
 						index: 0,
-						msg: "UserInput"
+						id: "UserInput"
 					},
 					{
 						index: 1,
-						msg: "SomeInput"
+						id: "SomeInput"
 					},
 				],
 				outputs: [
 					{
 						index: 0,
-						msg: "ErrorOutput"
+						id: "ErrorOutput"
 					},
 				]
 			};
@@ -80,7 +80,7 @@
 			addOneInput() {
 				this.inputs.push({
 					index: this.inputs.length,
-					msg: ""
+					id: ""
 				})
 			},
 
@@ -94,7 +94,7 @@
 			addOneOutput() {
 				this.outputs.push({
 					index: this.outputs.length,
-					msg: ""
+					id: ""
 				})
 			},
 

@@ -1,5 +1,6 @@
 <template>
-  <Panel title="typeflow-container">
+  <div class="typeflow-container">
+    <div class="title"><b>Typeflow Editor</b></div>
     <div id="mxContainer"></div>
     <div
       v-if="isFormShow"
@@ -20,7 +21,7 @@
         </div>
       </li>
     </ul>
-  </Panel>
+  </div>
 </template>
 <script>
 import mxgraph from "../graph/index";
@@ -157,7 +158,6 @@ export default {
 
   components: {
     FillForm,
-    Panel
   },
 
   methods: {
@@ -208,14 +208,19 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  .title {
+    font-size: 22px;
+    margin: 20px 0 20px 0;
+  }
   #mxContainer {
     background: #efefef;
     width: 100%;
-    height: 500px;
+    height: calc(75vh);
   }
   .mxResElement {
     width: 150px;
     height: 20px;
+    font-weight: bold;
     background: #2c3e50;
     color: #42b983;
   }

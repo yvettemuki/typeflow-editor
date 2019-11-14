@@ -169,6 +169,7 @@ export default {
     nowDefiType: "Definition",
     nowVertexId: -1,
     definitions: [],
+    testReset: 0,
   };
   },
 

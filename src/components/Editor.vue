@@ -43,6 +43,8 @@ const {
 } = mxgraph;
 
 const FROM_EDITOR_LOG = "FROM_EDITOR_LOG";
+const AUTO_INSERT_EDGE = 0;
+const MANUAL_INSERT_EDGE = 1;
 
 let graph = null;
 let idSeed = -1;
@@ -125,6 +127,10 @@ const updateVertex = (vertexId, definition) => {
       inVertex.data = {
         input: inputs[idx]
       }
+      // let edge = graph.createEdge(parent, null, '', inVertex, defiVertex);
+      // edge.edge = true;
+      // edge.type = AUTO_INSERT_EDGE;
+      // graph.addEdge(edge);
       graph.insertEdge(parent, null, '', inVertex, defiVertex);
       relativePosi++;
     }
@@ -139,6 +145,10 @@ const updateVertex = (vertexId, definition) => {
       outVertex.data = {
         output: outputs[idx]
       }
+      // let edge = graph.createEdge(parent, null, '', defiVertex, outVertex);
+      // edge.edge = true;
+      // edge.type = AUTO_INSERT_EDGE;
+      // graph.addEdge(edge);
       graph.insertEdge(parent, null, '', defiVertex, outVertex);
       relativePosi2++;
     }
@@ -173,6 +183,7 @@ export default {
     nowDefiType: "Definition",
     nowVertexId: -1,
     definitions: [],
+    isAutoAdd: false
   };
   },
 
@@ -190,8 +201,9 @@ export default {
         outputs: outputs
       }
       this.definitions.push(definition);
-      window.console.log(this.definitions);
+      this.isAutoAdd = true;
       updateVertex(vertexId, definition);
+      this.isAutoAdd = false;
       window.console.log(graph.getChildEdges(graph.getDefaultParent()));
       this.isFormShow = false;
     },
@@ -210,7 +222,9 @@ export default {
           this.isFormShow = true;
         }
         if(cell.edge) {
-          this._adjustConnection(cell);
+          if(!this.isAutoAdd) {
+            this._adjustConnection(cell);
+          }
         }
       });
 
@@ -223,7 +237,20 @@ export default {
     },
 
     _adjustConnection: function (edge) {
+      //change the target
+      let target = edge.target;
+      let targetEdge = target.edges[0];
+      let newTarget = targetEdge.target; //from now target always in index 0
+      edge.target = newTarget;
 
+      //delete the old unused edge
+      graph.setSelectionCell(targetEdge);
+      targetEdge.removeFromParent();
+      graph.setSelectionCell(target);
+      target.removeFromParent();
+
+      graph.refresh(target.edges[0]);
+      graph.refresh(target);
     }
 
   },

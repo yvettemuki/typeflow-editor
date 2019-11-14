@@ -1,26 +1,30 @@
 <template>
   <div class="typeflow-container">
     <div class="title"><b>Typeflow Editor</b></div>
-    <div id="mxContainer"></div>
     <div
       v-if="isFormShow"
       class="form-cover">
       <FillForm :type="nowDefiType" :id="nowVertexId" v-on="{
         getValueFromForm: _getValueFromForm,
         closeForm: _closeForm
-        }"/>
+    }"/>
     </div>
-    <ul id="definitionList">
-      <li
-        v-for="(ele, idx) in resElements"
-        :key="idx">
-        <div
-          :data-type="ele.defiType"
-          class="mxResElement">
-          {{ele.defiType}}
-        </div>
-      </li>
-    </ul>
+    <div class="main-container">
+      <ul id="definitionList">
+        <li
+          v-for="(ele, idx) in resElements"
+          :key="idx">
+          <div
+            :data-type="ele.defiType"
+            class="mxResElement leftElement">
+            {{ele.defiType}}
+          </div>
+        </li>
+        <li class="leftElement functionElement">to JSON</li>
+        <li class="leftElement functionElement">create Model</li>
+      </ul>
+      <div class="container-border"><div id="mxContainer"></div></div>
+    </div>
   </div>
 </template>
 <script>
@@ -242,28 +246,47 @@ export default {
     background: #efefef;
     width: 100%;
     overflow: scroll;
-    height: calc(75vh);
+    height: 100%;
   }
-  .mxResElement {
-    width: 150px;
-    height: 20px;
-    font-weight: bold;
-    background: #2c3e50;
-    color: #42b983;
-  }
-  #definitionList {
-    position: relative;
-    top: 20px;
-    padding: 0;
-    margin: 0;
+  .container-border {
+    height: calc(80vh);
+    width: 100%;
+    padding: 10px;
+    margin-left: 50px;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background: #e3e3e3;
   }
-  .mxResElement {
+  .main-container {
+    display: flex;
+    flex-direction: row;
+    padding: 0 30px 10px 30px;
+  }
+  .leftElement {
     height: 40px;
     width: 150px;
     line-height: 40px;
     border-radius: 4px;
+    font-weight: bold;
+    /*background: #2c3e50;*/
+    /*color: #42b983;*/
+    background: #00918e;
+    color: #ffffff;
+    margin-bottom: 20px;
+  }
+  .functionElement {
+    background: #4dd599;
+  }
+  #definitionList {
+    position: relative;
+    top: 40px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
   }
   .form-cover {
     width: 100%;

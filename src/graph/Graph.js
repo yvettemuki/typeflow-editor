@@ -180,11 +180,11 @@ export class Graph extends mxGraph {
             [mxConstants.STYLE_ROUNDED]: true,
             [mxConstants.STYLE_ARCSIZE]: 8, // 设置圆角程度
 
-            // [mxConstants.STYLE_STROKECOLOR]: '#333333',
-            [mxConstants.STYLE_FONTCOLOR]: '#42b983',
-            [mxConstants.STYLE_FILLCOLOR]: '#2c3e50',
+            [mxConstants.STYLE_STROKECOLOR]: '#00918e',
+            [mxConstants.STYLE_FONTCOLOR]: '#beebe9',
+            [mxConstants.STYLE_FILLCOLOR]: '#00918e',
             //
-            [mxConstants.STYLE_LABEL_BACKGROUNDCOLOR]: '#2c3e50',
+            [mxConstants.STYLE_LABEL_BACKGROUNDCOLOR]: '#00918e',
             [mxConstants.STYLE_FONTSIZE]: 12,
             [mxConstants.STYLE_ALIGN]: mxConstants.ALIGN_CENTER,
             [mxConstants.STYLE_VERTICAL_ALIGN]: mxConstants.ALIGN_TOP,
@@ -198,9 +198,11 @@ export class Graph extends mxGraph {
             [mxConstants.STYLE_PERIMETER]: mxPerimeter.RectanglePerimeter,
             [mxConstants.STYLE_ROUNDED]: true,
             [mxConstants.STYLE_ARCSIZE]: 8, // 设置圆角程度
+            [mxConstants.STYLE_STROKECOLOR]: '#ffdc34',
             [mxConstants.STYLE_FONTCOLOR]: '#ffffff',
-            [mxConstants.STYLE_FILLCOLOR]: '#2c3e50',
+            [mxConstants.STYLE_FILLCOLOR]: '#f7be16',
             [mxConstants.STYLE_FONTSIZE]: 12,
+            [mxConstants.STYLE_FONTSTYLE]: mxConstants.FONT_BOLD,
             [mxConstants.STYLE_ALIGN]: mxConstants.ALIGN_CENTER,
         }
         this.getStylesheet().putCellStyle('inout_node', inOutNodeStyle);

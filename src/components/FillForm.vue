@@ -117,6 +117,7 @@
 		position: relative;
 		height: 400px;
 		width: 40%;
+		min-width: 640px;
 		z-index: 1000;
 		background: #ffffff;
 		border-radius: 10px;

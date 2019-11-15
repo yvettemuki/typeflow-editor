@@ -51,17 +51,21 @@
 				inputs: [
 					{
 						index: 0,
-						id: "UserInput"
+						id: ""
 					},
 					{
 						index: 1,
-						id: "SomeInput"
+						id: ""
 					},
 				],
 				outputs: [
 					{
 						index: 0,
-						id: "ErrorOutput"
+						id: ""
+					},
+					{
+						index: 1,
+						id: ""
 					},
 				]
 			};
@@ -74,7 +78,7 @@
 			},
 
 			sendToEditorWhenCancel() {
-				this.$emit('closeForm', false);
+				this.$emit('closeForm', this.id, false);
 			},
 
 			addOneInput() {
@@ -130,6 +134,7 @@
 	.defi-main-content {
 		display: flex;
 		flex-direction: row;
+		justify-content: space-between;
 	}
 	.input-desc {
 		display: flex;

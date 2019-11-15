@@ -20,8 +20,10 @@
             {{ele.defiType}}
           </div>
         </li>
-        <li class="leftElement functionElement">to JSON</li>
-        <li class="leftElement functionElement">create Model</li>
+        <li class="leftElement functionElement" @click="_toJson">Export XML</li>
+        <li class="leftElement functionElement">To PNG</li>
+        <li class="leftElement functionElement deleteSelected" @click="_deleteSelected">Delete</li>
+        <li class="leftElement functionElement exportCode">Export Code</li>
       </ul>
       <div class="container-border"><div id="mxContainer"></div></div>
     </div>
@@ -227,12 +229,14 @@ export default {
           }
         }
       });
-
-
     },
 
-    _closeForm: function (isFormShow) {
-      window.console.log("test the show " + isFormShow)
+    _closeForm: function (id, isFormShow) {
+      let deleteVertex = graph.getModel().getCell(id);
+      graph.setSelectionCell(deleteVertex);
+      deleteVertex.removeFromParent();
+      graph.clearSelection();
+      graph.refresh(deleteVertex);
       this.isFormShow = isFormShow;
     },
 
@@ -251,7 +255,18 @@ export default {
 
       graph.refresh(target.edges[0]);
       graph.refresh(target);
-    }
+    },
+
+    _toJson: function () {
+      graph.exportModelXML();
+    },
+
+    _deleteSelected: function () {
+      let target = graph.getSelectionCell();
+      target.removeFromParent();
+      graph.clearSelection();
+      graph.refresh(target);
+}
 
   },
 
@@ -303,9 +318,27 @@ export default {
     background: #00918e;
     color: #ffffff;
     margin-bottom: 20px;
+    cursor: cell;
   }
   .functionElement {
     background: #4dd599;
+    cursor: pointer;
+  }
+  .functionElement:hover {
+    background: #45bf89;
+  }
+  .deleteSelected {
+    margin-top: 100%;
+    background: #fb5b5a;
+  }
+  .deleteSelected:hover {
+    background: #e35351;
+  }
+  .exportCode {
+    background: #3fc5f0;
+  }
+  .exportCode:hover {
+    background: #39b4db;
   }
   #definitionList {
     position: relative;

@@ -21,7 +21,6 @@ const {
     mxObjectCodec,
     mxUtils,
     mxImageExport,
-    mxXmlCanvas2D,
     mxCodecRegistry,
 } = mxgraph;
 
@@ -30,38 +29,7 @@ Object.assign(mxEvent, {
     VERTEX_START_MOVE: 'vertexStartMove',
 });
 
-let pokeElementIdSeed = 0;
-
-// export class PokeElement {
-//   constructor(element) {
-//     this.id = pokeElementIdSeed;
-//     pokeElementIdSeed++;
-//     this.element = element;
-//     this.normalType = '';
-//   }
-// }
-
 export class Graph extends mxGraph {
-    static getStyleDict(cell) {
-        return _.compact(cell.getStyle().split(';'))
-            .reduce((acc, item) => {
-                const [key, value] = item.split('=');
-                acc[key] = value;
-                return acc;
-            }, {});
-    }
-
-    static convertStyleToString(styleDict) {
-        const style = Object.entries(styleDict)
-            .map(([key, value]) => `${key}=${value}`)
-            .join(';')
-            .replace(/=undefined/g, '');
-        return `${style};`;
-    }
-
-    static getCellPosition(cell) {
-        return _.pick(cell.getGeometry(), ['x', 'y']);
-    }
 
     constructor(container) {
         super(container);
@@ -284,126 +252,18 @@ export class Graph extends mxGraph {
         };
     }
 
-
-    // _configCoder() {
-    //     const codec = new mxObjectCodec(new PokeElement());
-    //
-    //     codec.encode = function (enc, obj) {
-    //         const node = enc.document.createElement('PokeElement');
-    //         mxUtils.setTextContent(node, JSON.stringify(obj));
-    //
-    //         return node;
-    //     };
-    //
-    //     codec.decode = function (dec, node, into) {
-    //         const obj = JSON.parse(mxUtils.getTextContent(node));
-    //         obj.constructor = PokeElement;
-    //
-    //         return obj;
-    //     };
-    //
-    //     mxCodecRegistry.register(codec);
-    // }
-
-    getDom(cell) {
-        const state = this.view.getState(cell);
-        return state.shape.node;
-    }
-
-    setStyle(cell, key, value) {
-        const styleDict = Graph.getStyleDict(cell);
-        styleDict[key] = value;
-        const style = Graph.convertStyleToString(styleDict);
-        this.getModel().setStyle(cell, style);
-    }
-
     isPart(cell) {
         const state = this.view.getState(cell);
         const style = (state != null) ? state.style : this.getCellStyle(cell);
         return style.constituent === 1;
     }
 
-    deleteSubtree(cell) {
-        const cells = [];
-        this.traverse(cell, true, (vertex) => {
-            cells.push(vertex);
-            return true;
-        });
-        this.removeCells(cells);
-    }
-
-
-    _restoreModel() {
-        Object.values(this.getModel().cells)
-            .forEach(cell => {
-                if (cell.vertex && cell.data) {
-                    cell.data = JSON.parse(cell.data);
-                }
-            });
-    }
-
-    // 将 data 变为字符串，否则还原时会报错
-    _getExportModel() {
-        const model = _.cloneDeep(this.getModel());
-        Object.values(model.cells)
-            .forEach(cell => {
-                if (cell.vertex && cell.data) {
-                    cell.data = JSON.stringify(cell.data);
-                }
-            });
-        return model;
-    }
-
-    importModelXML(xmlTxt) {
-        this.getModel().beginUpdate();
-        try {
-            const doc = mxUtils.parseXml(xmlTxt);
-            const root = doc.documentElement;
-            const dec = new mxCodec(root.ownerDocument);
-            dec.decode(root, this.getModel());
-        } finally {
-            this.getModel().endUpdate();
-        }
-        this._restoreModel();
-    }
-
     exportModelXML() {
-        const enc = new mxCodec(mxUtils.createXmlDocument());
-        const node = enc.encode(this._getExportModel());
-        return mxUtils.getPrettyXml(node);
+        var encoder = new mxCodec();
+        var node = encoder.encode(this.getModel());
+        mxUtils.popup(mxUtils.getPrettyXml(node), false);
     }
 
-    exportPicXML() {
-        const xmlDoc = mxUtils.createXmlDocument();
-        const root = xmlDoc.createElement('output');
-        xmlDoc.appendChild(root);
-
-        const { scale } = this.view;
-        // 这个项目画布边宽为0，可以自行进行调整
-        const border = 0;
-
-        const bounds = this.getGraphBounds();
-        const xmlCanvas = new mxXmlCanvas2D(root);
-        xmlCanvas.translate(
-            Math.floor((border / scale - bounds.x) / scale),
-            Math.floor((border / scale - bounds.y) / scale),
-        );
-        xmlCanvas.scale(1);
-
-        const imgExport = new mxImageExport();
-        imgExport.drawState(this.getView().getState(this.model.root), xmlCanvas);
-
-        const w = Math.ceil(bounds.width * scale / scale + 2 * border);
-        const h = Math.ceil(bounds.height * scale / scale + 2 * border);
-
-        const xml = mxUtils.getPrettyXml(root);
-
-        return {
-            xml,
-            w,
-            h,
-        };
-    }
 
 
 }

@@ -142,30 +142,46 @@ export class Graph extends mxGraph {
         };
         this.getStylesheet().putCellStyle('node', nodeStyle);
 
-        const defiNodeStyle = {
+        const functionNodeStyle = {
             [mxConstants.STYLE_SHAPE]: mxConstants.SHAPE_LABEL,
             [mxConstants.STYLE_PERIMETER]: mxPerimeter.RectanglePerimeter,
             [mxConstants.STYLE_ROUNDED]: true,
-            [mxConstants.STYLE_ARCSIZE]: 8, // 设置圆角程度
+            [mxConstants.STYLE_ARCSIZE]: 8,
 
             [mxConstants.STYLE_STROKECOLOR]: '#00918e',
             [mxConstants.STYLE_FONTCOLOR]: '#beebe9',
             [mxConstants.STYLE_FILLCOLOR]: '#00918e',
-            //
+            [mxConstants.STYLE_FONTSTYLE]: mxConstants.FONT_BOLD,
             [mxConstants.STYLE_LABEL_BACKGROUNDCOLOR]: '#00918e',
             [mxConstants.STYLE_FONTSIZE]: 12,
             [mxConstants.STYLE_ALIGN]: mxConstants.ALIGN_CENTER,
             [mxConstants.STYLE_VERTICAL_ALIGN]: mxConstants.ALIGN_TOP,
-            //[mxConstants.STYLE_IMAGE_ALIGN]: mxConstants.ALIGN_CENTER,
-            // [mxConstants.STYLE_IMAGE_VERTICAL_ALIGN]: mxConstants.ALIGN_TOP,
         };
-        this.getStylesheet().putCellStyle('defi_node', defiNodeStyle);
+        this.getStylesheet().putCellStyle('function_node', functionNodeStyle);
+
+        const endPointNodeStyle = {
+            [mxConstants.STYLE_SHAPE]: mxConstants.SHAPE_LABEL,
+            [mxConstants.STYLE_PERIMETER]: mxPerimeter.RectanglePerimeter,
+            [mxConstants.STYLE_ROUNDED]: true,
+            [mxConstants.STYLE_ARCSIZE]: 8,
+
+            // [mxConstants.STYLE_STROKECOLOR]: '#43ab92',
+            [mxConstants.STYLE_STROKECOLOR]: '#42b983',
+            [mxConstants.STYLE_FONTCOLOR]: '#beebe9',
+            [mxConstants.STYLE_FILLCOLOR]: '#42b983',
+            [mxConstants.STYLE_FONTSTYLE]: mxConstants.FONT_BOLD,
+            [mxConstants.STYLE_LABEL_BACKGROUNDCOLOR]: '#42b983',
+            [mxConstants.STYLE_FONTSIZE]: 12,
+            [mxConstants.STYLE_ALIGN]: mxConstants.ALIGN_CENTER,
+            [mxConstants.STYLE_VERTICAL_ALIGN]: mxConstants.ALIGN_TOP,
+        };
+        this.getStylesheet().putCellStyle('endpoint_node', endPointNodeStyle);
 
         const inOutNodeStyle = {
             [mxConstants.STYLE_SHAPE]: mxConstants.SHAPE_LABEL,
             [mxConstants.STYLE_PERIMETER]: mxPerimeter.RectanglePerimeter,
             [mxConstants.STYLE_ROUNDED]: true,
-            [mxConstants.STYLE_ARCSIZE]: 8, // 设置圆角程度
+            [mxConstants.STYLE_ARCSIZE]: 8,
             [mxConstants.STYLE_STROKECOLOR]: '#ffdc34',
             [mxConstants.STYLE_FONTCOLOR]: '#ffffff',
             [mxConstants.STYLE_FILLCOLOR]: '#f7be16',

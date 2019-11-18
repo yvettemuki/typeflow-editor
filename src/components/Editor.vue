@@ -15,15 +15,24 @@
           v-for="(ele, idx) in resElements"
           :key="idx">
           <div
+            v-if="ele.defiType == 'PureFunction'"
             :data-type="ele.defiType"
-            class="mxResElement leftElement">
+            class="mxResElement leftElement"
+            id="pureFunctionElement">
+            {{ele.defiType}}
+          </div>
+          <div
+            v-else
+            :data-type="ele.defiType"
+            class="mxResElement leftElement"
+            id="endpointElement">
             {{ele.defiType}}
           </div>
         </li>
-        <li class="leftElement functionElement" @click="_toJson">Export XML</li>
-        <li class="leftElement functionElement">To PNG</li>
         <li class="leftElement functionElement deleteSelected" @click="_deleteSelected">Delete</li>
-        <li class="leftElement functionElement exportCode">Export Code</li>
+        <li class="leftElement functionElement save">Save</li>
+        <li class="leftElement functionElement export">Export PNG</li>
+        <li class="leftElement functionElement export" @click="_toXML">Export XML</li>
       </ul>
       <div class="container-border"><div id="mxContainer"></div></div>
     </div>
@@ -87,7 +96,13 @@ const makeDraggable = (sourceElements) => {
 
 const insertVertex = (dom, target, x, y) => {
   const defiType = dom.getAttribute('data-type');
-  var defiVertex = new mxCell(defiType, new mxGeometry(0, 0, 160, 50), `defi_node`);
+  var defiVertex;
+  if (defiType == 'PureFunction') {
+    defiVertex = new mxCell(defiType, new mxGeometry(0, 0, 160, 50), `function_node`)
+  }
+  else {
+    defiVertex = new mxCell(defiType, new mxGeometry(0, 0, 160, 50), `endpoint_node`);
+  }
   idSeed++;
   defiVertex.vertex = true;
   //customize new type data, to store vertex id \ type \ content
@@ -257,7 +272,7 @@ export default {
       graph.refresh(target);
     },
 
-    _toJson: function () {
+    _toXML: function () {
       graph.exportModelXML();
     },
 
@@ -313,12 +328,15 @@ export default {
     line-height: 40px;
     border-radius: 4px;
     font-weight: bold;
-    /*background: #2c3e50;*/
-    /*color: #42b983;*/
-    background: #00918e;
     color: #ffffff;
     margin-bottom: 20px;
     cursor: cell;
+  }
+  #pureFunctionElement {
+    background: #00918e;
+  }
+  #endpointElement {
+    background: #42b982;
   }
   .functionElement {
     background: #4dd599;
@@ -334,13 +352,20 @@ export default {
   .deleteSelected:hover {
     background: #e35351;
   }
-  .exportCode {
+  .export {
     background: #3fc5f0;
   }
-  .exportCode:hover {
+  .export:hover {
     background: #39b4db;
   }
+  .save {
+    background: #ff8d36;
+  }
+  .save:hover {
+    background: #f28633;
+  }
   #definitionList {
+    height: 100%;
     position: relative;
     top: 40px;
     padding: 0;

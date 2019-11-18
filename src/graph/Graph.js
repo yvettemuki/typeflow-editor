@@ -116,32 +116,6 @@ export class Graph extends mxGraph {
         };
         this.getStylesheet().putCellStyle('normalType', normalTypeStyle);
 
-        const nodeStyle = {
-            // 图片样式参考这个例子
-            // https://github.com/jinzhanye/mxgraph-demos/blob/master/src/06.image.html
-            [mxConstants.STYLE_SHAPE]: mxConstants.SHAPE_LABEL,
-            [mxConstants.STYLE_PERIMETER]: mxPerimeter.RectanglePerimeter,
-            [mxConstants.STYLE_ROUNDED]: true,
-            [mxConstants.STYLE_ARCSIZE]: 6, // 设置圆角程度
-
-            [mxConstants.STYLE_STROKECOLOR]: '#333333',
-            [mxConstants.STYLE_FONTCOLOR]: '#333333',
-            [mxConstants.STYLE_FILLCOLOR]: '#ffffff',
-            //
-            [mxConstants.STYLE_LABEL_BACKGROUNDCOLOR]: 'none',
-
-            [mxConstants.STYLE_ALIGN]: mxConstants.ALIGN_CENTER,
-            [mxConstants.STYLE_VERTICAL_ALIGN]: mxConstants.ALIGN_TOP,
-            [mxConstants.STYLE_IMAGE_ALIGN]: mxConstants.ALIGN_CENTER,
-            [mxConstants.STYLE_IMAGE_VERTICAL_ALIGN]: mxConstants.ALIGN_TOP,
-
-            [mxConstants.STYLE_IMAGE_WIDTH]: '72',
-            [mxConstants.STYLE_IMAGE_HEIGHT]: '72',
-            [mxConstants.STYLE_SPACING_TOP]: '100',
-            [mxConstants.STYLE_SPACING]: '8',
-        };
-        this.getStylesheet().putCellStyle('node', nodeStyle);
-
         const functionNodeStyle = {
             [mxConstants.STYLE_SHAPE]: mxConstants.SHAPE_LABEL,
             [mxConstants.STYLE_PERIMETER]: mxPerimeter.RectanglePerimeter,
@@ -156,6 +130,7 @@ export class Graph extends mxGraph {
             [mxConstants.STYLE_FONTSIZE]: 12,
             [mxConstants.STYLE_ALIGN]: mxConstants.ALIGN_CENTER,
             [mxConstants.STYLE_VERTICAL_ALIGN]: mxConstants.ALIGN_TOP,
+            [mxConstants.STYLE_SPACING_TOP]: '2',
         };
         this.getStylesheet().putCellStyle('function_node', functionNodeStyle);
 
@@ -174,6 +149,7 @@ export class Graph extends mxGraph {
             [mxConstants.STYLE_FONTSIZE]: 12,
             [mxConstants.STYLE_ALIGN]: mxConstants.ALIGN_CENTER,
             [mxConstants.STYLE_VERTICAL_ALIGN]: mxConstants.ALIGN_TOP,
+            [mxConstants.STYLE_SPACING_TOP]: '2',
         };
         this.getStylesheet().putCellStyle('endpoint_node', endPointNodeStyle);
 
@@ -190,6 +166,34 @@ export class Graph extends mxGraph {
             [mxConstants.STYLE_ALIGN]: mxConstants.ALIGN_CENTER,
         }
         this.getStylesheet().putCellStyle('inout_node', inOutNodeStyle);
+
+        const alterOutNodeStyle = {
+            [mxConstants.STYLE_SHAPE]: mxConstants.SHAPE_LABEL,
+            [mxConstants.STYLE_PERIMETER]: mxPerimeter.RectanglePerimeter,
+            [mxConstants.STYLE_ROUNDED]: true,
+            [mxConstants.STYLE_ARCSIZE]: 8,
+            [mxConstants.STYLE_STROKECOLOR]: '#EA5E5E',
+            [mxConstants.STYLE_FONTCOLOR]: '#ffffff',
+            [mxConstants.STYLE_FILLCOLOR]: '#EA5E5E',
+            [mxConstants.STYLE_FONTSIZE]: 12,
+            [mxConstants.STYLE_FONTSTYLE]: mxConstants.FONT_BOLD,
+            [mxConstants.STYLE_ALIGN]: mxConstants.ALIGN_CENTER,
+        }
+        this.getStylesheet().putCellStyle('alterout_node', alterOutNodeStyle);
+
+        const exceptOutNodeStyle = {
+            [mxConstants.STYLE_SHAPE]: mxConstants.SHAPE_LABEL,
+            [mxConstants.STYLE_PERIMETER]: mxPerimeter.RectanglePerimeter,
+            [mxConstants.STYLE_ROUNDED]: true,
+            [mxConstants.STYLE_ARCSIZE]: 8,
+            [mxConstants.STYLE_STROKECOLOR]: '#F58B54',
+            [mxConstants.STYLE_FONTCOLOR]: '#ffffff',
+            [mxConstants.STYLE_FILLCOLOR]: '#F58B54',
+            [mxConstants.STYLE_FONTSIZE]: 12,
+            [mxConstants.STYLE_FONTSTYLE]: mxConstants.FONT_BOLD,
+            [mxConstants.STYLE_ALIGN]: mxConstants.ALIGN_CENTER,
+        }
+        this.getStylesheet().putCellStyle('exceptout_node', exceptOutNodeStyle);
 
         // 设置选中状态节点的边角为圆角，默认是直角
         const oldCreateSelectionShape = mxVertexHandler.prototype.createSelectionShape;

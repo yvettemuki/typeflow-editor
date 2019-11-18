@@ -123,8 +123,8 @@ const updateVertex = (vertexId, definition) => {
   let y = defiVertex.getGeometry().y;
 
   var titleVertex = graph.insertVertex(defiVertex, null, definition.name,
-    0, 0.35, 150, 20,
-    'constituent=1;whiteSpace=wrap;strokeColor=none;fillColor=none;fontColor=#ffffff;fontSize=22',
+    0, 0.35, 160, 20,
+    'constituent=1;whiteSpace=wrap;strokeColor=none;fillColor=none;fontColor=#ffffff;fontSize=20;fontStyle=1',
     true);
   titleVertex.setConnectable(false);
 
@@ -144,28 +144,39 @@ const updateVertex = (vertexId, definition) => {
       inVertex.data = {
         input: inputs[idx]
       }
-      // let edge = graph.createEdge(parent, null, '', inVertex, defiVertex);
-      // edge.edge = true;
-      // edge.type = AUTO_INSERT_EDGE;
-      // graph.addEdge(edge);
       graph.insertEdge(parent, null, '', inVertex, defiVertex);
       relativePosi++;
     }
 
-    //update outputs
-    let outputs = definition.outputs;
-    let len2 = outputs.length;
+    //update outputs(common + alternative + exception)
+    let commonOutputs = definition.outputs;
+    let alterOutputs = definition.alternativeOutputs;
+    let exceptionOutputs = definition.exceptionOutputs;
+
+    let len2 = commonOutputs.length + alterOutputs.length + exceptionOutputs.length;
     let mid2 = Math.floor(len2 / 2);
     let relativePosi2 = -mid2;
-    for(let idx = 0; idx < len2; idx++) {
-      var outVertex = graph.insertVertex(parent, null, outputs[idx].id, x+relativePosi2*90+40, y+90, 80, 30, `inout_node`);
+    for(let idx = 0; idx < commonOutputs.length; idx++) {
+      let outVertex = graph.insertVertex(parent, null, commonOutputs[idx].id, x+relativePosi2*90+40, y+90, 80, 30, `inout_node`);
       outVertex.data = {
-        output: outputs[idx]
+        output: commonOutputs[idx]
       }
-      // let edge = graph.createEdge(parent, null, '', defiVertex, outVertex);
-      // edge.edge = true;
-      // edge.type = AUTO_INSERT_EDGE;
-      // graph.addEdge(edge);
+      graph.insertEdge(parent, null, '', defiVertex, outVertex);
+      relativePosi2++;
+    }
+    for(let idx = 0; idx < alterOutputs.length; idx++) {
+      let outVertex = graph.insertVertex(parent, null, alterOutputs[idx].id, x+relativePosi2*90+40, y+90, 80, 30, `alterout_node`);
+      outVertex.data = {
+        alterOutputs: alterOutputs[idx]
+      }
+      graph.insertEdge(parent, null, '', defiVertex, outVertex);
+      relativePosi2++;
+    }
+    for(let idx = 0; idx < exceptionOutputs.length; idx++) {
+      let outVertex = graph.insertVertex(parent, null, exceptionOutputs[idx].id, x+relativePosi2*90+40, y+90, 80, 30, `exceptout_node`);
+      outVertex.data = {
+        exceptionOutputs: exceptionOutputs[idx]
+      }
       graph.insertEdge(parent, null, '', defiVertex, outVertex);
       relativePosi2++;
     }
@@ -209,13 +220,15 @@ export default {
   },
 
   methods: {
-    _getValueFromForm: function(vertexId, defiType, defiName, inputs, outputs) {
+    _getValueFromForm: function(vertexId, defiType, defiName, inputs, outputs, alternativeOutputs, exceptionOutputs) {
        //use the data from form to create new definition
       let definition = {
         type: defiType,
         name: defiName,
         inputs: inputs,
-        outputs: outputs
+        outputs: outputs,
+        alternativeOutputs: alternativeOutputs,
+        exceptionOutputs: exceptionOutputs,
       }
       this.definitions.push(definition);
       this.isAutoAdd = true;
@@ -261,6 +274,7 @@ export default {
       let targetEdge = target.edges[0];
       let newTarget = targetEdge.target; //from now target always in index 0
       edge.target = newTarget;
+      graph.connectCell(edge, newTarget, false);
 
       //delete the old unused edge
       graph.setSelectionCell(targetEdge);
@@ -281,7 +295,7 @@ export default {
       target.removeFromParent();
       graph.clearSelection();
       graph.refresh(target);
-}
+    },
 
   },
 

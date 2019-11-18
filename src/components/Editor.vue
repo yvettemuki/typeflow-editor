@@ -321,6 +321,7 @@ export default {
   }
   .container-border {
     height: calc(80vh);
+    min-width: 980px;
     width: 100%;
     padding: 10px;
     margin-left: 50px;
@@ -361,19 +362,19 @@ export default {
   }
   .deleteSelected {
     margin-top: 100%;
-    background: #fb5b5a;
+    background: #64caed;
   }
   .deleteSelected:hover {
     background: #e35351;
   }
   .export {
-    background: #3fc5f0;
+    background: #4f81c7;
   }
   .export:hover {
-    background: #39b4db;
+    background: #4775b4;
   }
   .save {
-    background: #ff8d36;
+    background: #64c4ed;
   }
   .save:hover {
     background: #f28633;

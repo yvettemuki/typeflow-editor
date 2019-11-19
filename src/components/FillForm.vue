@@ -1,61 +1,97 @@
 <template>
 	<div class="defi-form">
-		<label><strong>{{type}}</strong></label>
-		<input v-model="defiName" class="defi-name" placeholder="Definition Name"/>
+		<label class="defi-type"><b>{{type}}</b></label>
+		<input v-model="defiName" class="defi-name" placeholder="type the definition name"/>
 		<div class="defi-main-content">
 			<div class="defi-input-section">
-			<ul class="defi-input-ul">
-				<li
-					v-for="(input, idx) in inputs"
-					:key="idx"
-					class="input-desc">
-					<label class="input-label"><strong>Int{{input.index+1}}</strong></label>
-					<input v-model="input.id" class="inputs-field"/>
-					<button class="minus-btn" @click="_deleteInput(idx)"></button>
-				</li>
-			</ul>
-			<button class="add-btn" @click="_addOneInput"><b>add common input</b></button>
+				<div class="defi-title-info-and-add">
+					<div class="defi-title-info">
+						<label class="defi-title"><b>input list</b></label>
+						<div class="defi-info"></div>
+					</div>
+					<button class="add-btn" @click="_addOneInput"></button>
+				</div>
+				<div class="blank-block" v-if="inputs.length <= 0">
+					add one if you need
+				</div>
+				<ul v-else class="defi-input-ul">
+					<li
+						v-for="(input, idx) in inputs"
+						:key="idx"
+						class="input-desc">
+	<!--					<label class="input-label"><strong>Int{{input.index+1}}</strong></label>-->
+						<input v-model="input.id" class="inputs-field"/>
+						<button class="minus-btn" @click="_deleteInput(idx)"></button>
+					</li>
+				</ul>
 			</div>
 			<div class="defi-input-section">
-			<ul class="defi-input-ul">
-				<li
-					v-for="(output, idx) in outputs"
-					:key="idx"
-					class="input-desc">
-					<label class="input-label"><strong>Out{{output.index+1}}</strong></label>
-					<input v-model="output.id" class="inputs-field"/>
-					<button class="minus-btn" @click="_deleteOutput(idx)"></button>
-				</li>
-			</ul>
-			<button class="add-btn" @click="_addOneOutput"><b>add common output</b></button>
+				<div class="defi-title-info-and-add">
+					<div class="defi-title-info">
+						<label class="defi-title"><b>output list</b></label>
+						<div class="defi-info"></div>
+					</div>
+					<button class="add-btn" @click="_addOneOutput"></button>
+				</div>
+				<div class="blank-block" v-if="outputs.length <= 0">
+					add one if you need
+				</div>
+				<ul v-else class="defi-input-ul">
+					<li
+						v-for="(output, idx) in outputs"
+						:key="idx"
+						class="input-desc">
+	<!--					<label class="input-label"><strong>Out{{output.index+1}}</strong></label>-->
+						<input v-model="output.id" class="inputs-field"/>
+						<button class="minus-btn" @click="_deleteOutput(idx)"></button>
+					</li>
+				</ul>
 			</div>
 		</div>
 		<div class="defi-main-content">
 			<div class="defi-input-section">
-			<ul class="defi-input-ul">
-				<li
-					v-for="(output, idx) in alternativeOutputs"
-					:key="idx"
-					class="input-desc">
-					<label class="input-label"><strong>Out{{output.index+1}}</strong></label>
-					<input v-model="output.id" class="inputs-field"/>
-					<button class="minus-btn" @click="_deleteAlterOutput(idx)"></button>
-				</li>
-			</ul>
-				<button class="add-btn" @click="_addOneAlterOutput"><b>add alternative output</b></button>
+				<div class="defi-title-info-and-add">
+					<div class="defi-title-info">
+						<label class="defi-title"><b>alternative output list</b></label>
+						<div class="defi-info"></div>
+					</div>
+					<button class="add-btn" @click="_addOneAlterOutput"></button>
+				</div>
+				<div class="blank-block" v-if="alternativeOutputs.length <= 0">
+					add one if you need
+				</div>
+				<ul v-else class="defi-input-ul">
+					<li
+						v-for="(output, idx) in alternativeOutputs"
+						:key="idx"
+						class="input-desc">
+	<!--					<label class="input-label"><strong>Out{{output.index+1}}</strong></label>-->
+						<input v-model="output.id" class="inputs-field"/>
+						<button class="minus-btn" @click="_deleteAlterOutput(idx)"></button>
+					</li>
+				</ul>
 			</div>
 			<div class="defi-input-section">
-			<ul class="defi-input-ul">
-				<li
-					v-for="(output, idx) in exceptionOutputs"
-					:key="idx"
-					class="input-desc">
-					<label class="input-label"><strong>Out{{output.index+1}}</strong></label>
-					<input v-model="output.id" class="inputs-field"/>
-					<button class="minus-btn" @click="_deleteExceptOutput(idx)"></button>
-				</li>
-			</ul>
-				<button class="add-btn" @click="_addOneExceptOutput"><b>add exception output</b></button>
+				<div class="defi-title-info-and-add">
+					<div class="defi-title-info">
+						<label class="defi-title"><b>exception output list</b></label>
+						<div class="defi-info"></div>
+					</div>
+					<button class="add-btn" @click="_addOneExceptOutput"></button>
+				</div>
+				<div class="blank-block" v-if="exceptionOutputs.length <= 0">
+					add one if you need
+				</div>
+				<ul v-else class="defi-input-ul">
+					<li
+						v-for="(output, idx) in exceptionOutputs"
+						:key="idx"
+						class="input-desc">
+	<!--					<label class="input-label"><strong>Out{{output.index+1}}</strong></label>-->
+						<input v-model="output.id" class="inputs-field"/>
+						<button class="minus-btn" @click="_deleteExceptOutput(idx)"></button>
+					</li>
+				</ul>
 			</div>
 		</div>
 		<button class="close-btn" @click="_sendToEditorWhenCancel"></button>
@@ -81,32 +117,24 @@
 						index: 0,
 						id: ""
 					},
-					{
-						index: 1,
-						id: ""
-					},
 				],
 				outputs: [
 					{
 						index: 0,
 						id: ""
 					},
-					{
-						index: 1,
-						id: ""
-					},
 				],
 				alternativeOutputs: [
-					{
-						index: 0,
-						id: ""
-					},
+					// {
+					// 	index: 0,
+					// 	id: ""
+					// },
 				],
 				exceptionOutputs: [
-					{
-						index: 0,
-						id: ""
-					},
+					// {
+					// 	index: 0,
+					// 	id: ""
+					// },
 				]
 			};
 		},
@@ -183,26 +211,60 @@
 <style lang="less" scoped>
 	.defi-form {
 		position: relative;
-		height: 550px;
-		width: 40%;
-		min-width: 640px;
+		height: 520px;
+		width: 580px;
+		min-width: 580px;
 		z-index: 1000;
 		background: #ffffff;
 		border-radius: 10px;
-		padding: 40px 40px 20px 40px;
+		padding: 30px 70px 30px 70px;
 		display: flex;
 		flex-direction: column;
+	}
+	.defi-type {
+		font-size: 16px;
 	}
 	.defi-name {
 		height: 30px;
 		border-radius: 4px;
-		border: 1px solid #d5d5d5;
-		margin-top: 20px;
-		padding: 0 5px 0 5px;
+		border: 1px solid #e1e1e1;
+		margin-top: 30px;
+		padding: 0 10px 0 10px;
+	}
+	.defi-input-section {
+		height: 165px;
+		width: 260px;
+		display: flex;
+		flex-direction: column;
+	}
+	.defi-title-info-and-add {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 5px;
+	}
+	.defi-title-info {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+	.defi-title {
+		font-size: 14px;
+	}
+	.defi-info {
+		height: 10px;
+		width: 9px;
+		margin-left: 5px;
+		background-size: 100%;
+		background-repeat: no-repeat;
+		background-image: url("../assets/info.png");
 	}
 	.defi-input-ul {
-		height: 120px;
+		height: 150px;
 		overflow-y: scroll;
+		margin-top: 0;
+		margin-bottom: 10px;
 	}
 	.defi-main-content {
 		margin-top: 20px;
@@ -218,50 +280,56 @@
 		justify-content: space-between;
 	}
 	.add-btn {
-		height: 25px;
-		min-width: 55%;
-		border-radius: 4px;
-		background: dodgerblue;
+		height: 10px;
+		width: 11px;
+		background-size: 100%;
+		background-image: url("../assets/add_2.png");
 		color: #ffffff;
-		float: left;
 		cursor: pointer;
 	}
 	.add-btn:hover {
-		background: #1c86ee;
+		background-image: url("../assets/add_hover.png");
 	}
 	.minus-btn {
-		height: 20px;
-		width: 20px;
-		background-image: url("../assets/delete_btn.png");
+		width: 10px;
+		height: 3px;
+		background-image: url("../assets/delete_btn_2.png");
 		background-repeat: no-repeat;
 		background-size: 100%;
+		cursor: pointer;
+	}
+	.minus-btn:hover {
+		background-image: url("../assets/delete_hover.png");
 	}
 	.close-btn {
 		position: absolute;
 		top: 10px;
 		right: 10px;
-		height: 25px;
-		width: 25px;
-		background-image: url("../assets/close_btn.png");
+		height: 13px;
+		width: 13px;
+		background-image: url("../assets/close_btn_2.png");
 		background-repeat: no-repeat;
 		background-size: 100%;
 		cursor: pointer;
 	}
+	.close-btn:hover {
+		background-image: url("../assets/close_btn_hover.png");
+	}
 	.inputs-field {
-		height: 24px;
-		width: 200px;
+		height: 30px;
+		width: 240px;
 		border-radius: 4px;
-		border: 1px solid #d5d5d5;
+		border: 1px solid #e1e1e1;
 		padding: 0 10px;
-		margin: 2.5px 5px 2.5px 5px;
+		margin: 5px 5px 5px 0;
 	}
 	ul {
 		padding-left: 0px;
 	}
 	.confirm-btn {
-		position: absolute;
-		right: 40px;
-		bottom: 30px;
+		position: relative;
+		bottom: -30px;
+		margin: 0 auto;
 		height: 30px;
 		width: 100px;
 		font-weight: bold;
@@ -272,10 +340,23 @@
 		cursor: pointer;
 	}
 	.confirm-btn:hover {
-		background: #2c3e50;
+		background: #3eae7b;
 	}
 	.input-label {
 		color: #a5a5a5;
+	}
+	.blank-block {
+		margin-top: 5px;
+		width: 260px;
+		height: 140px;
+		border: 1px #e9e9e9 solid;
+		border-radius: 4px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		font-size: 12px;
+		color: #9e9e9e;
 	}
 
 </style>

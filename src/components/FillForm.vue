@@ -101,6 +101,7 @@
 </template>
 
 <script>
+	import vm from '../main';
 	export default {
 		name: "FillForm",
 
@@ -124,23 +125,42 @@
 						id: ""
 					},
 				],
-				alternativeOutputs: [
-					// {
-					// 	index: 0,
-					// 	id: ""
-					// },
-				],
-				exceptionOutputs: [
-					// {
-					// 	index: 0,
-					// 	id: ""
-					// },
-				]
+				alternativeOutputs: [],
+				exceptionOutputs: [],
+				isValidate: true
 			};
 		},
 
 		methods: {
+			_validateFillForm() {
+				this.isValidate = true;
+				if(this.defiName.replace(/\s*/g,"").length <= 0) {
+					this.isValidate = false;
+				}
+				this._validate(this.inputs);
+				this._validate(this.outputs);
+				this._validate(this.alternativeOutputs);
+				this._validate(this.exceptionOutputs);
+      },
+
+			_validate(elements) {
+				if(elements.length <= 0) {
+					return;
+				} else {
+				elements.forEach( ele => {
+					if(ele.id.replace(/\s*/g,"").length <= 0) {
+						this.isValidate = false;
+					}
+				})
+				}
+			},
+
 			_sendToEditor() {
+				this._validateFillForm();
+				if(this.isValidate != true) {
+					this.$message.warning("you have some blanks not filled!");
+					return;
+				}
 				window.console.log("in the fill form" + typeof this.inputs);
 				this.$emit('getValueFromForm', this.id, this.type, this.defiName, this.inputs, this.outputs, this.alternativeOutputs, this.exceptionOutputs);
 			},
@@ -204,6 +224,8 @@
 					ele.index = this.exceptionOutputs.indexOf(ele)
 				})
 			},
+
+
 		}
 	};
 </script>
@@ -254,7 +276,7 @@
 	}
 	.defi-info {
 		height: 10px;
-		width: 9px;
+		width: 10px;
 		margin-left: 5px;
 		background-size: 100%;
 		background-repeat: no-repeat;

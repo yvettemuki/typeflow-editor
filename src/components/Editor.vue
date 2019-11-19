@@ -40,7 +40,6 @@
 </template>
 <script>
 import mxgraph from "../graph/index";
-import Panel from "./Panel";
 import FillForm from "./FillForm";
 import {genGraph, destroyGraph, Graph} from "../graph/Graph";
 import {resElements} from "../common/data";

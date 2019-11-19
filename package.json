@@ -9,8 +9,11 @@
   },
   "dependencies": {
     "core-js": "^3.3.2",
+    "element-ui": "^2.12.0",
     "mxgraph": "^4.0.5",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vue-m-message": "^2.0.0",
+    "vue-message": "^1.4.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.0.0",

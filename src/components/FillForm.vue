@@ -9,7 +9,7 @@
 						<label class="defi-title"><b>input list</b></label>
 						<div class="defi-info"></div>
 					</div>
-					<button class="add-btn" @click="_addOneInput"></button>
+					<div class="add" @click="_addOneInput"></div>
 				</div>
 				<div class="blank-block" v-if="inputs.length <= 0">
 					add one if you need
@@ -21,7 +21,8 @@
 						class="input-desc">
 	<!--					<label class="input-label"><strong>Int{{input.index+1}}</strong></label>-->
 						<input v-model="input.id" class="inputs-field"/>
-						<button class="minus-btn" @click="_deleteInput(idx)"></button>
+						<div class="delete" @click="_deleteInput(idx)"></div>
+
 					</li>
 				</ul>
 			</div>
@@ -31,7 +32,7 @@
 						<label class="defi-title"><b>output list</b></label>
 						<div class="defi-info"></div>
 					</div>
-					<button class="add-btn" @click="_addOneOutput"></button>
+					<div class="add" @click="_addOneOutput"></div>
 				</div>
 				<div class="blank-block" v-if="outputs.length <= 0">
 					add one if you need
@@ -43,7 +44,7 @@
 						class="input-desc">
 	<!--					<label class="input-label"><strong>Out{{output.index+1}}</strong></label>-->
 						<input v-model="output.id" class="inputs-field"/>
-						<button class="minus-btn" @click="_deleteOutput(idx)"></button>
+						<div class="delete" @click="_deleteOutput(idx)"></div>
 					</li>
 				</ul>
 			</div>
@@ -55,7 +56,7 @@
 						<label class="defi-title"><b>alternative output list</b></label>
 						<div class="defi-info"></div>
 					</div>
-					<button class="add-btn" @click="_addOneAlterOutput"></button>
+					<div class="add" @click="_addOneAlterOutput"></div>
 				</div>
 				<div class="blank-block" v-if="alternativeOutputs.length <= 0">
 					add one if you need
@@ -67,7 +68,7 @@
 						class="input-desc">
 	<!--					<label class="input-label"><strong>Out{{output.index+1}}</strong></label>-->
 						<input v-model="output.id" class="inputs-field"/>
-						<button class="minus-btn" @click="_deleteAlterOutput(idx)"></button>
+						<div class="delete" @click="_deleteAlterOutput(idx)"></div>
 					</li>
 				</ul>
 			</div>
@@ -77,7 +78,7 @@
 						<label class="defi-title"><b>exception output list</b></label>
 						<div class="defi-info"></div>
 					</div>
-					<button class="add-btn" @click="_addOneExceptOutput"></button>
+					<div class="add" @click="_addOneExceptOutput"></div>
 				</div>
 				<div class="blank-block" v-if="exceptionOutputs.length <= 0">
 					add one if you need
@@ -89,7 +90,7 @@
 						class="input-desc">
 	<!--					<label class="input-label"><strong>Out{{output.index+1}}</strong></label>-->
 						<input v-model="output.id" class="inputs-field"/>
-						<button class="minus-btn" @click="_deleteExceptOutput(idx)"></button>
+						<div class="delete" @click="_deleteExceptOutput(idx)"></div>
 					</li>
 				</ul>
 			</div>
@@ -101,10 +102,9 @@
 </template>
 
 <script>
-	import vm from '../main';
+
 	export default {
 		name: "FillForm",
-
 		props: {
 			id: String,
 			type: String,
@@ -379,6 +379,46 @@
 		justify-content: center;
 		font-size: 12px;
 		color: #9e9e9e;
+	}
+	.add {
+		width: 12px;
+		height: 12px;
+		transition: color .25s;
+		position: relative;
+		border: none;
+		cursor: pointer;
+	}
+	.add::before {
+		content: '';
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		width: 12px;
+		margin-left: -6px;
+		margin-top: -1.5px;
+		border-top: 3px solid #000000;
+	}
+	.add::after {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		height: 12px;
+		margin-top: -6px;
+		margin-left: -1.5px;
+		border-left: 3px solid #000000;
+	}
+	.add:hover::before, .add:hover::after{
+		border-color: #ec9b3b;
+	}
+	.delete {
+		height: 3px;
+		width: 12px;
+		background: #C94F4F;
+		cursor: pointer;
+	}
+	.delete:hover {
+		background: #a03e3e;
 	}
 
 </style>

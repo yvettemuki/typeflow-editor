@@ -297,6 +297,8 @@ export const destroyGraph = () => {
 
 export const genGraph = (container) => {
     graph = new Graph(container);
+    //set the graph can zoom
+    graph.centerZoom = true;
     return graph;
 };
 

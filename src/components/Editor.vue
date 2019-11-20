@@ -11,28 +11,39 @@
     </div>
     <div class="main-container">
       <ul id="definitionList">
-        <li
-          v-for="(ele, idx) in resElements"
-          :key="idx">
-          <div
-            v-if="ele.defiType == 'PureFunction'"
-            :data-type="ele.defiType"
-            class="mxResElement leftElement"
-            id="pureFunctionElement">
-            {{ele.defiType}}
-          </div>
-          <div
-            v-else
-            :data-type="ele.defiType"
-            class="mxResElement leftElement"
-            id="endpointElement">
-            {{ele.defiType}}
-          </div>
+        <span class="left-elements-title"><b>Definitions</b></span>
+        <div class="left-basic-li">
+          <li
+            v-for="(ele, idx) in resElements"
+            :key="idx">
+            <div
+              v-if="ele.defiType == 'PureFunction'"
+              :data-type="ele.defiType"
+              class="mxResElement leftElement"
+              id="pureFunctionElement">
+              {{ele.defiType}}
+            </div>
+            <div
+              v-else
+              :data-type="ele.defiType"
+              class="mxResElement leftElement"
+              id="endpointElement">
+              {{ele.defiType}}
+            </div>
+          </li>
+        </div>
+        <span class="left-elements-title"><b>Tools</b></span>
+        <div class="left-basic-li function-div">
+          <li class="leftElement functionElement deleteSelected" @click="_deleteSelected">Delete</li>
+          <li class="leftElement functionElement save">Save</li>
+          <li class="leftElement functionElement export">Export PNG</li>
+          <li class="leftElement functionElement export" @click="_toXML">Export XML</li>
+        </div>
+        <span class="left-elements-title"><b>Zoom</b></span>
+        <li class="zoom-li">
+          <Add weight="4" size="16" radius="100" color="#000000"></Add>
+          <Delete height="4" width="16" radius="999" color="#000000"></Delete>
         </li>
-        <li class="leftElement functionElement deleteSelected" @click="_deleteSelected">Delete</li>
-        <li class="leftElement functionElement save">Save</li>
-        <li class="leftElement functionElement export">Export PNG</li>
-        <li class="leftElement functionElement export" @click="_toXML">Export XML</li>
       </ul>
       <div class="container-border"><div id="mxContainer"></div></div>
     </div>
@@ -43,6 +54,8 @@ import mxgraph from "../graph/index";
 import FillForm from "./FillForm";
 import {genGraph, destroyGraph, Graph} from "../graph/Graph";
 import {resElements} from "../common/data";
+import Add from "./Add";
+import Delete from "./Delete";
 
 const {
   mxEvent,
@@ -215,6 +228,8 @@ export default {
   },
 
   components: {
+    Delete,
+    Add,
     FillForm,
   },
 
@@ -322,14 +337,15 @@ export default {
     height: calc(80vh);
     min-width: 980px;
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     margin-left: 50px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-    background: #e3e3e3;
+    background: #ffffff;
+    box-shadow: 0px 1px 2px 1.5px #e3e3e3;
   }
   .main-container {
     display: flex;
@@ -343,7 +359,8 @@ export default {
     border-radius: 4px;
     font-weight: bold;
     color: #ffffff;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
     cursor: cell;
   }
   #pureFunctionElement {
@@ -360,7 +377,6 @@ export default {
     background: #45bf89;
   }
   .deleteSelected {
-    margin-top: 100%;
     background: #64caed;
   }
   .deleteSelected:hover {
@@ -401,4 +417,26 @@ export default {
     z-index: 999;
     background: rgba(0, 0, 0, 0.5);
   }
+  .zoom-li {
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    background: #ffffff;
+    padding: 0px 10px 0px 10px;
+    border-radius: 999px;
+    box-shadow: 0px 1px 2px 1.5px #e3e3e3;
+  }
+  .left-basic-li {
+    padding: 0px 10px 0px 10px;
+    margin-bottom: 40px;
+    background: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0px 1px 2px 1.5px #e3e3e3;
+  }
+  .left-elements-title {
+    margin-bottom: 10px;
+  }
+
 </style>

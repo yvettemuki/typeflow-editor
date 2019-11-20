@@ -41,8 +41,8 @@
         </div>
         <span class="left-elements-title"><b>Zoom</b></span>
         <li class="zoom-li">
-          <Add weight="4" size="16" radius="100" color="#000000"></Add>
-          <Delete height="4" width="16" radius="999" color="#000000"></Delete>
+          <Add weight="4" size="16" radius="100" color="#000000" @click.native="_zoomIn"></Add>
+          <Delete height="4" width="16" radius="999" color="#000000" @click.native="_zoomOut"></Delete>
         </li>
       </ul>
       <div class="container-border"><div id="mxContainer"></div></div>
@@ -310,6 +310,16 @@ export default {
       graph.clearSelection();
       graph.refresh(target);
     },
+
+    _zoomIn: function () {
+      window.console.log("teatjoewrjtoe")
+      window.console.log("teatjoewrjtoe")
+      graph.zoomIn();
+    },
+
+    _zoomOut: function () {
+      graph.zoomOut();
+    }
 
   },
 

@@ -9,20 +9,20 @@
 			name: "Delete",
 			props: {
 				width: {
-					type: Number,
-					default: 12
+					type: String,
+					default: '12'
 				},
 				height: {
-					type: Number,
-					default: 2
+					type: String,
+					default: '2'
 				},
 				color: {
 					type: String,
 					default: '#000000'
 				},
 				radius: {
-					type: Number,
-					default: 0
+					type: String,
+					default: '0'
 				}
 			},
 			data() {

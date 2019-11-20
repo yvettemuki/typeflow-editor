@@ -10,16 +10,16 @@
         name: "Add",
 				props: {
 					size: {
-						type: Number,
-						default: 12,
+						type: String,
+						default: '12',
 					},
 					weight: {
-						type: Number,
-						default: 2
+						type: String,
+						default: '2'
           },
 					radius: {
-						type: Number,
-						default: 0
+						type: String,
+						default: '0'
 					},
 					color: {
 						type: String,

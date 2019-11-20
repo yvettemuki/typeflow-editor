@@ -167,7 +167,7 @@ export class Graph extends mxGraph {
         }
         this.getStylesheet().putCellStyle('inout_node', inOutNodeStyle);
 
-        const alterOutNodeStyle = {
+        const exceptOutNodeStyle = {
             [mxConstants.STYLE_SHAPE]: mxConstants.SHAPE_LABEL,
             [mxConstants.STYLE_PERIMETER]: mxPerimeter.RectanglePerimeter,
             [mxConstants.STYLE_ROUNDED]: true,
@@ -179,9 +179,9 @@ export class Graph extends mxGraph {
             [mxConstants.STYLE_FONTSTYLE]: mxConstants.FONT_BOLD,
             [mxConstants.STYLE_ALIGN]: mxConstants.ALIGN_CENTER,
         }
-        this.getStylesheet().putCellStyle('alterout_node', alterOutNodeStyle);
+        this.getStylesheet().putCellStyle('exceptout_node', exceptOutNodeStyle);
 
-        const exceptOutNodeStyle = {
+        const alterOutNodeStyle = {
             [mxConstants.STYLE_SHAPE]: mxConstants.SHAPE_LABEL,
             [mxConstants.STYLE_PERIMETER]: mxPerimeter.RectanglePerimeter,
             [mxConstants.STYLE_ROUNDED]: true,
@@ -193,7 +193,7 @@ export class Graph extends mxGraph {
             [mxConstants.STYLE_FONTSTYLE]: mxConstants.FONT_BOLD,
             [mxConstants.STYLE_ALIGN]: mxConstants.ALIGN_CENTER,
         }
-        this.getStylesheet().putCellStyle('exceptout_node', exceptOutNodeStyle);
+        this.getStylesheet().putCellStyle('alterout_node', alterOutNodeStyle);
 
         // 设置选中状态节点的边角为圆角，默认是直角
         const oldCreateSelectionShape = mxVertexHandler.prototype.createSelectionShape;

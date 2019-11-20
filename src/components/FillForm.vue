@@ -9,6 +9,7 @@
 						<label class="defi-title"><b>input list</b></label>
 						<div class="defi-info"></div>
 					</div>
+<!--					<Add size="10" weight="2" radius="99"></Add>-->
 					<div class="add" @click="_addOneInput"></div>
 				</div>
 				<div class="blank-block" v-if="inputs.length <= 0">
@@ -22,7 +23,6 @@
 	<!--					<label class="input-label"><strong>Int{{input.index+1}}</strong></label>-->
 						<input v-model="input.id" class="inputs-field"/>
 						<div class="delete" @click="_deleteInput(idx)"></div>
-
 					</li>
 				</ul>
 			</div>
@@ -102,10 +102,11 @@
 </template>
 
 <script>
-
-	export default {
+	import Add from "./Add";
+  export default {
 		name: "FillForm",
-		props: {
+      components: {},
+      props: {
 			id: String,
 			type: String,
 		},
@@ -158,7 +159,12 @@
 			_sendToEditor() {
 				this._validateFillForm();
 				if(this.isValidate != true) {
-					this.$message.warning("you have some blanks not filled!");
+					this.$message.warning({
+							duration: 1000,
+							iconClass: 'icon',
+							message: "you have some blanks not filled!",
+							customClass: 'warning-msg'
+					});
 					return;
 				}
 				window.console.log("in the fill form" + typeof this.inputs);
@@ -421,4 +427,23 @@
 		background: #a03e3e;
 	}
 
+</style>
+<style>
+	.warning-msg {
+		background-color: #ffffff !important;
+		font-weight: bold;
+		font-family: Arial;
+	}
+	.el-message__content {
+		color: #C94F4F !important;
+	}
+	.icon {
+		background-image: url("../assets/warning.png");
+		height: 15px;
+		width: 15px;
+		margin-top: 2px;
+		background-repeat: no-repeat;
+		background-size: 100%;
+		margin-right: 10px;
+	}
 </style>

@@ -156,7 +156,8 @@ const updateVertex = (vertexId, definition) => {
       inVertex.data = {
         input: inputs[idx]
       }
-      graph.insertEdge(parent, null, '', inVertex, defiVertex);
+      let edge = graph.insertEdge(parent, null, '', inVertex, defiVertex);
+      edge.setConnectable(false);
       relativePosi++;
     }
 
@@ -173,7 +174,8 @@ const updateVertex = (vertexId, definition) => {
       outVertex.data = {
         output: commonOutputs[idx]
       }
-      graph.insertEdge(parent, null, '', defiVertex, outVertex);
+      let edge = graph.insertEdge(parent, null, '', defiVertex, outVertex);
+      edge.setConnectable(false);
       relativePosi2++;
     }
     for(let idx = 0; idx < alterOutputs.length; idx++) {
@@ -181,7 +183,8 @@ const updateVertex = (vertexId, definition) => {
       outVertex.data = {
         alterOutputs: alterOutputs[idx]
       }
-      graph.insertEdge(parent, null, '', defiVertex, outVertex);
+      let edge = graph.insertEdge(parent, null, '', defiVertex, outVertex);
+      edge.setConnectable(false);
       relativePosi2++;
     }
     for(let idx = 0; idx < exceptionOutputs.length; idx++) {
@@ -189,7 +192,8 @@ const updateVertex = (vertexId, definition) => {
       outVertex.data = {
         exceptionOutputs: exceptionOutputs[idx]
       }
-      graph.insertEdge(parent, null, '', defiVertex, outVertex);
+      let edge = graph.insertEdge(parent, null, '', defiVertex, outVertex);
+      edge.setConnectable(false);
       relativePosi2++;
     }
   } finally {
@@ -202,6 +206,7 @@ const setConnectValidation = (vm) => {
   //validate the connection
   mxGraph.prototype.isValidConnection = (source, target) => {
     //here source and target is object of cell
+    window.console.log("int the conncetion validate")
     const sourceElement = source.data;
     const targetElement = target.data;
     if(sourceElement.hasOwnProperty('output') && targetElement.hasOwnProperty('input')) {
@@ -209,7 +214,7 @@ const setConnectValidation = (vm) => {
     }
     return false;
   }
-}
+};
 
 
 
@@ -266,6 +271,7 @@ export default {
           this.isFormShow = true;
         }
         if(cell.edge) {
+          cell.setConnectable(false);
           if(!this.isAutoAdd) {
             this._adjustConnection(cell);
           }
@@ -312,8 +318,6 @@ export default {
     },
 
     _zoomIn: function () {
-      window.console.log("teatjoewrjtoe")
-      window.console.log("teatjoewrjtoe")
       graph.zoomIn();
     },
 

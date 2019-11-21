@@ -255,9 +255,10 @@
 	.defi-name {
 		height: 30px;
 		border-radius: 4px;
-		border: 1px solid #e1e1e1;
+		border: 2px solid #e1e1e1;
 		margin-top: 30px;
 		padding: 0 10px 0 10px;
+		font-size: 12px;
 	}
 	.defi-input-section {
 		height: 165px;
@@ -278,7 +279,7 @@
 		align-items: center;
 	}
 	.defi-title {
-		font-size: 14px;
+		font-size: 12px;
 	}
 	.defi-info {
 		height: 10px;
@@ -347,9 +348,10 @@
 		height: 30px;
 		width: 240px;
 		border-radius: 4px;
-		border: 1px solid #e1e1e1;
+		border: 2px solid #e1e1e1;
 		padding: 0 10px;
 		margin: 5px 5px 5px 0;
+		font-size: 12px;
 	}
 	ul {
 		padding-left: 0px;
@@ -377,7 +379,7 @@
 		margin-top: 5px;
 		width: 260px;
 		height: 140px;
-		border: 1px #e9e9e9 solid;
+		border: 2px #e9e9e9 solid;
 		border-radius: 4px;
 		display: flex;
 		flex-direction: row;

@@ -18,6 +18,7 @@ const {
     mxPoint,
     mxEventObject,
     mxCodec,
+    mxEdgeStyle,
     mxObjectCodec,
     mxUtils,
     mxImageExport,
@@ -215,6 +216,7 @@ export class Graph extends mxGraph {
             [mxConstants.STYLE_STROKEWIDTH]: '2',
             [mxConstants.STYLE_STROKECOLOR]: '#333333',
             [mxConstants.STYLE_EDGE]: mxConstants.EDGESTYLE_TOPTOBOTTOM,
+            // [mxConstants.STYLE_EDGE]: mxEdgeStyle.TopToBottom,
             [mxConstants.STYLE_FONTCOLOR]: '#33333',
             [mxConstants.STYLE_LABEL_BACKGROUNDCOLOR]: '#ffa94d',
         });
@@ -228,7 +230,7 @@ export class Graph extends mxGraph {
     _setAnchors() {
         // 禁止从节点中心拖拽出线条
         this.connectionHandler.isConnectableCell = () => false;
-        mxEdgeHandler.prototype.isConnectableCell = () => false;
+
 
         // Overridden to define per-shape connection points
         mxGraph.prototype.getAllConnectionConstraints = (terminal) => {
@@ -247,7 +249,6 @@ export class Graph extends mxGraph {
 
         // Defines the default constraints for all shapes
         mxShape.prototype.constraints = [
-
             new mxConnectionConstraint(new mxPoint(0.5, 0), true),
             new mxConnectionConstraint(new mxPoint(0.5, 1), true)];
 

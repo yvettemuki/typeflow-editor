@@ -18,6 +18,15 @@
         closeFormDoneNothing: _closeFormDoneNothing
         }"/>
     </div>
+    <div
+      v-if="isResFormShow"
+      class="form-cover">
+      <SimpleInput title="Resource" :id="nowVertexId"
+        v-on="{
+          getValueFromSimpleForm: _getValueFromResForm,
+          closeSimpleForm: _closeResForm
+        }"/>
+    </div>
     <div class="main-container">
       <ul id="definitionList">
         <span class="left-elements-title"><b>Definitions</b></span>
@@ -72,6 +81,7 @@ import {genGraph, destroyGraph, Graph} from "../graph/Graph";
 import {resElements} from "../common/data";
 import Add from "./Add";
 import Delete from "./Delete";
+import SimpleInput from "./SimpleInput";
 
 const {
   mxEvent,
@@ -130,22 +140,17 @@ const insertVertex = (dom, target, x, y) => {
     newVertex = new mxCell(defiType, new mxGeometry(0, 0, 160, 50), `function_node`);
     //customize new type data, to store vertex id \ type \ content
     newVertex.data = {
-      type: "definition_type",
       definition: null
     }
   }
   else if (defiType == 'InputEndpoint' || defiType == 'OutputEndpoint') {
     newVertex = new mxCell(defiType, new mxGeometry(0, 0, 160, 50), `endpoint_node`);
     newVertex.data = {
-      type: "definition_type",
       definition: null
     }
   }
   else {
     newVertex = new mxCell(defiType, new mxGeometry(0, 0, 160, 50), `resource_node`);
-    newVertex.data = {
-      type: "resource_type",
-    }
   }
   newVertex.vertex = true;
   const cells = graph.importCells([newVertex], x, y, target);
@@ -161,7 +166,6 @@ const updateVertex = (vertexId, definition) => {
   defiVertex.data.definition = definition;
 
   let width = calFontWidth(definition.name);
-  window.console.log(width);
   var geo = graph.getCellGeometry(defiVertex);
   geo = geo.clone();
   geo.width = width;
@@ -196,7 +200,6 @@ const updateVertex = (vertexId, definition) => {
       edge.setConnectable(false);
       relativePosi++;
     }
-
     //update outputs(common + alternative + exception)
     let commonOutputs = definition.outputs;
     let alterOutputs = definition.alternativeOutputs;
@@ -237,6 +240,20 @@ const updateVertex = (vertexId, definition) => {
   }
 
 };
+
+const updateResVertex = (id, name) => {
+  let resVertex = graph.getModel().getCell(id);
+  graph.getModel().setValue(resVertex, name);
+  // let width = calFontWidth(name);
+  // var geo = graph.getCellGeometry(resVertex);
+  // geo = geo.clone();
+  // geo.width = width;
+  // graph.getModel().setGeometry(resVertex, geo);
+}
+
+const adjustVertexWidth = (vertex, width) => {
+
+}
 
 const setConnectValidation = (vm) => {
   //validate the connection
@@ -301,10 +318,12 @@ export default {
     definitions: [],
     isAutoAdd: false,
     isCheckShow: false,
+    isResFormShow: false,
   };
   },
 
   components: {
+    SimpleInput,
     Delete,
     Add,
     FillForm,
@@ -326,6 +345,7 @@ export default {
       updateVertex(vertexId, definition);
       this.isAutoAdd = false;
       window.console.log(graph.getChildEdges(graph.getDefaultParent()));
+      this.isResFormShow = false; //??????????????? why must
       this.isFormShow = false;
     },
 
@@ -338,12 +358,14 @@ export default {
           return;
         }
         if (cell.vertex) {
-          if(cell.data.type == 'definition_type') {
+          if(cell.value == 'PureFunction' || cell.value == 'InputEndpoint' || cell.value == 'OutputEndpoint') {
             this.nowDefiType =  cell.getValue();
             this.nowVertexId = cell.getId();
             this.isFormShow = true;
           } else {
-            window.console.log("test the res")
+            //window.console.log(cell.value);
+            this.nowVertexId = cell.getId();
+            this.isResFormShow = true;
           }
         }
         if(cell.edge) {
@@ -358,13 +380,22 @@ export default {
       graph.addListener(mxEvent.DEFINITION_CLICK, this._showSelectedDefinitionForm);
     },
 
-    _closeForm: function (id, isFormShow) {
+    _closeForm: function (id) {
       let deleteVertex = graph.getModel().getCell(id);
       graph.setSelectionCell(deleteVertex);
       deleteVertex.removeFromParent();
       graph.clearSelection();
       graph.refresh(deleteVertex);
-      this.isFormShow = isFormShow;
+      this.isFormShow = false;
+    },
+
+    _closeResForm: function (id) {
+      let deleteVertex = graph.getModel().getCell(id);
+      graph.setSelectionCell(deleteVertex);
+      deleteVertex.removeFromParent();
+      graph.clearSelection();
+      graph.refresh(deleteVertex);
+      this.isResFormShow = false;
     },
 
     _adjustConnection: function (edge) {
@@ -422,6 +453,12 @@ export default {
     _changeValueFromForm: function () {
       this.$message.info("test change value from form");
     },
+
+    _getValueFromResForm: function (id, name) {
+      updateResVertex(id, name);
+      this.isResFormShow = false;
+    },
+
   },
 
   mounted() {
@@ -558,6 +595,6 @@ export default {
     z-index: -999;
   }
   .resourceElement {
-    background: #ff7e67;
+    background: #00918e;
   }
 </style>

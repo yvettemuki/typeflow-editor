@@ -80,7 +80,7 @@ export class Graph extends mxGraph {
         mxEvent.disableContextMenu(this.container);
 
         // 固定节点大小
-        this.setCellsResizable(true);
+        this.setCellsResizable(false);
 
         // 编辑时按回车键不换行，而是完成输入
         this.setEnterStopsCellEditing(true);

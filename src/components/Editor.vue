@@ -4,10 +4,19 @@
     <div
       v-if="isFormShow"
       class="form-cover">
-      <FillForm :type="nowDefiType" :id="nowVertexId" v-on="{
+      <FillForm :type="nowDefiType" :id="nowVertexId" :formType="'ADD_FORM_TYPE'" v-on="{
         getValueFromForm: _getValueFromForm,
         closeForm: _closeForm
     }"/>
+    </div>
+    <div
+      v-if="isCheckShow"
+      class="form-cover">
+      <FillForm :definition="nowSelectedDefi" :id="nowVertexId" :formType="'CHECK_OR_CHANGE_FORM_TYPE'"
+        v-on="{
+        changeValueFromForm: _changeValueFromForm,
+        closeFormDoneNothing: _closeFormDoneNothing
+        }"/>
     </div>
     <div class="main-container">
       <ul id="definitionList">
@@ -32,6 +41,12 @@
             </div>
           </li>
         </div>
+        <span class="left-elements-title"><b>Resources</b></span>
+        <div class="left-basic-li">
+          <li
+            class="mxResElement leftElement resourceElement"
+            :data-type="'Resource'">Resource</li>
+        </div>
         <span class="left-elements-title"><b>Tools</b></span>
         <div class="left-basic-li function-div">
           <li class="leftElement functionElement deleteSelected" @click="_deleteSelected">Delete</li>
@@ -47,6 +62,7 @@
       </ul>
       <div class="container-border"><div id="mxContainer"></div></div>
     </div>
+<!--    <div id="test-font-width"></div>-->
   </div>
 </template>
 <script>
@@ -63,18 +79,19 @@ const {
   mxGeometry,
   mxUtils,
   mxGraph,
+  mxEventObject,
 } = mxgraph;
 
-const FROM_EDITOR_LOG = "FROM_EDITOR_LOG";
-const AUTO_INSERT_EDGE = 0;
-const MANUAL_INSERT_EDGE = 1;
+const ADD_FORM_TYPE = "ADD_FROM_TYPE";
+const CHECK_OR_CHANGE_FORM_TYPE = "CHECK_OR_CHANGE_FORM_TYPE";
 
 let graph = null;
 let idSeed = -1;
 
 const initGraph = () => {
   graph = genGraph(document.getElementById('mxContainer'));
-  makeDraggable(document.getElementsByClassName('mxResElement'))
+  makeDraggable(document.getElementsByClassName('mxResElement'));
+  listenGraphEvent();
 }
 
 const makeDraggable = (sourceElements) => {
@@ -108,20 +125,30 @@ const makeDraggable = (sourceElements) => {
 
 const insertVertex = (dom, target, x, y) => {
   const defiType = dom.getAttribute('data-type');
-  var defiVertex;
+  let newVertex;
   if (defiType == 'PureFunction') {
-    defiVertex = new mxCell(defiType, new mxGeometry(0, 0, 160, 50), `function_node`)
+    newVertex = new mxCell(defiType, new mxGeometry(0, 0, 160, 50), `function_node`);
+    //customize new type data, to store vertex id \ type \ content
+    newVertex.data = {
+      type: "definition_type",
+      definition: null
+    }
+  }
+  else if (defiType == 'InputEndpoint' || defiType == 'OutputEndpoint') {
+    newVertex = new mxCell(defiType, new mxGeometry(0, 0, 160, 50), `endpoint_node`);
+    newVertex.data = {
+      type: "definition_type",
+      definition: null
+    }
   }
   else {
-    defiVertex = new mxCell(defiType, new mxGeometry(0, 0, 160, 50), `endpoint_node`);
+    newVertex = new mxCell(defiType, new mxGeometry(0, 0, 160, 50), `resource_node`);
+    newVertex.data = {
+      type: "resource_type",
+    }
   }
-  idSeed++;
-  defiVertex.vertex = true;
-  //customize new type data, to store vertex id \ type \ content
-  defiVertex.data = {
-    definition: null
-  }
-  const cells = graph.importCells([defiVertex], x, y, target);
+  newVertex.vertex = true;
+  const cells = graph.importCells([newVertex], x, y, target);
   if(cells != null && cells.length > 0) {
     graph.setSelectionCells(cells);
   }
@@ -130,15 +157,24 @@ const insertVertex = (dom, target, x, y) => {
 
 const updateVertex = (vertexId, definition) => {
   var defiVertex = graph.getModel().getCell(vertexId);
+  graph.getModel().setValue(defiVertex, definition.name);
   defiVertex.data.definition = definition;
+
+  let width = calFontWidth(definition.name);
+  window.console.log(width);
+  var geo = graph.getCellGeometry(defiVertex);
+  geo = geo.clone();
+  geo.width = width;
+  graph.getModel().setGeometry(defiVertex, geo);
+
   let x = defiVertex.getGeometry().x;
   let y = defiVertex.getGeometry().y;
 
-  var titleVertex = graph.insertVertex(defiVertex, null, definition.name,
-    0, 0.35, 160, 20,
-    'constituent=1;whiteSpace=wrap;strokeColor=none;fillColor=none;fontColor=#ffffff;fontSize=20;fontStyle=1',
+  var typeVertex = graph.insertVertex(defiVertex, null, definition.type,
+    0, 0, width, 20,
+    `defitype_node;constituent=1;`,
     true);
-  titleVertex.setConnectable(false);
+  typeVertex.setConnectable(false);
 
   var model = graph.getModel();
   var parent = graph.getDefaultParent();
@@ -151,7 +187,7 @@ const updateVertex = (vertexId, definition) => {
     let mid = Math.floor(len / 2);
     let relativePosi = -mid;
     for(let idx = 0; idx < len; idx++) {
-      var inVertex = graph.insertVertex(parent, null, inputs[idx].id, x+relativePosi*90+40, y-90, 80, 30, `inout_node`);
+      var inVertex = graph.insertVertex(parent, null, inputs[idx].id, x+relativePosi*110+width/2-50, y-90, 100, 30, `inout_node`);
       //add the 'data' to identify the vertex for the connection validation
       inVertex.data = {
         input: inputs[idx]
@@ -170,7 +206,7 @@ const updateVertex = (vertexId, definition) => {
     let mid2 = Math.floor(len2 / 2);
     let relativePosi2 = -mid2;
     for(let idx = 0; idx < commonOutputs.length; idx++) {
-      let outVertex = graph.insertVertex(parent, null, commonOutputs[idx].id, x+relativePosi2*90+40, y+90, 80, 30, `inout_node`);
+      let outVertex = graph.insertVertex(parent, null, commonOutputs[idx].id, x+relativePosi2*110+width/2-50, y+90+30, 100, 30, `inout_node`);
       outVertex.data = {
         output: commonOutputs[idx]
       }
@@ -179,7 +215,7 @@ const updateVertex = (vertexId, definition) => {
       relativePosi2++;
     }
     for(let idx = 0; idx < alterOutputs.length; idx++) {
-      let outVertex = graph.insertVertex(parent, null, alterOutputs[idx].id, x+relativePosi2*90+40, y+90, 80, 30, `alterout_node`);
+      let outVertex = graph.insertVertex(parent, null, alterOutputs[idx].id, x+relativePosi2*110+width/2-50, y+90+30, 100, 30, `alterout_node`);
       outVertex.data = {
         alterOutputs: alterOutputs[idx]
       }
@@ -188,7 +224,7 @@ const updateVertex = (vertexId, definition) => {
       relativePosi2++;
     }
     for(let idx = 0; idx < exceptionOutputs.length; idx++) {
-      let outVertex = graph.insertVertex(parent, null, exceptionOutputs[idx].id, x+relativePosi2*90+40, y+90, 80, 30, `exceptout_node`);
+      let outVertex = graph.insertVertex(parent, null, exceptionOutputs[idx].id, x+relativePosi2*110+width/2-50, y+90+30, 100, 30, `exceptout_node`);
       outVertex.data = {
         exceptionOutputs: exceptionOutputs[idx]
       }
@@ -216,6 +252,33 @@ const setConnectValidation = (vm) => {
   }
 };
 
+const listenGraphEvent = () => {
+  graph.addListener(mxEvent.CLICK, (sender, evt) => {
+    let e = evt.getProperty('event');
+    let cell = evt.getProperty('cell');
+
+    if(!cell) {
+      return;
+    }
+
+    const clickDefinition = cell.style.includes('endpoint_node') || cell.style.includes('function_node') || cell.style.includes('definame_node');
+    if(clickDefinition) {
+      window.console.log("click definition event");
+      if(cell.style.includes('definame_node')) {
+        graph.fireEvent(new mxEventObject(mxEvent.DEFINITION_CLICK, 'cell', cell.parent));
+      } else {
+        graph.fireEvent(new mxEventObject(mxEvent.DEFINITION_CLICK, 'cell', cell));
+      }
+    }
+  })
+};
+
+const calFontWidth = (str) => {
+  let len = str.length;
+  len = (len * 14 + 4) > 160 ? (len * 14 + 4) : 160;
+  return len;
+}
+
 
 
 export default {
@@ -227,8 +290,17 @@ export default {
     isFormShow: false,
     nowDefiType: "Definition",
     nowVertexId: -1,
+    nowSelectedDefi: {
+      type: '',
+      name: '',
+      inputs: '',
+      outputs: [],
+      alternativeOutputs: [],
+      exceptionOutputs: []
+    },
     definitions: [],
-    isAutoAdd: false
+    isAutoAdd: false,
+    isCheckShow: false,
   };
   },
 
@@ -266,9 +338,13 @@ export default {
           return;
         }
         if (cell.vertex) {
-          this.nowDefiType = cell.getValue();
-          this.nowVertexId = cell.getId();
-          this.isFormShow = true;
+          if(cell.data.type == 'definition_type') {
+            this.nowDefiType =  cell.getValue();
+            this.nowVertexId = cell.getId();
+            this.isFormShow = true;
+          } else {
+            window.console.log("test the res")
+          }
         }
         if(cell.edge) {
           cell.setConnectable(false);
@@ -277,6 +353,9 @@ export default {
           }
         }
       });
+
+      //listen to click event
+      graph.addListener(mxEvent.DEFINITION_CLICK, this._showSelectedDefinitionForm);
     },
 
     _closeForm: function (id, isFormShow) {
@@ -323,8 +402,26 @@ export default {
 
     _zoomOut: function () {
       graph.zoomOut();
-    }
+    },
 
+    _showSelectedDefinitionForm (sender, evt) {
+      let cell = evt.getProperty('cell');
+      this.nowVertexId = cell.id;
+      let definition = cell.data;
+      this.nowSelectedDefi = definition;
+      window.console.log(definition);
+      window.console.log(definition.name);
+      window.console.log(this.nowSelectedDefi.name);
+      // this.isCheckShow = true;
+    },
+
+    _closeFormDoneNothing: function () {
+      this.isCheckShow = false;
+    },
+
+    _changeValueFromForm: function () {
+      this.$message.info("test change value from form");
+    },
   },
 
   mounted() {
@@ -378,10 +475,12 @@ export default {
     cursor: cell;
   }
   #pureFunctionElement {
-    background: #00918e;
+    /*background: #00918e;*/
+    background: #42b982;
   }
   #endpointElement {
-    background: #42b982;
+    /*background: #42b982;*/
+    background: #34495d;
   }
   .functionElement {
     background: #4dd599;
@@ -409,9 +508,6 @@ export default {
     background: #f28633;
   }
   #definitionList {
-    height: 100%;
-    position: relative;
-    top: 40px;
     padding: 0;
     margin: 0;
     display: flex;
@@ -444,13 +540,24 @@ export default {
   }
   .left-basic-li {
     padding: 0px 10px 0px 10px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     background: #ffffff;
     border-radius: 4px;
     box-shadow: 0px 1px 2px 1.5px #e3e3e3;
   }
   .left-elements-title {
     margin-bottom: 10px;
+    font-size: 14px;
   }
-
+  #test-font-width {
+    position: absolute;
+    height: auto;
+    width: auto;
+    visibility: hidden;
+    white-space: nowrap;
+    z-index: -999;
+  }
+  .resourceElement {
+    background: #ff7e67;
+  }
 </style>

@@ -102,13 +102,19 @@
 </template>
 
 <script>
-	import Add from "./Add";
+  import Add from "./Add";
+
+  const ADD_FORM_TYPE = "ADD_FORM_TYPE";
+  const CHECK_OR_CHANGE_FORM_TYPE = "CHECK_OR_CHANGE_FORM_TYPE";
+
   export default {
 		name: "FillForm",
-      components: {},
-      props: {
+		components: {},
+		props: {
 			id: String,
 			type: String,
+			definition: Object,
+			formType: String
 		},
 
 		data() {
@@ -128,8 +134,15 @@
 				],
 				alternativeOutputs: [],
 				exceptionOutputs: [],
-				isValidate: true
+				isValidate: true,
+				defiObject: null,
 			};
+		},
+
+		watch: {
+			'definition.name'() {
+				window.console.log("has value")
+			}
 		},
 
 		methods: {
@@ -167,12 +180,21 @@
 					});
 					return;
 				}
-				window.console.log("in the fill form" + typeof this.inputs);
-				this.$emit('getValueFromForm', this.id, this.type, this.defiName, this.inputs, this.outputs, this.alternativeOutputs, this.exceptionOutputs);
+				window.console.log("in the fill form");
+				if(this.formType === ADD_FORM_TYPE) {
+					this.$emit('getValueFromForm', this.id, this.type, this.defiName, this.inputs, this.outputs, this.alternativeOutputs, this.exceptionOutputs);
+        } else if(this.formType === CHECK_OR_CHANGE_FORM_TYPE) {
+					this.$emit('changeValueFromForm');
+				}
 			},
 
 			_sendToEditorWhenCancel() {
-				this.$emit('closeForm', this.id, false);
+				if(this.formType === ADD_FORM_TYPE) {
+					this.$emit('closeForm', this.id, false);
+        } else if(this.formType === CHECK_OR_CHANGE_FORM_TYPE) {
+					this.$emit('closeFormDoneNothing');
+				}
+
 			},
 
 			_addOneInput() {
@@ -231,9 +253,23 @@
 				})
 			},
 
+		},
 
-		}
-	};
+		mounted () {
+			//finish data init but not start ele created
+			if(this.formType === CHECK_OR_CHANGE_FORM_TYPE) {
+				if(this.definition) {
+					this.defiObject = this.definition;
+					window.console.log(this.defiObject.name);
+				}
+				// this.defiName = this.definition.name;
+				//window.console.log(this.definition.type);
+				// this.outputs = this.definition.outputs;
+				// this.alternativeOutputs = this.definition.alternativeOutputs;
+				// this.exceptionOutputs = this.definition.exceptionOutputs;
+      }
+    }
+  };
 </script>
 
 <style lang="less" scoped>

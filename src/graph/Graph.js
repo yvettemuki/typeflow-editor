@@ -26,8 +26,7 @@ const {
 } = mxgraph;
 
 Object.assign(mxEvent, {
-    EDGE_START_MOVE: 'edgeStartMove',
-    VERTEX_START_MOVE: 'vertexStartMove',
+    DEFINITION_CLICK: 'DEFINITION_CLICK',
 });
 
 export class Graph extends mxGraph {
@@ -81,7 +80,7 @@ export class Graph extends mxGraph {
         mxEvent.disableContextMenu(this.container);
 
         // 固定节点大小
-        this.setCellsResizable(false);
+        this.setCellsResizable(true);
 
         // 编辑时按回车键不换行，而是完成输入
         this.setEnterStopsCellEditing(true);
@@ -91,7 +90,7 @@ export class Graph extends mxGraph {
         mxCellEditor.prototype.blurEnabled = true;
 
         // 禁止节点折叠
-        this.foldingEnabled = false;
+        this.foldingEnabled = true;
         // 文本包裹效果必须开启此配置
         this.setHtmlLabels(true);
 
@@ -123,15 +122,16 @@ export class Graph extends mxGraph {
             [mxConstants.STYLE_ROUNDED]: true,
             [mxConstants.STYLE_ARCSIZE]: 8,
 
-            [mxConstants.STYLE_STROKECOLOR]: '#00918e',
-            [mxConstants.STYLE_FONTCOLOR]: '#beebe9',
-            [mxConstants.STYLE_FILLCOLOR]: '#00918e',
+            [mxConstants.STYLE_STROKECOLOR]: '#42b982',
+            [mxConstants.STYLE_FONTCOLOR]: '#ffffff',
+            [mxConstants.STYLE_FILLCOLOR]: '#42b982',
             [mxConstants.STYLE_FONTSTYLE]: mxConstants.FONT_BOLD,
-            [mxConstants.STYLE_LABEL_BACKGROUNDCOLOR]: '#00918e',
-            [mxConstants.STYLE_FONTSIZE]: 12,
+            [mxConstants.STYLE_LABEL_BACKGROUNDCOLOR]: '#42b982',
+            [mxConstants.STYLE_FONTSIZE]: 20,
             [mxConstants.STYLE_ALIGN]: mxConstants.ALIGN_CENTER,
-            [mxConstants.STYLE_VERTICAL_ALIGN]: mxConstants.ALIGN_TOP,
-            [mxConstants.STYLE_SPACING_TOP]: '2',
+            [mxConstants.STYLE_WHITE_SPACE]: 'wrap',
+            [mxConstants.WORD_WRAP]: 'break-word'
+            //[mxConstants.STYLE_VERTICAL_ALIGN]: mxConstants.ALIGN_TOP,
         };
         this.getStylesheet().putCellStyle('function_node', functionNodeStyle);
 
@@ -141,18 +141,36 @@ export class Graph extends mxGraph {
             [mxConstants.STYLE_ROUNDED]: true,
             [mxConstants.STYLE_ARCSIZE]: 8,
 
-            // [mxConstants.STYLE_STROKECOLOR]: '#43ab92',
-            [mxConstants.STYLE_STROKECOLOR]: '#42b983',
-            [mxConstants.STYLE_FONTCOLOR]: '#beebe9',
-            [mxConstants.STYLE_FILLCOLOR]: '#42b983',
+            // [mxConstants.STYLE_STROKECOLOR]: '#42b983',
+            [mxConstants.STYLE_STROKECOLOR]: '#34495d',
+            [mxConstants.STYLE_FONTCOLOR]: '#ffffff',
+            [mxConstants.STYLE_FILLCOLOR]: '#34495d',
             [mxConstants.STYLE_FONTSTYLE]: mxConstants.FONT_BOLD,
-            [mxConstants.STYLE_LABEL_BACKGROUNDCOLOR]: '#42b983',
-            [mxConstants.STYLE_FONTSIZE]: 12,
+            [mxConstants.STYLE_LABEL_BACKGROUNDCOLOR]: '#34495d',
+            [mxConstants.STYLE_FONTSIZE]: 20,
             [mxConstants.STYLE_ALIGN]: mxConstants.ALIGN_CENTER,
-            [mxConstants.STYLE_VERTICAL_ALIGN]: mxConstants.ALIGN_TOP,
-            [mxConstants.STYLE_SPACING_TOP]: '2',
+            [mxConstants.STYLE_WHITE_SPACE]: 'wrap',
+            [mxConstants.WORD_WRAP]: 'break-word'
+            //[mxConstants.STYLE_VERTICAL_ALIGN]: mxConstants.ALIGN_TOP,
         };
         this.getStylesheet().putCellStyle('endpoint_node', endPointNodeStyle);
+
+        const resourceNodeStyle = {
+            [mxConstants.STYLE_SHAPE]: mxConstants.SHAPE_LABEL,
+            [mxConstants.STYLE_PERIMETER]: mxPerimeter.RectanglePerimeter,
+            [mxConstants.STYLE_ROUNDED]: true,
+            [mxConstants.STYLE_ARCSIZE]: 8,
+            [mxConstants.STYLE_STROKECOLOR]: '#00918e',
+            [mxConstants.STYLE_FONTCOLOR]: '#ffffff',
+            [mxConstants.STYLE_FILLCOLOR]: '#00918e',
+            [mxConstants.STYLE_FONTSTYLE]: mxConstants.FONT_BOLD,
+            [mxConstants.STYLE_LABEL_BACKGROUNDCOLOR]: '#00918e',
+            [mxConstants.STYLE_FONTSIZE]: 20,
+            [mxConstants.STYLE_ALIGN]: mxConstants.ALIGN_CENTER,
+            [mxConstants.STYLE_WHITE_SPACE]: 'wrap',
+            [mxConstants.WORD_WRAP]: 'break-word'
+        };
+        this.getStylesheet().putCellStyle('resource_node', resourceNodeStyle);
 
         const inOutNodeStyle = {
             [mxConstants.STYLE_SHAPE]: mxConstants.SHAPE_LABEL,
@@ -195,6 +213,18 @@ export class Graph extends mxGraph {
             [mxConstants.STYLE_ALIGN]: mxConstants.ALIGN_CENTER,
         }
         this.getStylesheet().putCellStyle('alterout_node', alterOutNodeStyle);
+
+        const defiTypeNodeStyle = {
+            [mxConstants.STYLE_STROKECOLOR]: 'none',
+            [mxConstants.STYLE_FILLCOLOR]: 'none',
+            [mxConstants.STYLE_FONTCOLOR]: '#beebe9',
+            [mxConstants.STYLE_FONTSIZE]: '12',
+            [mxConstants.STYLE_FONTSTYLE]: '1',
+            [mxConstants.STYLE_SPACING_TOP]: '2',
+            // [mxConstants.STYLE_WHITE_SPACE]: 'wrap',
+            // [mxConstants.WORD_WRAP]: 'break-word'
+        }
+        this.getStylesheet().putCellStyle('defitype_node', defiTypeNodeStyle);
 
         // 设置选中状态节点的边角为圆角，默认是直角
         const oldCreateSelectionShape = mxVertexHandler.prototype.createSelectionShape;

@@ -151,6 +151,9 @@ const insertVertex = (dom, target, x, y) => {
   }
   else {
     newVertex = new mxCell(defiType, new mxGeometry(0, 0, 160, 50), `resource_node`);
+    newVertex.data = {
+      resource: null
+    }
   }
   newVertex.vertex = true;
   const cells = graph.importCells([newVertex], x, y, target);
@@ -259,11 +262,13 @@ const setConnectValidation = (vm) => {
   //validate the connection
   mxGraph.prototype.isValidConnection = (source, target) => {
     //here source and target is object of cell
-    window.console.log("int the conncetion validate")
     const sourceElement = source.data;
     const targetElement = target.data;
     if(sourceElement.hasOwnProperty('output') && targetElement.hasOwnProperty('input')) {
       return sourceElement.output.id == targetElement.input.id;
+    }
+    if(sourceElement.hasOwnProperty('definition') && targetElement.hasOwnProperty('resource')) {
+      return true;
     }
     return false;
   }
@@ -363,7 +368,6 @@ export default {
             this.nowVertexId = cell.getId();
             this.isFormShow = true;
           } else {
-            //window.console.log(cell.value);
             this.nowVertexId = cell.getId();
             this.isResFormShow = true;
           }
@@ -371,6 +375,11 @@ export default {
         if(cell.edge) {
           cell.setConnectable(false);
           if(!this.isAutoAdd) {
+            if(cell.target.data.hasOwnProperty('resource')) {
+              window.console.log(cell);
+              cell.setStyle("dashed=1;");
+              return;
+            }
             this._adjustConnection(cell);
           }
         }

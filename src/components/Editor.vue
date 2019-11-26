@@ -247,11 +247,19 @@ const updateVertex = (vertexId, definition) => {
 const updateResVertex = (id, name) => {
   let resVertex = graph.getModel().getCell(id);
   graph.getModel().setValue(resVertex, name);
-  // let width = calFontWidth(name);
-  // var geo = graph.getCellGeometry(resVertex);
-  // geo = geo.clone();
-  // geo.width = width;
-  // graph.getModel().setGeometry(resVertex, geo);
+
+  let width = calFontWidth(name);
+  var geo = graph.getCellGeometry(resVertex);
+  geo = geo.clone();
+  geo.width = width;
+  graph.getModel().setGeometry(resVertex, geo);
+
+  let typeVertex = graph.insertVertex(resVertex, null, "Resource",
+    0, 0, width, 20,
+    `defitype_node;constituent=1;`,
+    true);
+  typeVertex.setConnectable(false);
+
 }
 
 const adjustVertexWidth = (vertex, width) => {
@@ -604,6 +612,6 @@ export default {
     z-index: -999;
   }
   .resourceElement {
-    background: #00918e;
+    background: #34495d;
   }
 </style>

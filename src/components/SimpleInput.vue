@@ -8,32 +8,33 @@
 </template>
 
 <script>
-    export default {
-        name: "SimpleInput",
-				props: {
-					title: String,
-					id: String
-				},
-				data() {
-					return {
-						inputContent: ""
-					}
-				},
-				methods: {
-					_sendNameToEditor: function () {
-						this.$emit('getValueFromSimpleForm', this.id, this.inputContent);
-          },
-          _sendToEditor: function () {
-						this.$emit('closeSimpleForm', this.id)
-          }
-				}
-    }
+	export default {
+		name: "SimpleInput",
+		props: {
+			title: String,
+			id: String
+		},
+		data() {
+			return {
+				inputContent: ""
+			}
+		},
+		methods: {
+			_sendNameToEditor: function () {
+				this.$emit('getValueFromSimpleForm', this.id, this.inputContent);
+			},
+			_sendToEditor: function () {
+				this.$emit('closeSimpleForm', this.id)
+			}
+		}
+	}
 </script>
 
 <style lang="less" scoped>
 	.title {
 		color: #333333;
 	}
+
 	.form-div {
 		display: flex;
 		flex-direction: column;
@@ -45,6 +46,7 @@
 		background: #ffffff;
 		padding: 40px;
 	}
+
 	.input-div {
 		margin-top: 10px;
 		width: 100%;
@@ -54,6 +56,7 @@
 		padding-left: 10px;
 		padding-right: 10px;
 	}
+
 	.close-btn {
 		position: absolute;
 		top: 10px;
@@ -65,9 +68,11 @@
 		background-size: 100%;
 		cursor: pointer;
 	}
+
 	.close-btn:hover {
 		background-image: url("../assets/close_btn_hover.png");
 	}
+
 	.confirm-btn {
 		position: absolute;
 		bottom: 40px;
@@ -81,6 +86,7 @@
 		color: #ffffff;
 		cursor: pointer;
 	}
+
 	.confirm-btn:hover {
 		background: #3eae7b;
 	}

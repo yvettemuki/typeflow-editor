@@ -9,7 +9,7 @@
 						<label class="defi-title"><b>input list</b></label>
 						<div class="defi-info"></div>
 					</div>
-<!--					<Add size="10" weight="2" radius="99"></Add>-->
+					<!--					<Add size="10" weight="2" radius="99"></Add>-->
 					<div class="add" @click="_addOneInput"></div>
 				</div>
 				<div class="blank-block" v-if="inputs.length <= 0">
@@ -20,7 +20,7 @@
 						v-for="(input, idx) in inputs"
 						:key="idx"
 						class="input-desc">
-	<!--					<label class="input-label"><strong>Int{{input.index+1}}</strong></label>-->
+						<!--					<label class="input-label"><strong>Int{{input.index+1}}</strong></label>-->
 						<input v-model="input.id" class="inputs-field"/>
 						<div class="delete" @click="_deleteInput(idx)"></div>
 					</li>
@@ -42,7 +42,7 @@
 						v-for="(output, idx) in outputs"
 						:key="idx"
 						class="input-desc">
-	<!--					<label class="input-label"><strong>Out{{output.index+1}}</strong></label>-->
+						<!--					<label class="input-label"><strong>Out{{output.index+1}}</strong></label>-->
 						<input v-model="output.id" class="inputs-field"/>
 						<div class="delete" @click="_deleteOutput(idx)"></div>
 					</li>
@@ -66,7 +66,7 @@
 						v-for="(output, idx) in alternativeOutputs"
 						:key="idx"
 						class="input-desc">
-	<!--					<label class="input-label"><strong>Out{{output.index+1}}</strong></label>-->
+						<!--					<label class="input-label"><strong>Out{{output.index+1}}</strong></label>-->
 						<input v-model="output.id" class="inputs-field"/>
 						<div class="delete" @click="_deleteAlterOutput(idx)"></div>
 					</li>
@@ -88,7 +88,7 @@
 						v-for="(output, idx) in exceptionOutputs"
 						:key="idx"
 						class="input-desc">
-	<!--					<label class="input-label"><strong>Out{{output.index+1}}</strong></label>-->
+						<!--					<label class="input-label"><strong>Out{{output.index+1}}</strong></label>-->
 						<input v-model="output.id" class="inputs-field"/>
 						<div class="delete" @click="_deleteExceptOutput(idx)"></div>
 					</li>
@@ -102,174 +102,174 @@
 </template>
 
 <script>
-  import Add from "./Add";
+    import Add from "./Add";
 
-  const ADD_FORM_TYPE = "ADD_FORM_TYPE";
-  const CHECK_OR_CHANGE_FORM_TYPE = "CHECK_OR_CHANGE_FORM_TYPE";
+    const ADD_FORM_TYPE = "ADD_FORM_TYPE";
+    const CHECK_OR_CHANGE_FORM_TYPE = "CHECK_OR_CHANGE_FORM_TYPE";
 
-  export default {
-		name: "FillForm",
-		components: {},
-		props: {
-			id: String,
-			type: String,
-			definition: Object,
-			formType: String
-		},
+    export default {
+        name: "FillForm",
+        components: {},
+        props: {
+            id: String,
+            type: String,
+            definition: Object,
+            formType: String
+        },
 
-		data() {
-			return {
-				defiName: "",
-				inputs: [
-					{
-						index: 0,
-						id: ""
-					},
-				],
-				outputs: [
-					{
-						index: 0,
-						id: ""
-					},
-				],
-				alternativeOutputs: [],
-				exceptionOutputs: [],
-				isValidate: true,
-				defiObject: null,
-			};
-		},
+        data() {
+            return {
+                defiName: "",
+                inputs: [
+                    {
+                        index: 0,
+                        id: ""
+                    },
+                ],
+                outputs: [
+                    {
+                        index: 0,
+                        id: ""
+                    },
+                ],
+                alternativeOutputs: [],
+                exceptionOutputs: [],
+                isValidate: true,
+                defiObject: null,
+            };
+        },
 
-		watch: {
-			'definition.name'() {
-				window.console.log("has value")
-			}
-		},
+        watch: {
+            'definition.name'() {
+                window.console.log("has value")
+            }
+        },
 
-		methods: {
-			_validateFillForm() {
-				this.isValidate = true;
-				if(this.defiName.replace(/\s*/g,"").length <= 0) {
-					this.isValidate = false;
-				}
-				this._validate(this.inputs);
-				this._validate(this.outputs);
-				this._validate(this.alternativeOutputs);
-				this._validate(this.exceptionOutputs);
-      },
+        methods: {
+            _validateFillForm() {
+                this.isValidate = true;
+                if (this.defiName.replace(/\s*/g, "").length <= 0) {
+                    this.isValidate = false;
+                }
+                this._validate(this.inputs);
+                this._validate(this.outputs);
+                this._validate(this.alternativeOutputs);
+                this._validate(this.exceptionOutputs);
+            },
 
-			_validate(elements) {
-				if(elements.length <= 0) {
-					return;
-				} else {
-				elements.forEach( ele => {
-					if(ele.id.replace(/\s*/g,"").length <= 0) {
-						this.isValidate = false;
-					}
-				})
-				}
-			},
+            _validate(elements) {
+                if (elements.length <= 0) {
+                    return;
+                } else {
+                    elements.forEach(ele => {
+                        if (ele.id.replace(/\s*/g, "").length <= 0) {
+                            this.isValidate = false;
+                        }
+                    })
+                }
+            },
 
-			_sendToEditor() {
-				this._validateFillForm();
-				if(this.isValidate != true) {
-					this.$message.warning({
-							duration: 1000,
-							iconClass: 'icon',
-							message: "you have some blanks not filled!",
-							customClass: 'warning-msg'
-					});
-					return;
-				}
-				window.console.log("in the fill form");
-				if(this.formType === ADD_FORM_TYPE) {
-					this.$emit('getValueFromForm', this.id, this.type, this.defiName, this.inputs, this.outputs, this.alternativeOutputs, this.exceptionOutputs);
-        } else if(this.formType === CHECK_OR_CHANGE_FORM_TYPE) {
-					this.$emit('changeValueFromForm');
-				}
-			},
+            _sendToEditor() {
+                this._validateFillForm();
+                if (this.isValidate != true) {
+                    this.$message.warning({
+                        duration: 1000,
+                        iconClass: 'icon',
+                        message: "you have some blanks not filled!",
+                        customClass: 'warning-msg'
+                    });
+                    return;
+                }
+                window.console.log("in the fill form");
+                if (this.formType === ADD_FORM_TYPE) {
+                    this.$emit('getValueFromForm', this.id, this.type, this.defiName, this.inputs, this.outputs, this.alternativeOutputs, this.exceptionOutputs);
+                } else if (this.formType === CHECK_OR_CHANGE_FORM_TYPE) {
+                    this.$emit('changeValueFromForm');
+                }
+            },
 
-			_sendToEditorWhenCancel() {
-				if(this.formType === ADD_FORM_TYPE) {
-					this.$emit('closeForm', this.id, false);
-        } else if(this.formType === CHECK_OR_CHANGE_FORM_TYPE) {
-					this.$emit('closeFormDoneNothing');
-				}
+            _sendToEditorWhenCancel() {
+                if (this.formType === ADD_FORM_TYPE) {
+                    this.$emit('closeForm', this.id, false);
+                } else if (this.formType === CHECK_OR_CHANGE_FORM_TYPE) {
+                    this.$emit('closeFormDoneNothing');
+                }
 
-			},
+            },
 
-			_addOneInput() {
-				this.inputs.push({
-					index: this.inputs.length,
-					id: ""
-				})
-			},
+            _addOneInput() {
+                this.inputs.push({
+                    index: this.inputs.length,
+                    id: ""
+                })
+            },
 
-			_deleteInput(index) {
-				this.inputs.splice(index, 1)
-				this.inputs.map( ele => {
-					ele.index = this.inputs.indexOf(ele)
-				})
-			},
+            _deleteInput(index) {
+                this.inputs.splice(index, 1)
+                this.inputs.map(ele => {
+                    ele.index = this.inputs.indexOf(ele)
+                })
+            },
 
-			_addOneOutput() {
-				this.outputs.push({
-					index: this.outputs.length,
-					id: ""
-				})
-			},
+            _addOneOutput() {
+                this.outputs.push({
+                    index: this.outputs.length,
+                    id: ""
+                })
+            },
 
-			_deleteOutput(index) {
-				this.outputs.splice(index, 1)
-				this.outputs.map( ele => {
-					ele.index = this.outputs.indexOf(ele)
-				})
-			},
+            _deleteOutput(index) {
+                this.outputs.splice(index, 1)
+                this.outputs.map(ele => {
+                    ele.index = this.outputs.indexOf(ele)
+                })
+            },
 
-			_addOneAlterOutput() {
-				this.alternativeOutputs.push({
-					index: this.alternativeOutputs.length,
-					id: ""
-				})
-			},
+            _addOneAlterOutput() {
+                this.alternativeOutputs.push({
+                    index: this.alternativeOutputs.length,
+                    id: ""
+                })
+            },
 
-			_deleteAlterOutput(index) {
-				this.alternativeOutputs.splice(index, 1)
-				this.alternativeOutputs.map( ele => {
-					ele.index = this.alternativeOutputs.indexOf(ele)
-				})
-			},
+            _deleteAlterOutput(index) {
+                this.alternativeOutputs.splice(index, 1)
+                this.alternativeOutputs.map(ele => {
+                    ele.index = this.alternativeOutputs.indexOf(ele)
+                })
+            },
 
-			_addOneExceptOutput() {
-				this.exceptionOutputs.push({
-					index: this.exceptionOutputs.length,
-					id: ""
-				})
-			},
+            _addOneExceptOutput() {
+                this.exceptionOutputs.push({
+                    index: this.exceptionOutputs.length,
+                    id: ""
+                })
+            },
 
-			_deleteExceptOutput(index) {
-				this.exceptionOutputs.splice(index, 1)
-				this.exceptionOutputs.map( ele => {
-					ele.index = this.exceptionOutputs.indexOf(ele)
-				})
-			},
+            _deleteExceptOutput(index) {
+                this.exceptionOutputs.splice(index, 1)
+                this.exceptionOutputs.map(ele => {
+                    ele.index = this.exceptionOutputs.indexOf(ele)
+                })
+            },
 
-		},
+        },
 
-		mounted () {
-			//finish data init but not start ele created
-			if(this.formType === CHECK_OR_CHANGE_FORM_TYPE) {
-				if(this.definition) {
-					this.defiObject = this.definition;
-					window.console.log(this.defiObject.name);
-				}
-				// this.defiName = this.definition.name;
-				//window.console.log(this.definition.type);
-				// this.outputs = this.definition.outputs;
-				// this.alternativeOutputs = this.definition.alternativeOutputs;
-				// this.exceptionOutputs = this.definition.exceptionOutputs;
-      }
-    }
-  };
+        mounted() {
+            //finish data init but not start ele created
+            if (this.formType === CHECK_OR_CHANGE_FORM_TYPE) {
+                if (this.definition) {
+                    this.defiObject = this.definition;
+                    window.console.log(this.defiObject.name);
+                }
+                // this.defiName = this.definition.name;
+                //window.console.log(this.definition.type);
+                // this.outputs = this.definition.outputs;
+                // this.alternativeOutputs = this.definition.alternativeOutputs;
+                // this.exceptionOutputs = this.definition.exceptionOutputs;
+            }
+        }
+    };
 </script>
 
 <style lang="less" scoped>
@@ -285,9 +285,11 @@
 		display: flex;
 		flex-direction: column;
 	}
+
 	.defi-type {
 		font-size: 16px;
 	}
+
 	.defi-name {
 		height: 30px;
 		border-radius: 4px;
@@ -296,12 +298,14 @@
 		padding: 0 10px 0 10px;
 		font-size: 12px;
 	}
+
 	.defi-input-section {
 		height: 165px;
 		width: 260px;
 		display: flex;
 		flex-direction: column;
 	}
+
 	.defi-title-info-and-add {
 		display: flex;
 		flex-direction: row;
@@ -309,14 +313,17 @@
 		justify-content: space-between;
 		margin-bottom: 5px;
 	}
+
 	.defi-title-info {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 	}
+
 	.defi-title {
 		font-size: 12px;
 	}
+
 	.defi-info {
 		height: 10px;
 		width: 10px;
@@ -325,18 +332,21 @@
 		background-repeat: no-repeat;
 		background-image: url("../assets/info.png");
 	}
+
 	.defi-input-ul {
 		height: 150px;
 		overflow-y: scroll;
 		margin-top: 0;
 		margin-bottom: 10px;
 	}
+
 	.defi-main-content {
 		margin-top: 20px;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
 	}
+
 	.input-desc {
 		width: 100%;
 		display: flex;
@@ -344,6 +354,7 @@
 		align-items: center;
 		justify-content: space-between;
 	}
+
 	.add-btn {
 		height: 10px;
 		width: 11px;
@@ -352,9 +363,11 @@
 		color: #ffffff;
 		cursor: pointer;
 	}
+
 	.add-btn:hover {
 		background-image: url("../assets/add_hover.png");
 	}
+
 	.minus-btn {
 		width: 10px;
 		height: 3px;
@@ -363,9 +376,11 @@
 		background-size: 100%;
 		cursor: pointer;
 	}
+
 	.minus-btn:hover {
 		background-image: url("../assets/delete_hover.png");
 	}
+
 	.close-btn {
 		position: absolute;
 		top: 10px;
@@ -377,9 +392,11 @@
 		background-size: 100%;
 		cursor: pointer;
 	}
+
 	.close-btn:hover {
 		background-image: url("../assets/close_btn_hover.png");
 	}
+
 	.inputs-field {
 		height: 30px;
 		width: 240px;
@@ -389,9 +406,11 @@
 		margin: 5px 5px 5px 0;
 		font-size: 12px;
 	}
+
 	ul {
 		padding-left: 0px;
 	}
+
 	.confirm-btn {
 		position: relative;
 		bottom: -30px;
@@ -405,12 +424,15 @@
 		color: #ffffff;
 		cursor: pointer;
 	}
+
 	.confirm-btn:hover {
 		background: #3eae7b;
 	}
+
 	.input-label {
 		color: #a5a5a5;
 	}
+
 	.blank-block {
 		margin-top: 5px;
 		width: 260px;
@@ -424,6 +446,7 @@
 		font-size: 12px;
 		color: #9e9e9e;
 	}
+
 	.add {
 		width: 12px;
 		height: 12px;
@@ -432,6 +455,7 @@
 		border: none;
 		cursor: pointer;
 	}
+
 	.add::before {
 		content: '';
 		position: absolute;
@@ -442,6 +466,7 @@
 		margin-top: -1.5px;
 		border-top: 3px solid #000000;
 	}
+
 	.add::after {
 		content: '';
 		position: absolute;
@@ -452,15 +477,18 @@
 		margin-left: -1.5px;
 		border-left: 3px solid #000000;
 	}
-	.add:hover::before, .add:hover::after{
+
+	.add:hover::before, .add:hover::after {
 		border-color: #ec9b3b;
 	}
+
 	.delete {
 		height: 3px;
 		width: 12px;
 		background: #C94F4F;
 		cursor: pointer;
 	}
+
 	.delete:hover {
 		background: #a03e3e;
 	}
@@ -472,9 +500,11 @@
 		font-weight: bold;
 		font-family: Arial;
 	}
+
 	.el-message__content {
 		color: #C94F4F !important;
 	}
+
 	.icon {
 		background-image: url("../assets/warning.png");
 		height: 15px;

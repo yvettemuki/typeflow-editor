@@ -5,32 +5,32 @@
 </template>
 
 <script>
-    export default {
-        name: "Detail",
-				props: {
-					definition: {
-						type: Object,
-						default: null
-					},
-					position: {
-						type: Object,
-						default: function() {
-							return {
-								x: '500',
-								y: '200'
-							}
-            }
-					}
-				},
-				data() {
+	export default {
+		name: "Detail",
+		props: {
+			definition: {
+				type: Object,
+				default: null
+			},
+			position: {
+				type: Object,
+				default: function () {
 					return {
-						checkPosition: {
-							left: this.position.x + 'px',
-							top: this.position.y + 'px',
-						}
+						x: '500',
+						y: '200'
 					}
 				}
-    }
+			}
+		},
+		data() {
+			return {
+				checkPosition: {
+					left: this.position.x + 'px',
+					top: this.position.y + 'px',
+				}
+			}
+		}
+	}
 </script>
 
 <style scoped>

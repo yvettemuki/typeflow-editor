@@ -325,7 +325,7 @@ export class Graph extends mxGraph {
 
         const {scale} = this.view;
         // 这个项目画布边宽为0，可以自行进行调整
-        const border = 0;
+        const border = 10;
 
         const bounds = this.getGraphBounds();
         const xmlCanvas = new mxXmlCanvas2D(root);

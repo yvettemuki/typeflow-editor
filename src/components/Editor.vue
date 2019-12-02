@@ -476,22 +476,33 @@
 
 			_exportPNG: function () {
 				let picture = graph.exportPicXML();
-				window.console.log(JSON.stringify(picture))
-				this.$axios.post('http://localhost:8080/api/picture', {
-					xml: picture.xml,
-					width: picture.width,
-					height: picture.height
+				this.$axios({
+					method: 'post',
+					url: 'http://localhost:8080/api/download',
+					data: {
+						xml: picture.xml,
+						width: picture.width,
+						height: picture.height
+					},
+					responseType: 'blob',
 				})
-					.then(res => {
-						window.console.log(res);
-					})
-					.catch(err => {
-						window.console.log(err);
-					})
-				// this.$axios.get('/test')
-				// 	.then(res => {
-				// 		window.console.log(res);
-				// 	})
+				.then(res => {
+					if(res.data) {
+						let blob = new Blob([res.data], {type: "image/png"})
+						//get filename
+						let objectUrl = URL.createObjectURL(blob);
+						let link = document.createElement('a');
+						link.href = objectUrl;
+						link.download = "model.png";
+						link.click();
+					} else {
+						this.$message("download failed!");
+					}
+				})
+				.catch(err => {
+					window.console.log(err);
+				})
+
 			}
 
 		},

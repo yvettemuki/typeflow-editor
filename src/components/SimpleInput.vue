@@ -25,7 +25,12 @@
 		methods: {
 			_sendNameToEditor: function () {
 				if(this.inputContent.length == 0) {
-					this.$message.warning("input can not be empty!");
+					this.$message.warning({
+						duration: 1000,
+						iconClass: 'icon',
+						message: "input can not be empty!",
+						customClass: 'warning-msg'
+					});
 					return;
 				}
 				this.$emit('getValueFromSimpleForm', this.id, this.inputContent);
@@ -96,5 +101,26 @@
 
 	.confirm-btn:hover {
 		background: #3eae7b;
+	}
+</style>
+<style>
+	.warning-msg {
+		background-color: #ffffff !important;
+		font-weight: bold;
+		font-family: Arial;
+	}
+
+	.el-message__content {
+		color: #C94F4F !important;
+	}
+
+	.icon {
+		background-image: url("../assets/warning.png");
+		height: 15px;
+		width: 15px;
+		margin-top: 2px;
+		background-repeat: no-repeat;
+		background-size: 100%;
+		margin-right: 10px;
 	}
 </style>

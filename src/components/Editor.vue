@@ -504,7 +504,12 @@
 						link.download = "model.png";
 						link.click();
 					} else {
-						this.$message("download failed!");
+						this.$message.warning({
+							duration: 1000,
+							iconClass: 'icon',
+							message: "download failed!",
+							customClass: 'warning-msg'
+						});
 					}
 				})
 				.catch(err => {
@@ -542,13 +547,28 @@
 				})
 				.then(res => {
 					if (res.data.success) {
-						this.$message.info("save successfully!");
+						this.$message.warning({
+							duration: 1000,
+							iconClass: 'icon-info',
+							message: "save successfully",
+							customClass: 'warning-msg'
+						});
 					} else {
-						this.$message.info("save failed!");
+						this.$message.warning({
+							duration: 1000,
+							iconClass: 'icon-warn',
+							message: "failed to save",
+							customClass: 'warning-msg'
+						});
 					}
 				})
 				.catch(err => {
-					this.$message.error("fail to save!");
+					this.$message.warning({
+						duration: 1000,
+						iconClass: 'icon',
+						message: "failed to save",
+						customClass: 'warning-msg'
+					});
 					window.console.log(err);
 				})
 			}
@@ -713,3 +733,34 @@
 		background: #34495d;
 	}
 </style>
+<style>
+	.warning-msg {
+		background-color: #ffffff !important;
+		font-weight: bold;
+		font-family: Arial;
+	}
+
+	.el-message__content {
+		color: #C94F4F !important;
+	}
+
+	.icon-warn {
+		background-image: url("../assets/warning.png");
+		height: 15px;
+		width: 15px;
+		margin-top: 2px;
+		background-repeat: no-repeat;
+		background-size: 100%;
+		margin-right: 10px;
+	}
+	.icon-info {
+		background-image: url("../assets/success.png");
+		height: 15px;
+		width: 15px;
+		margin-top: 2px;
+		background-repeat: no-repeat;
+		background-size: 100%;
+		margin-right: 10px;
+	}
+</style>
+

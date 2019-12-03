@@ -12,7 +12,10 @@
 		name: "SimpleInput",
 		props: {
 			title: String,
-			id: String
+			id: {
+				type: String,
+				default: "no-id"
+			}
 		},
 		data() {
 			return {
@@ -21,6 +24,10 @@
 		},
 		methods: {
 			_sendNameToEditor: function () {
+				if(this.inputContent.length == 0) {
+					this.$message.warning("input can not be empty!");
+					return;
+				}
 				this.$emit('getValueFromSimpleForm', this.id, this.inputContent);
 			},
 			_sendToEditor: function () {

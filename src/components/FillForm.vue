@@ -102,7 +102,6 @@
 </template>
 
 <script>
-    import Add from "./Add";
 
     const ADD_FORM_TYPE = "ADD_FORM_TYPE";
     const CHECK_OR_CHANGE_FORM_TYPE = "CHECK_OR_CHANGE_FORM_TYPE";

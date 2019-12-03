@@ -25,6 +25,14 @@
 				closeSimpleForm: _closeResForm
         }"/>
 		</div>
+		<div
+			v-if="isSaveFormShow"
+			class="form-cover">
+			<SimpleInput title="Model Name" v-on="{
+				getValueFromSimpleForm: _getValueFromSaveForm,
+				closeSimpleForm: _closeSaveForm
+			}"/>
+		</div>
 		<div class="main-container">
 			<ul id="definitionList">
 				<span class="left-elements-title"><b>Definitions</b></span>
@@ -58,7 +66,7 @@
 				<span class="left-elements-title"><b>Tools</b></span>
 				<div class="left-basic-li function-div">
 					<li class="leftElement functionElement deleteSelected" @click="_deleteSelected">Delete</li>
-					<li class="leftElement functionElement save">Save</li>
+					<li class="leftElement functionElement save" @click="_saveModel">Save</li>
 					<li class="leftElement functionElement export" @click="_exportPNG">Export PNG</li>
 					<li class="leftElement functionElement export" @click="_toXML">Export XML</li>
 				</div>
@@ -330,6 +338,7 @@
 				isAutoAdd: false,
 				isCheckShow: false,
 				isResFormShow: false,
+				isSaveFormShow: false
 			};
 		},
 
@@ -489,7 +498,6 @@
 				.then(res => {
 					if(res.data) {
 						let blob = new Blob([res.data], {type: "image/png"})
-						//get filename
 						let objectUrl = URL.createObjectURL(blob);
 						let link = document.createElement('a');
 						link.href = objectUrl;
@@ -503,6 +511,46 @@
 					window.console.log(err);
 				})
 
+			},
+
+			_saveModel: function() {
+				this.isSaveFormShow = true;
+			},
+
+			_getValueFromSaveForm: function (id, name) {
+				this.isSaveFormShow = false;
+				//processing..
+				this._saveModelToServer(name);
+				//processing..
+			},
+
+			_closeSaveForm: function () {
+				this.isSaveFormShow = false;
+			},
+
+			_saveModelToServer: function (name) {
+				let picture = graph.exportPicXML();
+				this.$axios({
+					method: 'post',
+					url: 'http://localhost:8080/api/save',
+					data: {
+						name: name,
+						xml: picture.xml,
+						width: picture.width,
+						height: picture.height
+					}
+				})
+				.then(res => {
+					if (res.data.success) {
+						this.$message.info("save successfully!");
+					} else {
+						this.$message.info("save failed!");
+					}
+				})
+				.catch(err => {
+					this.$message.error("fail to save!");
+					window.console.log(err);
+				})
 			}
 
 		},

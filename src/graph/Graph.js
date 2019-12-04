@@ -45,6 +45,7 @@ export class Graph extends mxGraph {
         // this._setConnectionConfig();
         this._setAnchors();
         this._configCustomEvent();
+        this._restoreModel();
         // this._configCoder();
     }
 
@@ -306,6 +307,15 @@ export class Graph extends mxGraph {
         };
     }
 
+    _restoreModel() {
+        Object.values(this.getModel().cells)
+          .forEach(cell => {
+              if (cell.vertex && cell.data) {
+                  cell.data = JSON.parse(cell.data);
+              }
+          });
+    }
+
     isPart(cell) {
         const state = this.view.getState(cell);
         const style = (state != null) ? state.style : this.getCellStyle(cell);
@@ -315,7 +325,8 @@ export class Graph extends mxGraph {
     exportModelXML() {
         var encoder = new mxCodec();
         var node = encoder.encode(this.getModel());
-        mxUtils.popup(mxUtils.getPrettyXml(node), false);
+        return mxUtils.getPrettyXml(node);
+        // mxUtils.popup(mxUtils.getPrettyXml(node), false);
     }
 
     exportPicXML() {
@@ -349,6 +360,22 @@ export class Graph extends mxGraph {
             height: h,
         };
     }
+
+    importModelFromXML(xml) {
+        let model = this.getModel();
+        model.beginUpdate();
+        try {
+            const doc = mxUtils.parseXml(xml);
+            const root = doc.documentElement;
+            const dec = new mxCodec(root.ownerDocument);
+            dec.decode(root, this.getModel());
+        } finally {
+            model.endUpdate();
+        }
+        this._restoreModel();
+    }
+
+
 
 
 }

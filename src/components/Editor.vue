@@ -66,9 +66,10 @@
 				<span class="left-elements-title"><b>Tools</b></span>
 				<div class="left-basic-li function-div">
 					<li class="leftElement functionElement deleteSelected" @click="_deleteSelected">Delete</li>
-					<li class="leftElement functionElement save" @click="_saveModel">Save</li>
+					<li class="leftElement functionElement save" @click="_saveModel">Save Model</li>
+					<li class="leftElement functionElement export" @click="_importModel">Import Model</li>
 					<li class="leftElement functionElement export" @click="_exportPNG">Export PNG</li>
-					<li class="leftElement functionElement export" @click="_toXML">Export XML</li>
+					<li class="leftElement functionElement export" @click="_exportXMLFile">Export XML</li>
 				</div>
 				<span class="left-elements-title"><b>Zoom</b></span>
 				<li class="zoom-li">
@@ -91,6 +92,7 @@
 	import Add from "./Add";
 	import Delete from "./Delete";
 	import SimpleInput from "./SimpleInput";
+	import FileSaver from 'file-saver';
 
 	const {
 		mxEvent,
@@ -98,6 +100,7 @@
 		mxGeometry,
 		mxUtils,
 		mxGraph,
+		mxCodec,
 		mxEventObject,
 	} = mxgraph;
 
@@ -440,8 +443,10 @@
 				graph.refresh(target);
 			},
 
-			_toXML: function () {
-				graph.exportModelXML();
+			_exportXMLFile: function () {
+				const xml = graph.exportModelXML();
+				const blob = new Blob([xml], {type: "text/plain;charset=utf-8"});
+				FileSaver.saveAs(blob, "model.xml");
 			},
 
 			_deleteSelected: function () {
@@ -485,6 +490,7 @@
 
 			_exportPNG: function () {
 				let picture = graph.exportPicXML();
+				window.console.log(picture.xml);
 				this.$axios({
 					method: 'post',
 					url: 'http://localhost:8080/api/download',
@@ -571,6 +577,14 @@
 					});
 					window.console.log(err);
 				})
+			},
+
+			_importModel: function () {
+				// var encoder = new mxCodec();
+				// var node = encoder.encode(graph.getModel());
+				// let xml = mxUtils.getPrettyXml(node);
+				let xml = ``
+				graph.importModelFromXML(xml);
 			}
 
 		},

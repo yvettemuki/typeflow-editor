@@ -1,5 +1,6 @@
 import mxgraph from './index';
-import _ from 'lodash';
+const cloneDeep  = require('clone-deep');
+
 
 const {
     mxGraph,
@@ -316,15 +317,28 @@ export class Graph extends mxGraph {
           });
     }
 
+    //the custom data should be translate to the string
+    _getExportModel() {
+        const model = cloneDeep(this.getModel());
+        Object.values(model.cells)
+          .forEach(cell => {
+              if(cell.vertex && cell.data) {
+                  cell.data = JSON.stringify(cell.data);
+              }
+          });
+        return model;
+    }
+
     isPart(cell) {
         const state = this.view.getState(cell);
         const style = (state != null) ? state.style : this.getCellStyle(cell);
         return style.constituent === 1;
     }
 
+
     exportModelXML() {
         var encoder = new mxCodec();
-        var node = encoder.encode(this.getModel());
+        var node = encoder.encode(this._getExportModel());
         return mxUtils.getPrettyXml(node);
         // mxUtils.popup(mxUtils.getPrettyXml(node), false);
     }
@@ -362,15 +376,18 @@ export class Graph extends mxGraph {
     }
 
     importModelFromXML(xml) {
-        let model = this.getModel();
-        model.beginUpdate();
+        graph.getModel().beginUpdate();
         try {
-            const doc = mxUtils.parseXml(xml);
-            const root = doc.documentElement;
-            const dec = new mxCodec(root.ownerDocument);
-            dec.decode(root, this.getModel());
+            var doc = mxUtils.parseXml(xml);
+            var codec = new mxCodec(doc);
+            let test = codec.decode(doc.documentElement, graph.getModel());
+            window.console.log(test);
+            // const doc = mxUtils.parseXml(xml);
+            // const root = doc.documentElement;
+            // const dec = new mxCodec(root.ownerDocument);
+            // dec.decode(root, this.getModel());
         } finally {
-            model.endUpdate();
+            graph.getModel().endUpdate();
         }
         this._restoreModel();
     }

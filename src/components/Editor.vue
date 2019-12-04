@@ -70,6 +70,7 @@
 					<li class="leftElement functionElement export" @click="_importModel">Import Model</li>
 					<li class="leftElement functionElement export" @click="_exportPNG">Export PNG</li>
 					<li class="leftElement functionElement export" @click="_exportXMLFile">Export XML</li>
+					<input class="file-input" @change="_readFile" type="file" ref="importFile"/>
 				</div>
 				<span class="left-elements-title"><b>Zoom</b></span>
 				<li class="zoom-li">
@@ -583,8 +584,20 @@
 				// var encoder = new mxCodec();
 				// var node = encoder.encode(graph.getModel());
 				// let xml = mxUtils.getPrettyXml(node);
-				let xml = ``
-				graph.importModelFromXML(xml);
+				this.$refs.importFile.click();
+			},
+
+			_readFile: function (evt) {
+				const file = evt.target.files[0];
+				const reader = new FileReader();
+				//register the event
+				reader.onload = (e) => {
+					const xml = e.target.result;
+					window.console.log(xml);
+					graph.importModelFromXML(xml);
+				};
+				//read the file
+				reader.readAsText(file);
 			}
 
 		},
@@ -745,6 +758,10 @@
 
 	.resourceElement {
 		background: #34495d;
+	}
+
+	.file-input {
+		display: none !important;
 	}
 </style>
 <style>

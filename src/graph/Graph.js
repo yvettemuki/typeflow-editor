@@ -16,6 +16,7 @@ const {
     mxConnectionConstraint,
     mxConstraintHandler,
     mxConnectionHandler,
+    // mxXmlRequest,
     mxPoint,
     mxEventObject,
     mxCodec,
@@ -24,6 +25,7 @@ const {
     mxUtils,
     mxImageExport,
     mxXmlCanvas2D,
+    mxSvgCanvas2D,
     mxCodecRegistry,
 } = mxgraph;
 
@@ -373,6 +375,52 @@ export class Graph extends mxGraph {
             width: w,
             height: h,
         };
+    }
+
+    exportModelSvg() {
+        var scale = this.view.scale;
+        var bounds = this.getGraphBounds();
+        var border = 10;
+
+        // Prepares SVG document that holds the output
+        var svgDoc = mxUtils.createXmlDocument();
+        var root = (svgDoc.createElementNS != null) ?
+          svgDoc.createElementNS(mxConstants.NS_SVG, 'svg') : svgDoc.createElement('svg');
+
+        if (root.style != null) {
+            root.style.backgroundColor = '#FFFFFF';
+        } else {
+            root.setAttribute('style', 'background-color:#FFFFFF');
+        }
+
+        if (svgDoc.createElementNS == null) {
+            root.setAttribute('xmlns', mxConstants.NS_SVG);
+        }
+
+        root.setAttribute('width', Math.ceil(bounds.width * scale / scale + 2 * border) + 'px');
+        root.setAttribute('height', Math.ceil(bounds.height * scale / scale + 2 * border) + 'px');
+        root.setAttribute('xmlns:xlink', mxConstants.NS_XLINK);
+        root.setAttribute('version', '1.1');
+
+        // Adds group for anti-aliasing via transform
+        var group = (svgDoc.createElementNS != null) ?
+          svgDoc.createElementNS(mxConstants.NS_SVG, 'g') : svgDoc.createElement('g');
+        group.setAttribute('transform', 'translate(0.5,0.5)');
+        root.appendChild(group);
+        svgDoc.appendChild(root);
+
+        // Renders graph. Offset will be multiplied with state's scale when painting state.
+        var svgCanvas = new mxSvgCanvas2D(group);
+        svgCanvas.translate(Math.floor(border / scale - bounds.x), Math.floor(border / scale - bounds.y));
+        svgCanvas.scale(scale);
+
+        var imgExport = new mxImageExport();
+        imgExport.drawState(this.getView().getState(this.model.root), svgCanvas);
+
+        //var xml = encodeURIComponent(mxUtils.getXml(root)); //no need
+        var xml = mxUtils.getXml(root);
+        return xml;
+
     }
 
     importModelFromXML(xml) {

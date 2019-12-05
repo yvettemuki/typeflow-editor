@@ -68,7 +68,7 @@
 					<li class="leftElement functionElement deleteSelected" @click="_deleteSelected">Delete</li>
 					<li class="leftElement functionElement save" @click="_saveModel">Save Model</li>
 					<li class="leftElement functionElement export" @click="_importModel">Import Model</li>
-					<li class="leftElement functionElement export" @click="_exportPNG">Export PNG</li>
+					<li class="leftElement functionElement export" @click="_testExportSvg">Export PNG</li>
 					<li class="leftElement functionElement export" @click="_exportXMLFile">Export XML</li>
 					<input class="file-input" @change="_readFile" type="file" ref="importFile"/>
 				</div>
@@ -487,6 +487,17 @@
 			_getValueFromResForm: function (id, name) {
 				updateResVertex(id, name);
 				this.isResFormShow = false;
+			},
+
+			_testExportSvg: function() {
+				const svg = graph.exportModelSvg();
+				const blob = new Blob([svg], {type: 'image/svg+xml'});
+				window.console.log(blob);
+				const url = URL.createObjectURL(blob);
+				let link = document.createElement('a');
+				link.href = url;
+				link.download = 'model.svg';
+				link.click();
 			},
 
 			_exportPNG: function () {

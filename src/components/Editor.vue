@@ -68,7 +68,8 @@
 					<li class="leftElement functionElement deleteSelected" @click="_deleteSelected">Delete</li>
 					<li class="leftElement functionElement save" @click="_saveModel">Save Model</li>
 					<li class="leftElement functionElement export" @click="_importModel">Import Model</li>
-					<li class="leftElement functionElement export" @click="_testExportSvg">Export PNG</li>
+					<li class="leftElement functionElement export" @click="_exportSvg">Export SVG</li>
+					<li class="leftElement functionElement export" @click="_exportPNG">Export PNG</li>
 					<li class="leftElement functionElement export" @click="_exportXMLFile">Export XML</li>
 					<input class="file-input" @change="_readFile" type="file" ref="importFile"/>
 				</div>
@@ -489,7 +490,7 @@
 				this.isResFormShow = false;
 			},
 
-			_testExportSvg: function() {
+			_exportSvg: function() {
 				const svg = graph.exportModelSvg();
 				const blob = new Blob([svg], {type: 'image/svg+xml'});
 				window.console.log(blob);
@@ -505,7 +506,7 @@
 				window.console.log(picture.xml);
 				this.$axios({
 					method: 'post',
-					url: 'http://localhost:8080/api/download',
+					url: 'http://localhost:8080/api/downloadPNG',
 					data: {
 						xml: picture.xml,
 						width: picture.width,
@@ -552,15 +553,15 @@
 			},
 
 			_saveModelToServer: function (name) {
-				let picture = graph.exportPicXML();
+				let modelXml = graph.exportModelXML();
+				let svgXml = graph.exportModelSvg();
 				this.$axios({
 					method: 'post',
 					url: 'http://localhost:8080/api/save',
 					data: {
 						name: name,
-						xml: picture.xml,
-						width: picture.width,
-						height: picture.height
+						modelXml: modelXml,
+						svgXml: svgXml
 					}
 				})
 				.then(res => {

@@ -396,9 +396,12 @@ export class Graph extends mxGraph {
         if (svgDoc.createElementNS == null) {
             root.setAttribute('xmlns', mxConstants.NS_SVG);
         }
-
-        root.setAttribute('width', Math.ceil(bounds.width * scale / scale + 2 * border) + 'px');
-        root.setAttribute('height', Math.ceil(bounds.height * scale / scale + 2 * border) + 'px');
+        var width = Math.ceil(bounds.width * scale / scale + 2 * border);
+        var height = Math.ceil(bounds.height * scale / scale + 2 * border);
+        root.setAttribute('id', 'svg-container');
+        root.setAttribute('width', width + 'px');
+        root.setAttribute('height', height + 'px');
+        root.setAttribute('viewBox', "0 0 " + width + " " + height);
         root.setAttribute('xmlns:xlink', mxConstants.NS_XLINK);
         root.setAttribute('version', '1.1');
 
@@ -428,12 +431,7 @@ export class Graph extends mxGraph {
         try {
             var doc = mxUtils.parseXml(xml);
             var codec = new mxCodec(doc);
-            let test = codec.decode(doc.documentElement, graph.getModel());
-            window.console.log(test);
-            // const doc = mxUtils.parseXml(xml);
-            // const root = doc.documentElement;
-            // const dec = new mxCodec(root.ownerDocument);
-            // dec.decode(root, this.getModel());
+            codec.decode(doc.documentElement, graph.getModel());
         } finally {
             graph.getModel().endUpdate();
         }

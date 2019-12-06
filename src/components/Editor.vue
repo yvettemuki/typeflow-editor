@@ -33,6 +33,29 @@
 				closeSimpleForm: _closeSaveForm
 			}"/>
 		</div>
+		<div
+			v-if="isSelectViewShow"
+			class="form-cover">
+			<SelectView v-on="{
+				sendChooseToEditor: _getValueFromSelectView,
+				closeSelectView: _closeSelectView,
+			}"/>
+		</div>
+		<div
+			v-if="isImportModelShow"
+			class="form-cover">
+			<ImportModelPanel
+				v-bind:modelList="modelList"
+				v-on="{
+					getValueFromImportPanel: _getValueFromImport,
+					closeImportPanel: _closeImportPanel
+				}">
+				<template v-slot:model="{ model }">
+					<ModelSvg class="model-div" :xml="model.svgXml"></ModelSvg>
+					<span class="model-name"><b>{{model.name}}</b></span>
+				</template>
+			</ImportModelPanel>
+		</div>
 		<div class="main-container">
 			<ul id="definitionList">
 				<span class="left-elements-title"><b>Definitions</b></span>
@@ -95,6 +118,9 @@
 	import Delete from "./Delete";
 	import SimpleInput from "./SimpleInput";
 	import FileSaver from 'file-saver';
+	import SelectView from "./SelectView";
+	import ImportModelPanel from "./ImportModelPanel";
+	import ModelSvg from "./ModelSvg";
 
 	const {
 		mxEvent,
@@ -340,14 +366,21 @@
 					exceptionOutputs: []
 				},
 				definitions: [],
+				svgXmlList: [],
+				modelList: [],
 				isAutoAdd: false,
 				isCheckShow: false,
 				isResFormShow: false,
-				isSaveFormShow: false
+				isSaveFormShow: false,
+				isImportModelShow: false,
+				isSelectViewShow: false
 			};
 		},
 
 		components: {
+			ModelSvg,
+			ImportModelPanel,
+			SelectView,
 			SimpleInput,
 			Delete,
 			Add,
@@ -593,10 +626,23 @@
 			},
 
 			_importModel: function () {
-				// var encoder = new mxCodec();
-				// var node = encoder.encode(graph.getModel());
-				// let xml = mxUtils.getPrettyXml(node);
-				this.$refs.importFile.click();
+				this.isSelectViewShow = true;
+			},
+
+			_getValueFromSelectView: function (type) {
+				this.isSelectViewShow = false;
+				if (type == 0) {
+					//from local
+					this.$refs.importFile.click();
+				} else if (type == 1) {
+					//from database
+					this._getModelList();
+					this.isImportModelShow = true;
+				}
+			},
+
+			_closeSelectView: function () {
+				this.isSelectViewShow = false;
 			},
 
 			_readFile: function (evt) {
@@ -610,7 +656,27 @@
 				};
 				//read the file
 				reader.readAsText(file);
-			}
+			},
+
+			_getModelList: function () {
+				this.$axios({
+					method: 'get',
+					url: 'http://localhost:8080/api/getModels',
+				})
+				.then(res => {
+					window.console.log(res.status);
+					this.modelList = res.data;
+				})
+			},
+
+			_getValueFromImport: function (model) {
+				graph.importModelFromXML(model.modelXml);
+				this.isImportModelShow = false;
+			},
+
+			_closeImportPanel: function () {
+				this.isImportModelShow = true;
+			},
 
 		},
 
@@ -775,8 +841,32 @@
 	.file-input {
 		display: none !important;
 	}
+
+	.model-name {
+		margin-top: 10px;
+		font-size: 14px;
+	}
+	.model-div {
+		width: 150px;
+		height: 150px;
+		border-radius: 4px;
+		box-shadow: 0px 1px 2px 1.5px #e3e3e3;
+		cursor: pointer;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+	}
+	.model-div:hover {
+		background: #1c86ee;
+	}
 </style>
 <style>
+	#svg-container {
+		/*id of svg xml string*/
+		width: 150px;
+		height: auto;
+	}
 	.warning-msg {
 		background-color: #ffffff !important;
 		font-weight: bold;

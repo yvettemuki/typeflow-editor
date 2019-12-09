@@ -51,7 +51,7 @@
 					closeImportPanel: _closeImportPanel
 				}">
 				<template v-slot:model="{ model }">
-					<ModelSvg class="model-div" :xml="model.svgXml"></ModelSvg>
+					<ModelSvg class="model-div" :xml="model.svgXml" :id="model.name"></ModelSvg>
 					<span class="model-name"><b>{{model.name}}</b></span>
 				</template>
 			</ImportModelPanel>
@@ -675,7 +675,7 @@
 			},
 
 			_closeImportPanel: function () {
-				this.isImportModelShow = true;
+				this.isImportModelShow = false;
 			},
 
 		},
@@ -856,16 +856,17 @@
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
+		border: 2px solid transparent;
 	}
 	.model-div:hover {
-		background: #1c86ee;
+		border: 2px solid #1c86ee;
 	}
 </style>
 <style>
-	#svg-container {
+	.svg-container {
 		/*id of svg xml string*/
-		width: 150px;
-		height: auto;
+		width: auto;
+		height: 120px;
 	}
 	.warning-msg {
 		background-color: #ffffff !important;

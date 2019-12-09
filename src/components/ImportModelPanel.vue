@@ -63,6 +63,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		margin: 10px
 	}
 	.close-btn {
 		position: absolute;

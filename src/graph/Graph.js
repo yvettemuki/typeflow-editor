@@ -398,7 +398,7 @@ export class Graph extends mxGraph {
         }
         var width = Math.ceil(bounds.width * scale / scale + 2 * border);
         var height = Math.ceil(bounds.height * scale / scale + 2 * border);
-        root.setAttribute('id', 'svg-container');
+        root.setAttribute('class', 'svg-container');
         root.setAttribute('width', width + 'px');
         root.setAttribute('height', height + 'px');
         root.setAttribute('viewBox', "0 0 " + width + " " + height);

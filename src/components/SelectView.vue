@@ -3,6 +3,7 @@
 		<span class="title"><b>Choose</b></span>
 		<div class="select-btn" @click="this._chooseLocal"><b>import from local</b></div>
 		<div class="select-btn" @click="_chooseDatabase"><b>import from database</b></div>
+		<span class="note"><b>NOTE: all the existing models will be cleared after import, make sure save before the action!</b></span>
 		<button class="close-btn" @click="_closeView"></button>
 	</div>
 </template>
@@ -39,7 +40,7 @@
 		flex-direction: column;
 		align-items: center;
 		position: relative;
-		height: 250px;
+		height: 280px;
 		width: 400px;
 		border-radius: 4px;
 		background: #ffffff;
@@ -75,5 +76,11 @@
 	}
 	.close-btn:hover {
 		background-image: url("../assets/close_btn_hover.png");
+	}
+	.note {
+		margin-top: 30px;
+		width: 70%;
+		font-size: 10px;
+		color: #C94F4F;
 	}
 </style>

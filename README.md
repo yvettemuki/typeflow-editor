@@ -3,8 +3,10 @@
 
 ## Introduction
 ![img loading error](https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/home.png)
+
+![img loading error](https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/toolbar.png){:height="50%" width="50%"}
+
 ![img loading error](https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/inputForm.png)
-![img loading error](https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/home.png)
 ## Project setup
 ```
 npm install

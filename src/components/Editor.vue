@@ -493,10 +493,22 @@
 
 			_zoomIn: function () {
 				graph.zoomIn();
+				this._showZoomState();
 			},
 
 			_zoomOut: function () {
 				graph.zoomOut();
+				this._showZoomState();
+			},
+
+			_showZoomState: function () {
+				let zoom = graph.view.getScale() * 100;
+				this.$message.warning({
+					duration: 1000,
+					iconClass: 'icon',
+					message: "ZOOM: " + zoom + "%",
+					customClass: 'warning-msg'
+				});
 			},
 
 			_showSelectedDefinitionForm(sender, evt) {

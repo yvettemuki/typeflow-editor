@@ -575,7 +575,6 @@
 			},
 
 			_getValueFromSaveForm: function (id, name) {
-				this.isSaveFormShow = false;
 				//processing..
 				this._saveModelToServer(name);
 				//processing..
@@ -600,25 +599,26 @@
 				.then(res => {
 					if (res.data.success) {
 						this.$message.warning({
-							duration: 1000,
+							duration: 1500,
 							iconClass: 'icon-info',
-							message: "save successfully",
+							message: "save successfully!",
 							customClass: 'warning-msg'
 						});
+						this.isSaveFormShow = false;
 					} else {
 						this.$message.warning({
-							duration: 1000,
+							duration: 1500,
 							iconClass: 'icon-warn',
-							message: "failed to save",
+							message: "failed to save, model name is duplicate!",
 							customClass: 'warning-msg'
 						});
 					}
 				})
 				.catch(err => {
 					this.$message.warning({
-						duration: 1000,
+						duration: 1500,
 						iconClass: 'icon',
-						message: "failed to save",
+						message: "failed to save, something error",
 						customClass: 'warning-msg'
 					});
 					window.console.log(err);

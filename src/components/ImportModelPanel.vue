@@ -51,10 +51,14 @@
 		padding: 30px;
 	}
 	.import-list-view {
+		width: 90%;
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
-		margin-top: 30px;
+		margin: 30px auto;
+		overflow-y: scroll;
+		padding: 0;
+		justify-content: space-between;
 	}
 	.title {
 		font-size: 18px;

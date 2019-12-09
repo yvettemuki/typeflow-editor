@@ -2,11 +2,27 @@
 ### build with the vue and mxGraph
 
 ## Introduction
-![img loading error](https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/home.png)
+### Core appearance
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/home.png" width="100%">
 
-![img loading error](https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/toolbar.png){:height="50%" width="50%"}
+### After drag the one of the elements in "definitions", the form will display to fill 
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/inputForm.png" width="60%">
 
-![img loading error](https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/inputForm.png)
+### After finishing creating your typflow-model
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/draw.png" width="100%">
+
+### To **delete**, **zoom**(in/out), **export**, **import** or **save**, use the left tool bar
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/toolbar.png" width="20%">
+
+### When import, you can choose import **from local** or **from database**
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/import_choose.png" width="50%">
+
+### When from **database**
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/choose_panel.png" width="50%">
+
+
+
+
 ## Project setup
 ```
 npm install

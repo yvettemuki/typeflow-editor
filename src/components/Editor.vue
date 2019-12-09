@@ -637,7 +637,6 @@
 				} else if (type == 1) {
 					//from database
 					this._getModelList();
-					this.isImportModelShow = true;
 				}
 			},
 
@@ -666,6 +665,7 @@
 				.then(res => {
 					window.console.log(res.status);
 					this.modelList = res.data;
+					this.isImportModelShow = true;
 				})
 			},
 

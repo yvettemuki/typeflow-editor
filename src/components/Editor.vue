@@ -341,7 +341,29 @@
 		let len = str.length;
 		len = (len * 14 + 4) > 160 ? (len * 14 + 4) : 160;
 		return len;
-	}
+	};
+
+	const adjustConnection = (edge) => {
+		//change the target
+		let source = edge.source;
+		let target = edge.target;
+		let targetEdge = target.edges[0];
+		let newTarget = targetEdge.target; //from now target always in index 0
+		edge.target = newTarget;
+
+		//update connection
+		let model = graph.getModel();
+		let parent = graph.getDefaultParent();
+		model.beginUpdate();
+		try {
+			let edge = graph.insertEdge(parent, null, '', source, newTarget);
+		} finally {
+			model.endUpdate();
+		}
+
+		//delete the old unused edge
+		graph.removeCells([target]);
+	};
 
 
 	export default {
@@ -429,7 +451,9 @@
 								cell.setStyle("dashed=1;");
 								return;
 							}
-							this._adjustConnection(cell);
+							this.isAutoAdd = true;
+							adjustConnection(cell);
+							this.isAutoAdd = false;
 						}
 					}
 				});
@@ -454,24 +478,6 @@
 				graph.clearSelection();
 				graph.refresh(deleteVertex);
 				this.isResFormShow = false;
-			},
-
-			_adjustConnection: function (edge) {
-				//change the target
-				let target = edge.target;
-				let targetEdge = target.edges[0];
-				let newTarget = targetEdge.target; //from now target always in index 0
-				edge.target = newTarget;
-				graph.connectCell(edge, newTarget, false);
-
-				//delete the old unused edge
-				graph.setSelectionCell(targetEdge);
-				targetEdge.removeFromParent();
-				graph.setSelectionCell(target);
-				target.removeFromParent();
-
-				graph.refresh(target.edges[0]);
-				graph.refresh(target);
 			},
 
 			_exportXMLFile: function () {

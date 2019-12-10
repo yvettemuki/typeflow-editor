@@ -9,7 +9,6 @@
 						<label class="defi-title"><b>input list</b></label>
 						<div class="defi-info"></div>
 					</div>
-					<!--					<Add size="10" weight="2" radius="99"></Add>-->
 					<div class="add" @click="_addOneInput"></div>
 				</div>
 				<div class="blank-block" v-if="inputs.length <= 0">
@@ -20,7 +19,6 @@
 						v-for="(input, idx) in inputs"
 						:key="idx"
 						class="input-desc">
-						<!--					<label class="input-label"><strong>Int{{input.index+1}}</strong></label>-->
 						<input v-model="input.id" class="inputs-field"/>
 						<div class="delete" @click="_deleteInput(idx)"></div>
 					</li>
@@ -42,7 +40,6 @@
 						v-for="(output, idx) in outputs"
 						:key="idx"
 						class="input-desc">
-						<!--					<label class="input-label"><strong>Out{{output.index+1}}</strong></label>-->
 						<input v-model="output.id" class="inputs-field"/>
 						<div class="delete" @click="_deleteOutput(idx)"></div>
 					</li>
@@ -66,7 +63,6 @@
 						v-for="(output, idx) in alternativeOutputs"
 						:key="idx"
 						class="input-desc">
-						<!--					<label class="input-label"><strong>Out{{output.index+1}}</strong></label>-->
 						<input v-model="output.id" class="inputs-field"/>
 						<div class="delete" @click="_deleteAlterOutput(idx)"></div>
 					</li>
@@ -88,7 +84,6 @@
 						v-for="(output, idx) in exceptionOutputs"
 						:key="idx"
 						class="input-desc">
-						<!--					<label class="input-label"><strong>Out{{output.index+1}}</strong></label>-->
 						<input v-model="output.id" class="inputs-field"/>
 						<div class="delete" @click="_deleteExceptOutput(idx)"></div>
 					</li>
@@ -134,14 +129,7 @@
                 alternativeOutputs: [],
                 exceptionOutputs: [],
                 isValidate: true,
-                defiObject: null,
             };
-        },
-
-        watch: {
-            'definition.name'() {
-                window.console.log("has value")
-            }
         },
 
         methods: {
@@ -258,14 +246,12 @@
             //finish data init but not start ele created
             if (this.formType === CHECK_OR_CHANGE_FORM_TYPE) {
                 if (this.definition) {
-                    this.defiObject = this.definition;
-                    window.console.log(this.defiObject.name);
+										this.defiName = this.definition.name;
+                    this.inputs = this.definition.inputs;
+                    this.outputs = this.definition.outputs;
+                    this.alternativeOutputs = this.definition.alternativeOutputs;
+                    this.exceptionOutputs = this.definition.exceptionOutputs;
                 }
-                // this.defiName = this.definition.name;
-                //window.console.log(this.definition.type);
-                // this.outputs = this.definition.outputs;
-                // this.alternativeOutputs = this.definition.alternativeOutputs;
-                // this.exceptionOutputs = this.definition.exceptionOutputs;
             }
         }
     };

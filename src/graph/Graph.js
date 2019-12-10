@@ -228,8 +228,6 @@ export class Graph extends mxGraph {
             [mxConstants.STYLE_FONTSIZE]: '12',
             [mxConstants.STYLE_FONTSTYLE]: '1',
             [mxConstants.STYLE_SPACING_TOP]: '2',
-            // [mxConstants.STYLE_WHITE_SPACE]: 'wrap',
-            // [mxConstants.WORD_WRAP]: 'break-word'
         }
         this.getStylesheet().putCellStyle('defitype_node', defiTypeNodeStyle);
 

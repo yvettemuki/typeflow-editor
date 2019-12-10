@@ -329,10 +329,10 @@
 				return;
 			}
 
-			const clickDefinition = cell.style.includes('endpoint_node') || cell.style.includes('function_node') || cell.style.includes('definame_node');
+			const clickDefinition = cell.style.includes('endpoint_node') || cell.style.includes('function_node') || cell.style.includes('defitype_node');
 			if (clickDefinition) {
 				window.console.log("click definition event");
-				if (cell.style.includes('definame_node')) {
+				if (cell.style.includes('defitype_node')) {
 					graph.fireEvent(new mxEventObject(mxEvent.DEFINITION_CLICK, 'cell', cell.parent));
 				} else {
 					graph.fireEvent(new mxEventObject(mxEvent.DEFINITION_CLICK, 'cell', cell));
@@ -514,12 +514,8 @@
 			_showSelectedDefinitionForm(sender, evt) {
 				let cell = evt.getProperty('cell');
 				this.nowVertexId = cell.id;
-				let definition = cell.data;
-				this.nowSelectedDefi = definition;
-				window.console.log(definition);
-				window.console.log(definition.name);
-				window.console.log(this.nowSelectedDefi.name);
-				// this.isCheckShow = true;
+				this.nowSelectedDefi = cell.data.definition;
+				this.isCheckShow = true;
 			},
 
 			_closeFormDoneNothing: function () {

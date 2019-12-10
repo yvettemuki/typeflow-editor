@@ -7,7 +7,9 @@
 				<div class="defi-title-info-and-add">
 					<div class="defi-title-info">
 						<label class="defi-title"><b>input list</b></label>
-						<div class="defi-info"></div>
+						<div class="defi-info">
+							<Info class="info" msg="Enter input variable types" height="40" width="100" x="20"></Info>
+						</div>
 					</div>
 					<div class="add" @click="_addOneInput"></div>
 				</div>
@@ -28,7 +30,9 @@
 				<div class="defi-title-info-and-add">
 					<div class="defi-title-info">
 						<label class="defi-title"><b>output list</b></label>
-						<div class="defi-info"></div>
+						<div class="defi-info">
+							<Info class="info" msg="Enter normal output variable types" height="40" width="100" x="20"></Info>
+						</div>
 					</div>
 					<div class="add" @click="_addOneOutput"></div>
 				</div>
@@ -51,7 +55,9 @@
 				<div class="defi-title-info-and-add">
 					<div class="defi-title-info">
 						<label class="defi-title"><b>alternative output list</b></label>
-						<div class="defi-info"></div>
+						<div class="defi-info">
+							<Info class="info" msg="Enter alternative output variable types" height="40" width="100" x="20"></Info>
+						</div>
 					</div>
 					<div class="add" @click="_addOneAlterOutput"></div>
 				</div>
@@ -72,7 +78,9 @@
 				<div class="defi-title-info-and-add">
 					<div class="defi-title-info">
 						<label class="defi-title"><b>exception output list</b></label>
-						<div class="defi-info"></div>
+						<div class="defi-info">
+							<Info class="info" msg="Enter exception output variable types" height="40" width="100" x="20"></Info>
+						</div>
 					</div>
 					<div class="add" @click="_addOneExceptOutput"></div>
 				</div>
@@ -97,13 +105,14 @@
 </template>
 
 <script>
+		import Info from "./Info";
 
     const ADD_FORM_TYPE = "ADD_FORM_TYPE";
     const CHECK_OR_CHANGE_FORM_TYPE = "CHECK_OR_CHANGE_FORM_TYPE";
 
     export default {
         name: "FillForm",
-        components: {},
+        components: {Info},
         props: {
             id: String,
             type: String,
@@ -300,6 +309,7 @@
 	}
 
 	.defi-title-info {
+		position: relative;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
@@ -310,12 +320,24 @@
 	}
 
 	.defi-info {
+		position: relative;
+		display: inline-block;
 		height: 10px;
 		width: 10px;
 		margin-left: 5px;
 		background-size: 100%;
 		background-repeat: no-repeat;
 		background-image: url("../assets/info.png");
+	}
+
+	.defi-info:hover .info {
+		visibility: visible;
+	}
+
+	.info {
+		visibility: hidden;
+		font-size: 10px;
+		color: #4a4a4a;
 	}
 
 	.defi-input-ul {
@@ -326,6 +348,7 @@
 	}
 
 	.defi-main-content {
+		position: relative;
 		margin-top: 20px;
 		display: flex;
 		flex-direction: row;

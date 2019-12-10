@@ -383,16 +383,6 @@
 					}
 				}
 			})
-		// graph.traverse(cell, false, (vertex, edge) => {
-		// 	if(cell.edges.includes(edge)) {
-		// 		cells.push(edge);
-		// 		if(edge.source.edges.length == 1) {
-		// 			cells.push(edge.source);
-		// 		}
-		//
-		// 	}
-		// 	return true;
-		// });
 		graph.removeCells(cells, false);
 	};
 

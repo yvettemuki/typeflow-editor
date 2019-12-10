@@ -365,6 +365,37 @@
 		graph.removeCells([target]);
 	};
 
+	const deleteDefinition = (cell) => {
+		const cells = [];
+		cells.push(cell);
+		window.console.log(cell);
+		Object.values(cell.edges)
+			.forEach(edge => {
+				cells.push(edge);
+				if(edge.target == cell) {
+					if(edge.source.edges.length == 1) {
+						cells.push(edge.source);
+					}
+				}
+				if(edge.source == cell) {
+					if(edge.target.edges.length == 1) {
+						cells.push(edge.target);
+					}
+				}
+			})
+		// graph.traverse(cell, false, (vertex, edge) => {
+		// 	if(cell.edges.includes(edge)) {
+		// 		cells.push(edge);
+		// 		if(edge.source.edges.length == 1) {
+		// 			cells.push(edge.source);
+		// 		}
+		//
+		// 	}
+		// 	return true;
+		// });
+		graph.removeCells(cells, false);
+	};
+
 
 	export default {
 		name: "Editor",
@@ -488,9 +519,7 @@
 
 			_deleteSelected: function () {
 				let target = graph.getSelectionCell();
-				target.removeFromParent();
-				graph.clearSelection();
-				graph.refresh(target);
+				deleteDefinition(target);
 			},
 
 			_zoomIn: function () {

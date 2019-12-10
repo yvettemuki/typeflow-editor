@@ -300,10 +300,6 @@
 
 	}
 
-	const adjustVertexWidth = (vertex, width) => {
-
-	}
-
 	const setConnectValidation = (vm) => {
 		//validate the connection
 		mxGraph.prototype.isValidConnection = (source, target) => {
@@ -321,7 +317,7 @@
 	};
 
 	const listenGraphEvent = () => {
-		graph.addListener(mxEvent.CLICK, (sender, evt) => {
+		graph.addListener(mxEvent.DOUBLE_CLICK, (sender, evt) => {
 			let e = evt.getProperty('event');
 			let cell = evt.getProperty('cell');
 
@@ -333,9 +329,9 @@
 			if (clickDefinition) {
 				window.console.log("click definition event");
 				if (cell.style.includes('defitype_node')) {
-					graph.fireEvent(new mxEventObject(mxEvent.DEFINITION_CLICK, 'cell', cell.parent));
+					graph.fireEvent(new mxEventObject(mxEvent.DEFINITION_DOUBLE_CLICK, 'cell', cell.parent));
 				} else {
-					graph.fireEvent(new mxEventObject(mxEvent.DEFINITION_CLICK, 'cell', cell));
+					graph.fireEvent(new mxEventObject(mxEvent.DEFINITION_DOUBLE_CLICK, 'cell', cell));
 				}
 			}
 		})
@@ -439,7 +435,7 @@
 				});
 
 				//listen to click event
-				graph.addListener(mxEvent.DEFINITION_CLICK, this._showSelectedDefinitionForm);
+				graph.addListener(mxEvent.DEFINITION_DOUBLE_CLICK, this._showSelectedDefinitionForm);
 			},
 
 			_closeForm: function (id) {

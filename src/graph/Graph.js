@@ -30,7 +30,7 @@ const {
 } = mxgraph;
 
 Object.assign(mxEvent, {
-    DEFINITION_CLICK: 'DEFINITION_CLICK',
+    DEFINITION_DOUBLE_CLICK: 'DEFINITION_DOUBLE_CLICK',
 });
 
 export class Graph extends mxGraph {

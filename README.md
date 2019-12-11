@@ -15,8 +15,8 @@
 
 
 ### To **check or update** the created elements you can **double click** the Definition vertex (InputEndpoint, OutputEndpoint, PureFunction) 
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update1.png" width="100%">
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update2.png" width="100%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update1.png" width="60%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update2.png" width="60%">
 
 
 ### To **delete**, **zoom**(in/out), **export**, **import** or **save**, use the left tool bar

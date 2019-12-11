@@ -384,10 +384,25 @@
 				if(edge.source == cell) {
 					if(edge.target.edges.length == 1) {
 						cells.push(edge.target);
+					} else {
+						//need to transform from output to input
+						fromOutputToInput(edge.target);
 					}
 				}
 			})
 		graph.removeCells(cells, false);
+	};
+
+	const fromOutputToInput = (cell) => {
+		if (cell.data.hasOwnProperty('output')) {
+			Object.assign(cell.data, {
+				input: {
+					id: cell.data.output.id,
+					index: cell.data.output.index
+				}
+			});
+			delete cell.data.output;
+		}
 	};
 
 

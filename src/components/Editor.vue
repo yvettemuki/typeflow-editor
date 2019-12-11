@@ -509,6 +509,11 @@
 
 				//listen to click event
 				graph.addListener(mxEvent.DEFINITION_DOUBLE_CLICK, this._showSelectedDefinitionForm);
+
+				//listen to undo event; this model listener is on the model not on the graph
+				graph.getModel().addListener(mxEvent.UNDO, (sender, evt) => {
+					this.isModelSave = false;
+				});
 			},
 
 			_closeForm: function (id) {
@@ -755,7 +760,7 @@
 
 			_generateCode: function () {
 				window.console.log("test");
-			}
+			},
 
 		},
 

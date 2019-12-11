@@ -188,7 +188,7 @@
 											exceptionOutputs: this.exceptionOutputs
 										}
 										if (this._isDataChange(newDefinition, this.definition)) {
-											this.$emit('changeValueFromForm', this.id, this.definition.type, this.defiName, this.inputs, this.outputs, this.alternativeOutputs, this.exceptionOutputs);
+											this.$emit('changeValueFromForm', this.id, newDefinition);
 										} else {
 											return this.$emit('closeFormDoneNothing');
 										}

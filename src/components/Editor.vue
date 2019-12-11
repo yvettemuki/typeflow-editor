@@ -134,6 +134,8 @@
 
 	const ADD_FORM_TYPE = "ADD_FROM_TYPE";
 	const CHECK_OR_CHANGE_FORM_TYPE = "CHECK_OR_CHANGE_FORM_TYPE";
+	const DELETE_TYPE = "DELETE_TYPE";
+	const UPDATE_TYPE = "UPDATE_TYPE";
 
 	let graph = null;
 	let idSeed = -1;
@@ -365,10 +367,12 @@
 		graph.removeCells([target]);
 	};
 
-	const deleteDefinition = (cell) => {
-		const cells = [];
-		cells.push(cell);
+	const deleteDefinition = (cell, type) => {
 		window.console.log(cell);
+		const cells = [];
+		if (type == DELETE_TYPE) {
+			cells.push(cell);
+		}
 		Object.values(cell.edges)
 			.forEach(edge => {
 				cells.push(edge);
@@ -509,7 +513,7 @@
 
 			_deleteSelected: function () {
 				let target = graph.getSelectionCell();
-				deleteDefinition(target);
+				deleteDefinition(target, DELETE_TYPE);
 			},
 
 			_zoomIn: function () {
@@ -543,7 +547,22 @@
 				this.isCheckShow = false;
 			},
 
-			_changeValueFromForm: function (id) {
+			_changeValueFromForm: function (id, definition) {
+				//update the definition list
+				let index = this.definitions.indexOf(this.nowSelectedDefi);
+				this.definitions.splice(index, 1);
+				this.definitions.push(definition);
+
+				//delete vertex connection but not the vertex itself
+				deleteDefinition(graph.getSelectionCell(), UPDATE_TYPE);
+
+				//update vertex
+				this.isAutoAdd = true;
+				updateVertex(id, definition);
+				this.isAutoAdd = false;
+
+				this.isResFormShow = false; //?????? why it should be here
+				this.isCheckShow = false;
 			},
 
 			_getValueFromResForm: function (id, name) {

@@ -272,11 +272,12 @@
             //finish data init but not start ele created
             if (this.formType === CHECK_OR_CHANGE_FORM_TYPE) {
                 if (this.definition) {
-										this.defiName = this.definition.name;
-                    this.inputs = this.cloneDeep(this.definition.inputs);
-                    this.outputs = this.cloneDeep(this.definition.outputs);
-                    this.alternativeOutputs = this.cloneDeep(this.definition.alternativeOutputs);
-                    this.exceptionOutputs = this.cloneDeep(this.definition.exceptionOutputs);
+									this.type = this.definition.type;
+									this.defiName = this.definition.name;
+									this.inputs = this.cloneDeep(this.definition.inputs);
+									this.outputs = this.cloneDeep(this.definition.outputs);
+									this.alternativeOutputs = this.cloneDeep(this.definition.alternativeOutputs);
+									this.exceptionOutputs = this.cloneDeep(this.definition.exceptionOutputs);
                 }
             }
         }

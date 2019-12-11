@@ -90,6 +90,7 @@
 				<div class="left-basic-li function-div">
 					<li class="leftElement functionElement deleteSelected" @click="_deleteSelected">Delete</li>
 					<li class="leftElement functionElement save" @click="_saveModel">Save Model</li>
+					<li class="leftElement functionElement save" @click="_generateCode">Generate Code</li>
 					<li class="leftElement functionElement export" @click="_importModel">Import Model</li>
 					<li class="leftElement functionElement export" @click="_exportSvg">Export SVG</li>
 					<li class="leftElement functionElement export" @click="_exportPNG">Export PNG</li>
@@ -102,8 +103,14 @@
 					<Delete height="4" width="16" radius="999" color="#000000" @click.native="_zoomOut"></Delete>
 				</li>
 			</ul>
-			<div class="container-border">
-				<div id="mxContainer"></div>
+			<div class="right-elements-div">
+				<div class="model-basic-info-div">
+					<span class="info-name">Model Name: <span class="info-value">{{modelName}}</span></span>
+					<span class="info-save-status">Save Status: <span class="info-value">{{isModelSave}}</span></span>
+				</div>
+				<div class="container-border">
+					<div id="mxContainer"></div>
+				</div>
 			</div>
 		</div>
 		<!--    <div id="test-font-width"></div>-->
@@ -412,6 +419,7 @@
 		data() {
 			return {
 				resElements,
+				modelName: '',
 				isFormShow: false,
 				nowDefiType: "Definition",
 				nowVertexId: -1,
@@ -431,7 +439,8 @@
 				isResFormShow: false,
 				isSaveFormShow: false,
 				isImportModelShow: false,
-				isSelectViewShow: false
+				isSelectViewShow: false,
+				isModelSave: false
 			};
 		},
 
@@ -647,6 +656,7 @@
 			},
 
 			_saveModelToServer: function (name) {
+				this.modelName = name;
 				let modelXml = graph.exportModelXML();
 				let svgXml = graph.exportModelSvg();
 				this.$axios({
@@ -666,6 +676,7 @@
 							message: "save successfully!",
 							customClass: 'warning-msg'
 						});
+						this.isModelSave = true;
 						this.isSaveFormShow = false;
 					} else {
 						this.$message.warning({
@@ -733,12 +744,18 @@
 
 			_getValueFromImport: function (model) {
 				graph.importModelFromXML(model.modelXml);
+				this.modelName = model.name;
+				this.isModelSave = true;
 				this.isImportModelShow = false;
 			},
 
 			_closeImportPanel: function () {
 				this.isImportModelShow = false;
 			},
+
+			_generateCode: function () {
+				window.console.log("test");
+			}
 
 		},
 
@@ -765,11 +782,8 @@
 	}
 
 	.container-border {
-		height: calc(80vh);
-		min-width: 980px;
-		width: 100%;
+		height: 94%;
 		padding: 8px;
-		margin-left: 50px;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -779,6 +793,12 @@
 		box-shadow: 0px 1px 2px 1.5px #e3e3e3;
 	}
 
+	.right-elements-div {
+		min-width: 980px;
+		margin-left: 50px;
+		height: calc(88vh);
+		width: 100%;
+	}
 	.main-container {
 		display: flex;
 		flex-direction: row;
@@ -922,6 +942,22 @@
 	}
 	.model-div:hover {
 		border: 2px solid #1c86ee;
+	}
+	.model-basic-info-div {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		margin-bottom: 10px;
+		justify-content: flex-end;
+		font-size: 14px;
+		font-weight: bold;
+		margin-right: 8px;
+	}
+	.info-name {
+		margin-right: 10px;
+	}
+	.info-value {
+		color: #1c86ee;
 	}
 </style>
 <style>

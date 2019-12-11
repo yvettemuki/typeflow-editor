@@ -1,6 +1,6 @@
 <template>
 	<div class="defi-form">
-		<label class="defi-type"><b>{{type}}</b></label>
+		<label class="defi-type"><b>{{this.defiType}}</b></label>
 		<input v-model="defiName" class="defi-name" placeholder="type the definition name"/>
 		<div class="defi-main-content">
 			<div class="defi-input-section">
@@ -123,6 +123,7 @@
         data() {
             return {
                 defiName: "",
+								defiType: "",
                 inputs: [
                     {
                         index: 0,
@@ -269,17 +270,20 @@
         },
 
         mounted() {
-            //finish data init but not start ele created
-            if (this.formType === CHECK_OR_CHANGE_FORM_TYPE) {
-                if (this.definition) {
-									this.type = this.definition.type;
-									this.defiName = this.definition.name;
-									this.inputs = this.cloneDeep(this.definition.inputs);
-									this.outputs = this.cloneDeep(this.definition.outputs);
-									this.alternativeOutputs = this.cloneDeep(this.definition.alternativeOutputs);
-									this.exceptionOutputs = this.cloneDeep(this.definition.exceptionOutputs);
-                }
-            }
+					//finish data init but not start ele created
+					if (this.formType === CHECK_OR_CHANGE_FORM_TYPE) {
+						if (this.definition) {
+							this.defiType = this.definition.type;
+							this.defiName = this.definition.name;
+							this.inputs = this.cloneDeep(this.definition.inputs);
+							this.outputs = this.cloneDeep(this.definition.outputs);
+							this.alternativeOutputs = this.cloneDeep(this.definition.alternativeOutputs);
+							this.exceptionOutputs = this.cloneDeep(this.definition.exceptionOutputs);
+						}
+					}
+					if (this.formType === ADD_FORM_TYPE) {
+						this.defiType = this.type;
+					}
         }
     };
 </script>

@@ -13,6 +13,7 @@
     "core-js": "^3.3.2",
     "element-ui": "^2.12.0",
     "file-saver": "^2.0.2",
+    "lodash": "^4.17.15",
     "mxgraph": "^4.0.5",
     "vue": "^2.6.10",
     "vue-axios": "^2.1.5",

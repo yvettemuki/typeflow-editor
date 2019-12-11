@@ -543,8 +543,7 @@
 				this.isCheckShow = false;
 			},
 
-			_changeValueFromForm: function () {
-				this.$message.info("test change value from form");
+			_changeValueFromForm: function (id) {
 			},
 
 			_getValueFromResForm: function (id, name) {

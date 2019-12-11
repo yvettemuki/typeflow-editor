@@ -176,11 +176,23 @@
                     });
                     return;
                 }
-                window.console.log("in the fill form");
                 if (this.formType === ADD_FORM_TYPE) {
                     this.$emit('getValueFromForm', this.id, this.type, this.defiName, this.inputs, this.outputs, this.alternativeOutputs, this.exceptionOutputs);
                 } else if (this.formType === CHECK_OR_CHANGE_FORM_TYPE) {
-                    this.$emit('changeValueFromForm');
+										let newDefinition = {
+											name: this.definition.name, //can not change
+											type: this.definition.type, //can not change
+											inputs: this.inputs,
+											outputs: this.outputs,
+											alternativeOutputs: this.alternativeOutputs,
+											exceptionOutputs: this.exceptionOutputs
+										}
+										if (this._isDataChange(newDefinition, this.definition)) {
+											this.$emit('changeValueFromForm', this.id, this.definition.type, this.defiName, this.inputs, this.outputs, this.alternativeOutputs, this.exceptionOutputs);
+										} else {
+											return this.$emit('closeFormDoneNothing');
+										}
+
                 }
             },
 
@@ -249,6 +261,11 @@
                 })
             },
 
+						_isDataChange(newDefinition, oldDefinition) {
+								//use lodash to deep compare
+								return !this._.isEqual(newDefinition, oldDefinition);
+						}
+
         },
 
         mounted() {
@@ -256,10 +273,10 @@
             if (this.formType === CHECK_OR_CHANGE_FORM_TYPE) {
                 if (this.definition) {
 										this.defiName = this.definition.name;
-                    this.inputs = this.definition.inputs;
-                    this.outputs = this.definition.outputs;
-                    this.alternativeOutputs = this.definition.alternativeOutputs;
-                    this.exceptionOutputs = this.definition.exceptionOutputs;
+                    this.inputs = this.cloneDeep(this.definition.inputs);
+                    this.outputs = this.cloneDeep(this.definition.outputs);
+                    this.alternativeOutputs = this.cloneDeep(this.definition.alternativeOutputs);
+                    this.exceptionOutputs = this.cloneDeep(this.definition.exceptionOutputs);
                 }
             }
         }

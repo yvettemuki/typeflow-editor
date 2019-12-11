@@ -1,7 +1,7 @@
 <template>
 	<div class="select-view">
 		<span class="title"><b>Choose</b></span>
-		<div class="select-btn" @click="this._chooseLocal"><b>import from local</b></div>
+		<div class="select-btn" @click="this._chooseLocal"><b>import from xml</b></div>
 		<div class="select-btn" @click="_chooseDatabase"><b>import from database</b></div>
 		<span class="note"><b>NOTE: all the existing models will be cleared after import, make sure save before the action!</b></span>
 		<button class="close-btn" @click="_closeView"></button>

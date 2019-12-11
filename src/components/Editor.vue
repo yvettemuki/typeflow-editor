@@ -419,7 +419,7 @@
 		data() {
 			return {
 				resElements,
-				modelName: '',
+				modelName: "no name",
 				isFormShow: false,
 				nowDefiType: "Definition",
 				nowVertexId: -1,
@@ -651,8 +651,9 @@
 			},
 
 			_getValueFromSaveForm: function (id, name) {
+				this.modelName = name;
 				//processing..
-				this._saveModelToServer(name);
+				this._saveModelToServer();
 				//processing..
 			},
 
@@ -660,15 +661,14 @@
 				this.isSaveFormShow = false;
 			},
 
-			_saveModelToServer: function (name) {
-				this.modelName = name;
+			_saveModelToServer: function () {
 				let modelXml = graph.exportModelXML();
 				let svgXml = graph.exportModelSvg();
 				this.$axios({
 					method: 'post',
 					url: 'http://localhost:8080/api/save',
 					data: {
-						name: name,
+						name: this.modelName,
 						modelXml: modelXml,
 						svgXml: svgXml
 					}
@@ -759,8 +759,37 @@
 			},
 
 			_generateCode: function () {
-				window.console.log("test");
+				if (!this.isModelSave) {
+					this.$message.warning({
+						duration: 2000,
+						iconClass: 'icon',
+						message: "the current model is not saved, please save before generating code!",
+						customClass: 'warning-msg'
+					});
+				} else {
+					this._generateCodeToServer();
+				}
 			},
+
+			_generateCodeToServer: function () {
+				let modelXml = graph.exportModelXML();
+				let svgXml = graph.exportModelSvg();
+				this.$axios({
+					method: 'post',
+					url: 'http://localhost:8080/api/generateCode',
+					data: {
+						name: this.modelName,
+						modelXml: modelXml,
+						svgXml: svgXml
+					}
+				})
+					.then(res => {
+						window.console.log(res);
+					})
+					.catch(err => {
+						window.console.log(err);
+					})
+			}
 
 		},
 

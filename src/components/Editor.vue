@@ -654,7 +654,14 @@
 						message: "Save model can not be empty!",
 						customClass: 'warning-msg'
 					});
-				} else {
+				} else if (this.isModelSave) {
+					this.$message.warning({
+						duration: 2000,
+						iconClass: 'icon-info',
+						message: "Your model has been saved! No need to save again!",
+						customClass: 'warning-msg'
+					});
+				} else{
 					this.isSaveFormShow = true;
 				}
 			},
@@ -669,10 +676,7 @@
 			},
 
 			_saveModelToServer: function () {
-				let loading = this.$loading({
-					target: "typeflow-container",
-					background: "rgba(0,0,0,0.5)"
-				});
+				let loading = this.loading();
 				let modelXml = graph.exportModelXML();
 				let svgXml = graph.exportModelSvg();
 				this.$axios({
@@ -693,14 +697,10 @@
 							customClass: 'warning-msg'
 						});
 						this.isModelSave = true;
-						this.$nextTick(() => {
-							loading.close();
-						});
+						this.closeLoading(loading);
 						this.isSaveFormShow = false;
 					} else {
-						this.$nextTick(() => {
-							loading.close();
-						});
+						this.closeLoading(loading);
 						this.$message.warning({
 							duration: 1500,
 							iconClass: 'icon-warn',
@@ -710,9 +710,7 @@
 					}
 				})
 				.catch(err => {
-					this.$nextTick(() => {
-						loading.close();
-					})
+					this.closeLoading(loading);
 					this.$message.warning({
 						duration: 1500,
 						iconClass: 'icon',
@@ -756,10 +754,7 @@
 			},
 
 			_getModelList: function () {
-				let loading = this.$loading({
-					target: "typeflow-container",
-					background: "rgba(0,0,0,0.5)",
-				});
+				let loading = this.loading();
 				this.$axios({
 					method: 'get',
 					url: 'http://localhost:8080/api/getModels',
@@ -767,18 +762,12 @@
 				.then(res => {
 					window.console.log(res.status);
 					this.modelList = res.data;
-					this.$nextTick(() => {
-						//async close loading
-						loading.close();
-					});
+					this.closeLoading(loading);
 					this.isImportModelShow = true;
 				})
 				.catch(err => {
 					window.console.log(err);
-					this.$nextTick(() => {
-						//async close loading
-						loading.close();
-					});
+					this.closeLoading(loading);
 					this.$message.warning({
 						duration: 2000,
 						iconClass: 'icon',
@@ -862,6 +851,8 @@
 	.title {
 		font-size: 22px;
 		margin: 20px 0 20px 0;
+		border-bottom: 1px solid #efefef;
+		padding-bottom: 20px;
 	}
 
 	#mxContainer {

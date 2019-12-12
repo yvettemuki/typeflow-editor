@@ -1,5 +1,5 @@
 import mxgraph from './index';
-const cloneDeep  = require('clone-deep');
+import _ from 'lodash';
 
 
 const {
@@ -319,7 +319,7 @@ export class Graph extends mxGraph {
 
     //the custom data should be translate to the string
     _getExportModel() {
-        const model = cloneDeep(this.getModel());
+        const model = _.cloneDeep(this.getModel());
         Object.values(model.cells)
           .forEach(cell => {
               if(cell.vertex && cell.data) {
@@ -337,7 +337,7 @@ export class Graph extends mxGraph {
 
 
     exportModelXML() {
-        var encoder = new mxCodec();
+        var encoder = new mxCodec(mxUtils.createXmlDocument());
         var node = encoder.encode(this._getExportModel());
         return mxUtils.getPrettyXml(node);
         // mxUtils.popup(mxUtils.getPrettyXml(node), false);

@@ -803,6 +803,7 @@
 			},
 
 			_generateCodeToServer: function () {
+				window.console.log(this.definitions);
 				let modelXml = graph.exportModelXML();
 				let svgXml = graph.exportModelSvg();
 				this.$axios({

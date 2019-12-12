@@ -647,14 +647,21 @@
 			},
 
 			_saveModel: function() {
-				this.isSaveFormShow = true;
+				if (graph.isGraphEmpty()) {
+					this.$message.warning({
+						duration: 2000,
+						iconClass: 'icon-info',
+						message: "Save model can not be empty!",
+						customClass: 'warning-msg'
+					});
+				} else {
+					this.isSaveFormShow = true;
+				}
 			},
 
 			_getValueFromSaveForm: function (id, name) {
 				this.modelName = name;
-				//processing..
 				this._saveModelToServer();
-				//processing..
 			},
 
 			_closeSaveForm: function () {
@@ -662,6 +669,10 @@
 			},
 
 			_saveModelToServer: function () {
+				let loading = this.$loading({
+					target: "typeflow-container",
+					background: "rgba(0,0,0,0.5)"
+				});
 				let modelXml = graph.exportModelXML();
 				let svgXml = graph.exportModelSvg();
 				this.$axios({
@@ -682,8 +693,14 @@
 							customClass: 'warning-msg'
 						});
 						this.isModelSave = true;
+						this.$nextTick(() => {
+							loading.close();
+						});
 						this.isSaveFormShow = false;
 					} else {
+						this.$nextTick(() => {
+							loading.close();
+						});
 						this.$message.warning({
 							duration: 1500,
 							iconClass: 'icon-warn',
@@ -693,10 +710,13 @@
 					}
 				})
 				.catch(err => {
+					this.$nextTick(() => {
+						loading.close();
+					})
 					this.$message.warning({
 						duration: 1500,
 						iconClass: 'icon',
-						message: "failed to save, something error",
+						message: "Network error! make sure you have connect to database!",
 						customClass: 'warning-msg'
 					});
 					window.console.log(err);
@@ -736,6 +756,10 @@
 			},
 
 			_getModelList: function () {
+				let loading = this.$loading({
+					target: "typeflow-container",
+					background: "rgba(0,0,0,0.5)",
+				});
 				this.$axios({
 					method: 'get',
 					url: 'http://localhost:8080/api/getModels',
@@ -743,8 +767,26 @@
 				.then(res => {
 					window.console.log(res.status);
 					this.modelList = res.data;
+					this.$nextTick(() => {
+						//async close loading
+						loading.close();
+					});
 					this.isImportModelShow = true;
 				})
+				.catch(err => {
+					window.console.log(err);
+					this.$nextTick(() => {
+						//async close loading
+						loading.close();
+					});
+					this.$message.warning({
+						duration: 2000,
+						iconClass: 'icon',
+						message: "Network error! make sure you have connect to database!",
+						customClass: 'warning-msg'
+					});
+				})
+
 			},
 
 			_getValueFromImport: function (model) {
@@ -789,9 +831,23 @@
 					.catch(err => {
 						window.console.log(err);
 					})
-			}
+			},
 
+			loading: function () {
+				return this.$loading({
+					target: 'typeflow-container',
+					background: 'rgba(0,0,0,0.5)'
+				})
+			},
+
+			closeLoading: function (loading) {
+				this.$nextTick(() => {
+					loading.close();
+				})
+			}
 		},
+
+
 
 		mounted() {
 			initGraph();
@@ -1027,6 +1083,10 @@
 		background-repeat: no-repeat;
 		background-size: 100%;
 		margin-right: 10px;
+	}
+	.el-loading-spinner .path {
+		stroke-width: 3 !important;
+		stroke: #ffffff !important;
 	}
 </style>
 

@@ -436,7 +436,13 @@ export class Graph extends mxGraph {
         this._restoreModel();
     }
 
-
+    isGraphEmpty() {
+        let count = graph.getModel().getChildCount(graph.getDefaultParent());
+        if (count <= 0) {
+            return true;
+        }
+        return false;
+    }
 
 
 }

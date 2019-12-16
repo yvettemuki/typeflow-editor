@@ -1,5 +1,6 @@
 # typeflow-editor
 ### build with the vue and mxGraph
+### backend resource: https://github.com/yvettemuki/editor-service
 
 ## Introduction
 ### Core appearance

@@ -803,16 +803,17 @@
 			},
 
 			_generateCodeToServer: function () {
-				window.console.log(this.definitions);
-				let modelXml = graph.exportModelXML();
-				let svgXml = graph.exportModelSvg();
+				let encoder = new mxCodec(mxUtils.createXmlDocument());
+				let node = encoder.encode(graph.getModel());
+				let xml = mxUtils.getPrettyXml(node);
+				let modelName = this.modelName;
 				this.$axios({
 					method: 'post',
 					url: 'http://localhost:8080/api/generateCode',
 					data: {
-						name: this.modelName,
-						modelXml: modelXml,
-						svgXml: svgXml
+						id: 0,
+						name: modelName,
+						xml: xml,
 					}
 				})
 					.then(res => {
@@ -852,8 +853,6 @@
 	.title {
 		font-size: 22px;
 		margin: 20px 0 20px 0;
-		border-bottom: 1px solid #efefef;
-		padding-bottom: 20px;
 	}
 
 	#mxContainer {

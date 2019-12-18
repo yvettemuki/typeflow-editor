@@ -615,7 +615,7 @@
 				window.console.log(picture.xml);
 				this.$axios({
 					method: 'post',
-					url: 'http://localhost:8080/api/downloadPNG',
+					url: '/downloadPNG',
 					data: {
 						xml: picture.xml,
 						width: picture.width,
@@ -681,7 +681,7 @@
 				let svgXml = graph.exportModelSvg();
 				this.$axios({
 					method: 'post',
-					url: 'http://localhost:8080/api/save',
+					url: '/save',
 					data: {
 						name: this.modelName,
 						modelXml: modelXml,
@@ -757,7 +757,7 @@
 				let loading = this.loading();
 				this.$axios({
 					method: 'get',
-					url: 'http://localhost:8080/api/getModels',
+					url: '/getModels',
 				})
 				.then(res => {
 					window.console.log(res.status);
@@ -810,7 +810,7 @@
 				let stringifyXml = graph.exportModelXML()
 				this.$axios({
 					method: 'post',
-					url: 'http://localhost:8080/api/generateCode',
+					url: '/generateCode',
 					data: {
 						id: 0,
 						name: modelName,

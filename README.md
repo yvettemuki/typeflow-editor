@@ -42,5 +42,7 @@ npm install
 npm run serve
 ```
 
-### Default port is 8080, if you need see vue cli3 document to change the default port
-### When you change the backend server address(port), you need to change the proxy in vue.config.js file 
+## Attention:
+Default port is 8080, if you need see vue cli3 document to change the default port
+
+When you change the backend server address(port), you need to change the proxy in vue.config.js file 

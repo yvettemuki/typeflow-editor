@@ -42,3 +42,5 @@ npm install
 npm run serve
 ```
 
+### Default port is 8080, if you need see vue cli3 document to change the default port
+

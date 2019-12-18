@@ -317,7 +317,7 @@ export class Graph extends mxGraph {
           });
     }
 
-    //the custom data should be translate to the string
+    //the custom data should be stringify
     _getExportModel() {
         const model = _.cloneDeep(this.getModel());
         Object.values(model.cells)

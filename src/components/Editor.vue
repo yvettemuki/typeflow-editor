@@ -807,6 +807,7 @@
 				let node = encoder.encode(graph.getModel());
 				let xml = mxUtils.getPrettyXml(node);
 				let modelName = this.modelName;
+				let stringifyXml = graph.exportModelXML()
 				this.$axios({
 					method: 'post',
 					url: 'http://localhost:8080/api/generateCode',
@@ -814,6 +815,7 @@
 						id: 0,
 						name: modelName,
 						xml: xml,
+						stringifyXml: stringifyXml
 					}
 				})
 					.then(res => {

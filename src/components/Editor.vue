@@ -241,7 +241,7 @@
 			let mid = Math.floor(len / 2);
 			let relativePosi = -mid;
 			for (let idx = 0; idx < len; idx++) {
-				var inVertex = graph.insertVertex(parent, null, inputs[idx].id, x + relativePosi * 110 + width / 2 - 50, y - 90, 100, 30, `inout_node`);
+				var inVertex = graph.insertVertex(parent, null, inputs[idx].id, x + relativePosi * 110 + width / 2 - 50, y - 90, 100, 30, `inout_node;selectable=0`);
 				//add the 'data' to identify the vertex for the connection validation
 				inVertex.data = {
 					input: inputs[idx]
@@ -259,7 +259,7 @@
 			let mid2 = Math.floor(len2 / 2);
 			let relativePosi2 = -mid2;
 			for (let idx = 0; idx < commonOutputs.length; idx++) {
-				let outVertex = graph.insertVertex(parent, null, commonOutputs[idx].id, x + relativePosi2 * 110 + width / 2 - 50, y + 90 + 30, 100, 30, `inout_node`);
+				let outVertex = graph.insertVertex(parent, null, commonOutputs[idx].id, x + relativePosi2 * 110 + width / 2 - 50, y + 90 + 30, 100, 30, `inout_node;selectable=0`);
 				outVertex.data = {
 					output: commonOutputs[idx]
 				}
@@ -268,7 +268,7 @@
 				relativePosi2++;
 			}
 			for (let idx = 0; idx < alterOutputs.length; idx++) {
-				let outVertex = graph.insertVertex(parent, null, alterOutputs[idx].id, x + relativePosi2 * 110 + width / 2 - 50, y + 90 + 30, 100, 30, `alterout_node`);
+				let outVertex = graph.insertVertex(parent, null, alterOutputs[idx].id, x + relativePosi2 * 110 + width / 2 - 50, y + 90 + 30, 100, 30, `alterout_node;selectable=0`);
 				outVertex.data = {
 					alterOutputs: alterOutputs[idx]
 				}
@@ -277,7 +277,7 @@
 				relativePosi2++;
 			}
 			for (let idx = 0; idx < exceptionOutputs.length; idx++) {
-				let outVertex = graph.insertVertex(parent, null, exceptionOutputs[idx].id, x + relativePosi2 * 110 + width / 2 - 50, y + 90 + 30, 100, 30, `exceptout_node`);
+				let outVertex = graph.insertVertex(parent, null, exceptionOutputs[idx].id, x + relativePosi2 * 110 + width / 2 - 50, y + 90 + 30, 100, 30, `exceptout_node;selectable=0`);
 				outVertex.data = {
 					exceptionOutputs: exceptionOutputs[idx]
 				}
@@ -837,7 +837,7 @@
 				this.$nextTick(() => {
 					loading.close();
 				})
-			}
+			},
 		},
 
 

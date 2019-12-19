@@ -45,7 +45,7 @@ export class Graph extends mxGraph {
         this._configConstituent();
         this._putVertexStyle();
         this._setDefaultEdgeStyle();
-        // this._setConnectionConfig();
+        this._setSelectableConfig();
         this._setAnchors();
         this._configCustomEvent();
         this._restoreModel();
@@ -113,6 +113,15 @@ export class Graph extends mxGraph {
         // 禁止从将label从线条上拖离
         mxGraph.prototype.edgeLabelsMovable = false;
 
+    }
+
+    _setSelectableConfig() {
+        mxGraph.prototype.isCellSelectable = function (cell) {
+            var state = this.view.getState(cell);
+            var style = (state != null) ? state.style : this.getCellStyle(cell);
+
+            return this.isCellsSelectable() && !this.isCellLocked(cell) && style['selectable'] != 0;
+        }
     }
 
     _putVertexStyle() {
@@ -254,6 +263,7 @@ export class Graph extends mxGraph {
             // [mxConstants.STYLE_EDGE]: mxEdgeStyle.TopToBottom,
             [mxConstants.STYLE_FONTCOLOR]: '#33333',
             [mxConstants.STYLE_LABEL_BACKGROUNDCOLOR]: '#ffa94d',
+            "selectable": '0'
         });
         // 设置拖拽线的过程出现折线，默认为直线
         this.connectionHandler.createEdgeState = () => {

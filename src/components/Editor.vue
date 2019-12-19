@@ -509,8 +509,6 @@
 								cell.setStyle("dashed=1;");
 								return;
 							}
-							const cells = this._.cloneDeep(graph.getChildEdges(graph.getDefaultParent()));
-							window.console.log(cells);
 							this.isAutoAdd = true;
 							adjustConnection(cell);
 							this.isAutoAdd = false;

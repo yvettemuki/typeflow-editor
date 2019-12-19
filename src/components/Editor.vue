@@ -866,14 +866,17 @@
 			initGraph();
 			this._listenEvent();
 			setConnectValidation(this);
-			let that = this; //is a must
+			let _this = this; //is a must represent vue
 			document.onkeydown = function (e) {
 				let key = e.code;
 				if (key == 'KeyZ') {
 					e.preventDefault();
-					that._undoModel();
+					_this._undoModel();  //use `this` directly represent the document.onkeydown event
 				}
-
+				if (key == 'KeyD') {
+					e.preventDefault();
+					_this._deleteSelected();
+				}
 			}
 		}
 	}

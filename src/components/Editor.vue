@@ -866,6 +866,15 @@
 			initGraph();
 			this._listenEvent();
 			setConnectValidation(this);
+			let that = this; //is a must
+			document.onkeydown = function (e) {
+				let key = e.code;
+				if (key == 'KeyZ') {
+					e.preventDefault();
+					that._undoModel();
+				}
+
+			}
 		}
 	}
 

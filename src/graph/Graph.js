@@ -16,7 +16,6 @@ const {
     mxConnectionConstraint,
     mxConstraintHandler,
     mxConnectionHandler,
-    // mxXmlRequest,
     mxPoint,
     mxEventObject,
     mxCodec,

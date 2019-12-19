@@ -89,6 +89,7 @@
 				<span class="left-elements-title"><b>Tools</b></span>
 				<div class="left-basic-li function-div">
 					<li class="leftElement functionElement deleteSelected" @click="_deleteSelected">Delete</li>
+					<li class="leftElement functionElement save" @click="_undoModel">Undo</li>
 					<li class="leftElement functionElement save" @click="_saveModel">Save Model</li>
 					<li class="leftElement functionElement save" @click="_generateCode">Generate Code</li>
 					<li class="leftElement functionElement export" @click="_importModel">Import Model</li>
@@ -137,6 +138,7 @@
 		mxGraph,
 		mxCodec,
 		mxEventObject,
+		mxUndoManager,
 	} = mxgraph;
 
 	const ADD_FORM_TYPE = "ADD_FROM_TYPE";
@@ -145,6 +147,7 @@
 	const UPDATE_TYPE = "UPDATE_TYPE";
 
 	let graph = null;
+	let undoManager = null;
 	let idSeed = -1;
 
 	const initGraph = () => {
@@ -356,7 +359,12 @@
 		//change the target
 		let source = edge.source;
 		let target = edge.target;
-		let targetEdge = target.edges[0];
+		let targetEdge = null;
+		Array.from(target.edges).forEach(ele => {
+			if (ele.target && !ele.target.style.includes('inout_node')) {
+				targetEdge = ele;
+			}
+		});
 		let newTarget = targetEdge.target; //from now target always in index 0
 		edge.target = newTarget;
 
@@ -369,9 +377,10 @@
 		} finally {
 			model.endUpdate();
 		}
-
-		//delete the old unused edge
+		//delete the target including all connected edges
 		graph.removeCells([target]);
+		window.console.log(edge);
+
 	};
 
 	const deleteDefinition = (cell, type) => {
@@ -500,6 +509,8 @@
 								cell.setStyle("dashed=1;");
 								return;
 							}
+							const cells = this._.cloneDeep(graph.getChildEdges(graph.getDefaultParent()));
+							window.console.log(cells);
 							this.isAutoAdd = true;
 							adjustConnection(cell);
 							this.isAutoAdd = false;
@@ -511,8 +522,15 @@
 				graph.addListener(mxEvent.DEFINITION_DOUBLE_CLICK, this._showSelectedDefinitionForm);
 
 				//listen to undo event; this model listener is on the model not on the graph
+				//undo manager
+				undoManager = new mxUndoManager();
+
 				graph.getModel().addListener(mxEvent.UNDO, (sender, evt) => {
 					this.isModelSave = false;
+					undoManager.undoableEditHappened(evt.getProperty('edit'));
+				});
+				graph.getView().addListener(mxEvent.UNDO, (sender, evt) => {
+					undoManager.undoableEditHappened(evt.getProperty('edit'));
 				});
 			},
 
@@ -824,6 +842,10 @@
 					.catch(err => {
 						window.console.log(err);
 					})
+			},
+
+			_undoModel: function () {
+				undoManager.undo();
 			},
 
 			loading: function () {

@@ -1,16 +1,17 @@
 <template>
 	<div id="app">
-		<Editor></Editor>
+		<EditorNew></EditorNew>
 	</div>
 </template>
 
 <script>
     import Editor from '../components/Editor.vue'
+		import EditorNew from "../components/EditorNew";
 
     export default {
         name: 'app',
         components: {
-            Editor
+					EditorNew,
         }
     }
 </script>
@@ -19,7 +20,9 @@
 	html {
 		min-width: 1400px;
 	}
-
+	body {
+		margin: 0;
+	}
 	#app {
 		font-family: Arial;
 		/*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/

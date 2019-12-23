@@ -869,11 +869,11 @@
 			let _this = this; //is a must represent vue
 			document.onkeydown = function (e) {
 				let key = e.code;
-				if (key == 'KeyZ') {
+				if (key == 'KeyZ') { //ctrl + z
 					e.preventDefault();
 					_this._undoModel();  //use `this` directly represent the document.onkeydown event
 				}
-				if (key == 'KeyD') {
+				if (key == 'KeyD') { //ctrl + d
 					e.preventDefault();
 					_this._deleteSelected();
 				}

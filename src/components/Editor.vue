@@ -66,7 +66,17 @@
 			</div>
 			<div class="tool-bar">
 				<div class="tool-item general-item" @click="_importModel">Import</div>
-				<div class="tool-item general-item">Export</div>
+				<div class="tool-item general-item" @click="_exportModel">
+					<span>Export</span>
+					<Selector
+						v-if="isExportShow"
+						v-on="{
+							exportPNG: _exportPNG,
+							exportSVG: _exportSvg,
+							exportXML: _exportXMLFile
+							}">
+					</Selector>
+				</div>
 				<div class="tool-item generate-item" @click="_generateCode">Generate</div>
 				<div class="tool-item save-item" @click="_saveModel">Save</div>
 			</div>
@@ -203,6 +213,7 @@
 	import ImportModelPanel from "./ImportModelPanel";
 	import ModelSvg from "./ModelSvg";
 	import BasicLine from "./BasicLine";
+	import Selector from "./Selector";
 
 	const {
 		mxEvent,
@@ -523,11 +534,13 @@
 				isSaveFormShow: false,
 				isImportModelShow: false,
 				isSelectViewShow: false,
-				isModelSave: false
+				isModelSave: false,
+				isExportShow: false,
 			};
 		},
 
 		components: {
+			Selector,
 			ModelSvg,
 			ImportModelPanel,
 			SelectView,
@@ -688,6 +701,10 @@
 			_getValueFromResForm: function (id, name) {
 				updateResVertex(id, name);
 				this.isResFormShow = false;
+			},
+
+			_exportModel: function () {
+				this.isExportShow = true;
 			},
 
 			_exportSvg: function() {
@@ -939,13 +956,11 @@
 				let elements = document.getElementsByClassName('font-item');
 				Array.from(elements).forEach(ele => {
 					let fontWidth = ele.offsetWidth;
-					if ((fontWidth + 40) > width) {
-						let scale = fontWidth / width;
-						ele.style.fontSize = scale * 100 + '%';
+					if ((fontWidth + 9) > width) {
+						ele.style.fontSize = 9;
 					}
 				})
-
-			}
+			},
 		},
 
 
@@ -1280,17 +1295,16 @@
 		justify-content: center;
 		background: #34495D;
 		height: 36px;
-		width: 103px;
-		padding: 0 3px 0 3px;
+		width: 100px;
+		padding: 0 4.5px 0 4.5px;
 		border-radius: 4px;
 		color: #ffffff;
 		font-size: 11px;
 		font-weight: bold;
 		cursor: cell;
 		margin-bottom: 12px;
-		word-wrap: break-word;
-		word-break: break-all;
-		overflow: hidden;
+		word-wrap:break-word;
+		word-break:break-all;
 	}
 	.purefunction-item {
 		background: #42B982;
@@ -1308,7 +1322,7 @@
 		padding: 10px 20px;
 	}
 	.ele-tool-top-item {
-		font-size: 11px;
+		font-size: 12px;
 		width: 70px;
 		height: 30px;
 		line-height: 30px;

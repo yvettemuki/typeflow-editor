@@ -204,7 +204,7 @@
 		line-height: 36px;
 		border-radius: 4px;
 		color: #ffffff;
-		font-size: 14px;
+		font-size: 12px;
 		font-weight: bold;
 		cursor: cell;
 		margin-bottom: 12px;

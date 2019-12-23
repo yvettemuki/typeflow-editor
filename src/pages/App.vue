@@ -1,17 +1,17 @@
 <template>
 	<div id="app">
-		<EditorNew></EditorNew>
+		<Editor></Editor>
 	</div>
 </template>
 
 <script>
     import Editor from '../components/Editor.vue'
-		import EditorNew from "../components/EditorNew";
+		//import EditorNew from "../components/EditorNew";
 
     export default {
         name: 'app',
         components: {
-					EditorNew,
+					Editor,
         }
     }
 </script>

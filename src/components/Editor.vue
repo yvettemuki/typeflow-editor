@@ -76,7 +76,7 @@
 						<span class="element-type">Definition</span>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
-							<li class="element-li purefunction-item" data-type="PureFunction">PureFunction</li>
+							<li class="element-li purefunction-item" data-type="PureFunction"><span class="font-item">PureFunction</span></li>
 						</ul>
 					</div>
 					<div class="element-item">
@@ -84,10 +84,10 @@
 						<span class="element-type">InputEndpoint</span>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
-							<li class="element-li" data-type="InputEndpoint">InputEndpoint</li>
-							<li class="element-li" data-type="InputEndpoint">InputEndpoint1</li>
-							<li class="element-li" data-type="InputEndpoint">InputEndpoint2</li>
-							<li class="element-li" data-type="InputEndpoint">InputEndpoint3</li>
+							<li class="element-li" data-type="InputEndpoint"><span class="font-item">InputEndpoint</span></li>
+							<li class="element-li" data-type="InputEndpoint"><span class="font-item">CommandLineArgsInputEndpoint</span></li>
+							<li class="element-li" data-type="InputEndpoint"><span class="font-item">CommandLineInputEndpoint</span></li>
+							<li class="element-li" data-type="InputEndpoint"><span class="font-item">AliyunHttpInputEndpoint</span></li>
 						</ul>
 					</div>
 					<div class="element-item">
@@ -95,8 +95,8 @@
 						<span class="element-type">OutputEndpoint</span>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
-							<li class="element-li" data-type="OutputEndpoint">OutputEndpoint</li>
-							<li class="element-li" data-type="OutputEndpoint">OutputEndpoint1</li>
+							<li class="element-li" data-type="OutputEndpoint"><span class="font-item">OutputEndpoint</span></li>
+							<li class="element-li" data-type="OutputEndpoint"><span class="font-item">FileOutputEndpoint</span></li>
 						</ul>
 					</div>
 					<div class="element-item">
@@ -104,7 +104,7 @@
 						<span class="element-type">Others</span>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
-							<li class="element-li">Resource</li>
+							<li class="element-li"><span class="font-item">Resource</span></li>
 						</ul>
 					</div>
 					<div class="element-item">
@@ -112,7 +112,7 @@
 						<span class="element-type">My Components</span>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
-							<li class="element-li">NumInput</li>
+							<li class="element-li"><span class="font-item">NumInput</span></li>
 						</ul>
 					</div>
 					<div class="element-tool-bar">
@@ -222,7 +222,6 @@
 
 	let graph = null;
 	let undoManager = null;
-	let idSeed = -1;
 
 	const initGraph = () => {
 		graph = genGraph(document.getElementById('mxContainer'));
@@ -934,11 +933,25 @@
 					loading.close();
 				})
 			},
+
+			refreshFontSize: function () {
+				let width = document.getElementsByClassName('element-li')[0].offsetWidth;
+				let elements = document.getElementsByClassName('font-item');
+				Array.from(elements).forEach(ele => {
+					let fontWidth = ele.offsetWidth;
+					if ((fontWidth + 40) > width) {
+						let scale = fontWidth / width;
+						ele.style.fontSize = scale * 100 + '%';
+					}
+				})
+
+			}
 		},
 
 
 
 		mounted() {
+			//this.refreshFontSize();
 			initGraph();
 			this._listenEvent();
 			setConnectValidation(this);
@@ -1262,16 +1275,22 @@
 		overflow-y: scroll;
 	}
 	.element-li {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 		background: #34495D;
 		height: 36px;
-		width: 109px;
-		line-height: 36px;
+		width: 103px;
+		padding: 0 3px 0 3px;
 		border-radius: 4px;
 		color: #ffffff;
-		font-size: 12px;
+		font-size: 11px;
 		font-weight: bold;
 		cursor: cell;
 		margin-bottom: 12px;
+		word-wrap: break-word;
+		word-break: break-all;
+		overflow: hidden;
 	}
 	.purefunction-item {
 		background: #42B982;
@@ -1289,7 +1308,7 @@
 		padding: 10px 20px;
 	}
 	.ele-tool-top-item {
-		font-size: 12px;
+		font-size: 11px;
 		width: 70px;
 		height: 30px;
 		line-height: 30px;

@@ -55,6 +55,7 @@
 				</template>
 			</ImportModelPanel>
 		</div>
+		<div v-if="isExportShow" class="shade-layer" @click="_hideSelector"></div>
 		<div class="main-container">
 			<div class="navigator">
 				<div class="title-logo"><b>TypeFlow Editor</b></div>
@@ -73,7 +74,7 @@
 						v-on="{
 							exportPNG: _exportPNG,
 							exportSVG: _exportSvg,
-							exportXML: _exportXMLFile
+							exportXML: _exportXMLFile,
 							}">
 					</Selector>
 				</div>
@@ -938,6 +939,10 @@
 				undoManager.undo();
 			},
 
+			_hideSelector: function () {
+				this.isExportShow = false;
+			},
+
 			loading: function () {
 				return this.$loading({
 					target: 'typeflow-container',
@@ -1353,6 +1358,13 @@
 	.zoom-title {
 		font-size: 14px;
 		font-weight: bold;
+	}
+	.shade-layer {
+		position: fixed;
+		height: 100%;
+		width: 100%;
+		z-index: 998;
+		background: transparent;
 	}
 </style>
 <style>

@@ -1,5 +1,5 @@
 <template>
-	<ul class="selector-container">
+	<ul class="selector-container" id="selector">
 		<li class="selection-item" @click="_exportPNG"><b>PNG</b></li>
 		<li class="selection-item" @click="_exportSVG"><b>SVG</b></li>
 		<li class="selection-item" @click="_exportXML"><b>XML</b></li>
@@ -27,11 +27,6 @@
 
 			_exportXML: function () {
 				this.$emit('exportXML');
-			},
-
-			_closeExport: function() {
-				window.console.log("tesajroeawjro")
-				this.show = false;
 			},
 		}
 	}

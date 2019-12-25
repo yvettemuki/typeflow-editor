@@ -4,7 +4,7 @@
 
 ## Introduction
 ### Core appearance
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/home2.0.png" width="100%" box-shadow="0 2 8 0 #DCDCDC">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/home2.0.png" width="100%">
 
 
 ### After drag the one of the elements in three types of Definition(PureFunction/InputEndpoint/OutputEndpoint), the form will display to fill 
@@ -13,8 +13,8 @@
 
 ### After fill some Definition creating forms, you can connect them in the rule:
 ###### only same the name output of one Definition instance can connect to another Definition instance's same name input
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/connection_1.png" width="50%">
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/connection_2.png" width="50%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/connection_1.png" width="30%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/connection_2.png" width="30%">
 
 
 ### After finish dragging elements, filling their forms and connecting them, you will get the typeflow model 
@@ -22,8 +22,8 @@
 
 
 ### To check or update the created elements you can *double click* the Definition vertex (InputEndpoint, OutputEndpoint, PureFunction) 
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update1.png" width="20%">
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update2.png" width="20%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update1.png" width="60%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update2.png" width="60%">
 
 
 ### To *undo*, *redo*, *delete*, *zoom*(in/out), you can use the left side tools which are on the bottom of the panel
@@ -45,7 +45,7 @@
 
 
 ### To check some model information
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/model_info.png" width="20%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/model_info.png" width="30%">
 
 ## Project setup
 ```

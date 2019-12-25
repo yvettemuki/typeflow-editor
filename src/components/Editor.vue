@@ -648,6 +648,7 @@
 			},
 
 			_exportXMLFile: function () {
+				this.isExportShow = false;
 				const xml = graph.exportModelXML();
 				const blob = new Blob([xml], {type: "text/plain;charset=utf-8"});
 				FileSaver.saveAs(blob, "model.xml");
@@ -725,11 +726,14 @@
 				link.href = url;
 				link.download = 'model.svg';
 				link.click();
+				this.isExportShow = false;
 			},
 
 			_exportPNG: function () {
+				this.isExportShow = false;
+				let loading = this.loading();
 				let picture = graph.exportPicXML();
-				window.console.log(picture.xml);
+				// window.console.log(picture.xml);
 				this.$axios({
 					method: 'post',
 					url: '/downloadPNG',
@@ -748,7 +752,9 @@
 						link.href = objectUrl;
 						link.download = "model.png";
 						link.click();
+						this.closeLoading(loading);
 					} else {
+						this.closeLoading(loading);
 						this.$message.warning({
 							duration: 1000,
 							iconClass: 'icon',
@@ -758,6 +764,7 @@
 					}
 				})
 				.catch(err => {
+					this.closeLoading(loading);
 					window.console.log(err);
 				})
 
@@ -964,23 +971,11 @@
 				})
 			},
 
-			refreshFontSize: function () {
-				let maxFontSize = "12";
-				let width = document.getElementsByClassName('element-li')[0].offsetWidth;
-				let elements = document.getElementsByClassName('font-item');
-				Array.from(elements).forEach(ele => {
-					let fontWidth = ele.offsetWidth;
-					if ((fontWidth + 9) > width) {
-						ele.style.fontSize = 9;
-					}
-				})
-			},
 		},
 
 
 
 		mounted() {
-			//this.refreshFontSize();
 			initGraph();
 			this._listenEvent();
 			setConnectValidation(this);

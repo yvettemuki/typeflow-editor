@@ -4,32 +4,44 @@
 
 ## Introduction
 ### Core appearance
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/home.png" width="100%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/home2.0.png" width="100%">
 
 
-### After drag the one of the elements in "definitions", the form will display to fill 
+### After drag the one of the elements in three types of Definition(PureFunction/InputEndpoint/OutputEndpoint), the form will display to fill 
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/inputForm.png" width="60%">
 
 
-### After finishing creating your typflow-model
+### After fill some Definition creating forms, you can connect them in the rule:
+###### only same the name output of one Definition instance can connect to another Definition instance's same name input
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/connection_1.png" width="50%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/connection_2.png" width="50%">
+
+
+### After finish dragging elements, filling their forms and connecting them, you will get the typeflow model 
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/draw.png" width="100%">
 
 
-### To **check or update** the created elements you can **double click** the Definition vertex (InputEndpoint, OutputEndpoint, PureFunction) 
+### To check or update the created elements you can *double click* the Definition vertex (InputEndpoint, OutputEndpoint, PureFunction) 
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update1.png" width="60%">
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update2.png" width="60%">
 
 
-### To **delete**, **zoom**(in/out), **export**, **import** or **save**, use the left tool bar
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/toolbar.png" width="20%">
+### To *undo*, *redo*, *delete*, *zoom*(in/out), you can use the left side tools which are on the bottom of the panel
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/toolbar2.0.png" width="20%">
 
 
-### When import, you can choose import **from local** or **from database**
+### To *import model*, *export model*, *generate code* and *save model*, you can click the buttons on the top side
+###### export can choose 3 types: png, svg and xml
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/file_multipulate.png" width="40%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/export.png" width="40%">
+
+
+### When import, you can choose import *from local* or *from database*
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/import_choose.png" width="50%">
 
 
-### When from **database**
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/choose_panel.png" width="100%">
+### When from *database*, and you can delete model when click the "delete" button on the right top side of each item
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/import_choose.png" width="100%">
 
 
 ## Project setup

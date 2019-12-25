@@ -1329,7 +1329,7 @@
 		padding: 0 8px 0 8px;
 		border-radius: 4px;
 		color: #ffffff;
-		font-size: 11px;
+		font-size: 12px;
 		font-weight: bold;
 		cursor: cell;
 		margin-bottom: 12px;

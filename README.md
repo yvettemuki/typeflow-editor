@@ -4,7 +4,7 @@
 
 ## Introduction
 ### Core appearance
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/home2.0.png" width="100%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/home2.0.png" width="100%" box-shadow="0 2 8 0 #DCDCDC">
 
 
 ### After drag the one of the elements in three types of Definition(PureFunction/InputEndpoint/OutputEndpoint), the form will display to fill 
@@ -22,8 +22,8 @@
 
 
 ### To check or update the created elements you can *double click* the Definition vertex (InputEndpoint, OutputEndpoint, PureFunction) 
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update1.png" width="40%">
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update2.png" width="40%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update1.png" width="20%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update2.png" width="20%">
 
 
 ### To *undo*, *redo*, *delete*, *zoom*(in/out), you can use the left side tools which are on the bottom of the panel

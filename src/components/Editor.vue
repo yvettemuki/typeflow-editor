@@ -87,7 +87,7 @@
 						<span class="element-type">Definition</span>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
-							<li class="element-li purefunction-item" data-type="PureFunction"><span class="font-item">PureFunction</span></li>
+							<li class="element-li purefunction-item" data-type="PureFunction" data-subtype="PureFunction"><span class="font-item">PureFunction</span></li>
 						</ul>
 					</div>
 					<div class="element-item">
@@ -95,10 +95,9 @@
 						<span class="element-type">InputEndpoint</span>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
-							<li class="element-li" data-type="InputEndpoint"><span class="font-item">InputEndpoint</span></li>
-							<li class="element-li" data-type="InputEndpoint"><span class="font-item">CommandLineArgsInputEndpoint</span></li>
-							<li class="element-li" data-type="InputEndpoint"><span class="font-item">CommandLineInputEndpoint</span></li>
-							<li class="element-li" data-type="InputEndpoint"><span class="font-item">AliyunHttpInputEndpoint</span></li>
+							<li class="element-li" data-type="CommandLineArgsInputEndpoint"><span class="font-item">CommandLineArgsInputEndpoint</span></li>
+							<li class="element-li" data-type="CommandLineInputEndpoint"><span class="font-item">CommandLineInputEndpoint</span></li>
+							<li class="element-li" data-type="AliyunHttpInputEndpoint"><span class="font-item">AliyunHttpInputEndpoint</span></li>
 						</ul>
 					</div>
 					<div class="element-item">
@@ -106,8 +105,7 @@
 						<span class="element-type">OutputEndpoint</span>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
-							<li class="element-li" data-type="OutputEndpoint"><span class="font-item">OutputEndpoint</span></li>
-							<li class="element-li" data-type="OutputEndpoint"><span class="font-item">FileOutputEndpoint</span></li>
+							<li class="element-li" data-type="FileOutputEndpoint"><span class="font-item">FileOutputEndpoint</span></li>
 						</ul>
 					</div>
 					<div class="element-item">
@@ -115,7 +113,7 @@
 						<span class="element-type">Others</span>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
-							<li class="element-li"><span class="font-item">Resource</span></li>
+							<li class="element-li" data-type="Resource"><span class="font-item">Resource</span></li>
 						</ul>
 					</div>
 					<div class="element-item">
@@ -123,7 +121,7 @@
 						<span class="element-type">My Components</span>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
-							<li class="element-li"><span class="font-item">NumInput</span></li>
+							<li class="element-li" data-type="Customize"><span class="font-item">NumInput</span></li>
 						</ul>
 					</div>
 					<div class="element-tool-bar">
@@ -272,7 +270,7 @@
 	}
 
 	const insertVertex = (dom, target, x, y) => {
-		const defiType = dom.getAttribute('data-type');
+		let defiType = dom.getAttribute('data-type');
 		let newVertex;
 		if (defiType == 'PureFunction') {
 			newVertex = new mxCell(defiType, new mxGeometry(0, 0, 160, 50), `function_node`);
@@ -280,12 +278,14 @@
 			newVertex.data = {
 				definition: null
 			}
-		} else if (defiType == 'InputEndpoint' || defiType == 'OutputEndpoint') {
+		} else if (defiType.includes('InputEndpoint') || defiType.includes('OutputEndpoint')) {
+			window.console.log("rrewarawr");
 			newVertex = new mxCell(defiType, new mxGeometry(0, 0, 160, 50), `endpoint_node`);
 			newVertex.data = {
 				definition: null
 			}
 		} else {
+			window.console.log("test");
 			newVertex = new mxCell(defiType, new mxGeometry(0, 0, 160, 50), `resource_node`);
 			newVertex.data = {
 				resource: null
@@ -304,7 +304,9 @@
 		graph.getModel().setValue(defiVertex, definition.name);
 		defiVertex.data.definition = definition;
 
-		let width = calFontWidth(definition.name);
+		let widthName = calFontWidth(definition.name, 1);
+		let widthType = calFontWidth(definition.type, 0);
+		let width = Math.max(widthName, widthType);
 		var geo = graph.getCellGeometry(defiVertex);
 		geo = geo.clone();
 		geo.width = width;
@@ -384,7 +386,7 @@
 		let resVertex = graph.getModel().getCell(id);
 		graph.getModel().setValue(resVertex, name);
 
-		let width = calFontWidth(name);
+		let width = calFontWidth(name, 1);
 		var geo = graph.getCellGeometry(resVertex);
 		geo = geo.clone();
 		geo.width = width;
@@ -435,9 +437,15 @@
 		})
 	};
 
-	const calFontWidth = (str) => {
+	const calFontWidth = (str, type) => {
 		let len = str.length;
-		len = (len * 14 + 4) > 160 ? (len * 14 + 4) : 160;
+		if ( type == 0) {
+			//definition type
+			len = (len * 8 + 4) > 160 ? (len * 8 + 4) : 160;
+		} else if (type == 1) {
+			//definition name
+			len = (len * 14 + 4) > 160 ? (len * 14 + 4) : 160;
+		}
 		return len;
 	};
 
@@ -581,7 +589,7 @@
 						return;
 					}
 					if (cell.vertex) {
-						if (cell.value == 'PureFunction' || cell.value == 'InputEndpoint' || cell.value == 'OutputEndpoint') {
+						if (cell.value == 'PureFunction' || cell.value.includes('InputEndpoint') || cell.value.includes('OutputEndpoint')) {
 							this.nowDefiType = cell.getValue();
 							this.nowVertexId = cell.getId();
 							this.isFormShow = true;

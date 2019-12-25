@@ -16,7 +16,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json; charset=utf-8';
 axios.defaults.crossDomain = true;
 axios.defaults.withCredentials = true;
 //axios.defaults.headers.common['Authorization'] = '';
-axios.defaults.timeout = 5000;
+axios.defaults.timeout = 10000;
 Vue.prototype.$axios = axios;
 Vue.config.productionTip = false;
 

@@ -33,7 +33,7 @@
 ### To *import model*, *export model*, *generate code* and *save model*, you can click the buttons on the top side
 ###### export can choose 3 types: png, svg and xml
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/file_multipulate.png" width="40%">
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/export.png" width="20%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/export.png" width="10%">
 
 
 ### When import, you can choose import *from local* or *from database*

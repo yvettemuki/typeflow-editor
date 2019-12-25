@@ -965,6 +965,7 @@
 			},
 
 			refreshFontSize: function () {
+				let maxFontSize = "12";
 				let width = document.getElementsByClassName('element-li')[0].offsetWidth;
 				let elements = document.getElementsByClassName('font-item');
 				Array.from(elements).forEach(ele => {
@@ -1308,16 +1309,16 @@
 		justify-content: center;
 		background: #34495D;
 		height: 36px;
-		width: 100px;
-		padding: 0 4.5px 0 4.5px;
+		//width: 100px;
+		padding: 0 8px 0 8px;
 		border-radius: 4px;
 		color: #ffffff;
 		font-size: 11px;
 		font-weight: bold;
 		cursor: cell;
 		margin-bottom: 12px;
-		word-wrap:break-word;
-		word-break:break-all;
+		/*word-wrap:break-word;*/
+		/*word-break:break-all;*/
 	}
 	.purefunction-item {
 		background: #42B982;

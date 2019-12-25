@@ -22,8 +22,8 @@
 
 
 ### To check or update the created elements you can *double click* the Definition vertex (InputEndpoint, OutputEndpoint, PureFunction) 
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update1.png" width="60%">
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update2.png" width="60%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update1.png" width="40%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update2.png" width="40%">
 
 
 ### To *undo*, *redo*, *delete*, *zoom*(in/out), you can use the left side tools which are on the bottom of the panel
@@ -33,16 +33,19 @@
 ### To *import model*, *export model*, *generate code* and *save model*, you can click the buttons on the top side
 ###### export can choose 3 types: png, svg and xml
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/file_multipulate.png" width="40%">
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/export.png" width="40%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/export.png" width="20%">
 
 
 ### When import, you can choose import *from local* or *from database*
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/import_choose.png" width="50%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/import_selection.png" width="50%">
 
 
 ### When from *database*, and you can delete model when click the "delete" button on the right top side of each item
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/import_choose.png" width="100%">
 
+
+### To check some model information
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/model_info.png" width="20%">
 
 ## Project setup
 ```

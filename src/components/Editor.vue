@@ -49,7 +49,7 @@
 					closeImportPanel: _closeImportPanel
 				}">
 				<template v-slot:model="{ model }">
-					<button class="delete-model" @click="_deleteModel(model.name)">delete</button>
+					<button class="delete-btn" @click="_deleteModel(model)"></button>
 					<ModelSvg
 						class="model-div"
 						:model = "model"
@@ -963,8 +963,20 @@
 				this.isExportShow = false;
 			},
 
-			_deleteModel: function (id) {
-				window.console.log("in the delete button");
+			_deleteModel: function (model) {
+				let name = model.name;
+				this.$axios({
+					method: 'post',
+					url: '/deleteModel',
+					data: name
+				})
+				.then(res => {
+					window.console.log(res);
+					if (res.data.success) {
+						let index = this.modelList.indexOf(model);
+						this.modelList.splice(index, 1);
+					}
+				})
 			},
 
 			loading: function () {
@@ -1379,8 +1391,19 @@
 		z-index: 998;
 		background: transparent;
 	}
-	.delete-model {
-		color: #333333;
+	.delete-btn {
+		position: relative;
+		top: 14px;
+		left: 68px;
+		height: 10px;
+		width: 10px;
+		background-image: url("../assets/close_btn_2.png");
+		background-repeat: no-repeat;
+		background-size: 100%;
+		cursor: pointer;
+	}
+	.delete-btn:hover {
+		background-image: url("../assets/close_btn_hover.png");
 	}
 </style>
 <style>

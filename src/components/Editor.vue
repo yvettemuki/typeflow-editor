@@ -46,11 +46,16 @@
 			<ImportModelPanel
 				v-bind:modelList="modelList"
 				v-on="{
-					getValueFromImportPanel: _getValueFromImport,
 					closeImportPanel: _closeImportPanel
 				}">
 				<template v-slot:model="{ model }">
-					<ModelSvg class="model-div" :xml="model.svgXml" :id="model.name"></ModelSvg>
+					<button class="delete-model" @click="_deleteModel(model.name)">delete</button>
+					<ModelSvg
+						class="model-div"
+						:model = "model"
+						v-on="{
+							getModelItem: _getValueFromImport
+						}"/>
 					<span class="model-name"><b>{{model.name}}</b></span>
 				</template>
 			</ImportModelPanel>
@@ -958,6 +963,10 @@
 				this.isExportShow = false;
 			},
 
+			_deleteModel: function (id) {
+				window.console.log("in the delete button");
+			},
+
 			loading: function () {
 				return this.$loading({
 					target: 'typeflow-container',
@@ -1369,6 +1378,9 @@
 		width: 100%;
 		z-index: 998;
 		background: transparent;
+	}
+	.delete-model {
+		color: #333333;
 	}
 </style>
 <style>

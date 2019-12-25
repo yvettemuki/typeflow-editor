@@ -1,26 +1,25 @@
 <template>
-	<div :id="id"></div>
+	<div :id="model.name" @click="_chooseItem(model)"></div>
 </template>
 
 <script>
 	export default {
 		name: "ModelSvg",
 		props: {
-			id: {
+			model: {
 				default: null,
-				type: String,
-			},
-			xml: {
-				default: null,
-				type: String
+				type: Object
 			}
 		},
 		methods: {
 			_toSvgDom: function () {
-				let svg = this.xml;
-				let container = document.getElementById(this.id);
+				let svg = this.model.svgXml;
+				let container = document.getElementById(this.model.name);
 				container.innerHTML = svg;
+			},
 
+			_chooseItem: function (model) {
+				this.$emit('getModelItem', model);
 			}
 		},
 

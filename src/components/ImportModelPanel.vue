@@ -5,8 +5,7 @@
 		<ul class="import-list-view">
 			<li v-for="(model, idx) in modelList"
 				:key="idx"
-				class="model-li"
-				@click="_sendSelectModel(model)">
+				class="model-li">
 				<slot name="model" v-bind:model="model"></slot>
 			</li>
 		</ul>
@@ -32,9 +31,9 @@
 				this.$emit("closeImportPanel");
 			},
 
-			_sendSelectModel: function (model) {
-				this.$emit("getValueFromImportPanel", model);
-			}
+			// _sendSelectModel: function (model) {
+			// 	this.$emit("getValueFromImportPanel", model);
+			// }
 		}
 	}
 </script>

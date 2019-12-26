@@ -228,7 +228,6 @@
 				definition: null
 			}
 		} else if (defiType.includes('InputEndpoint') || defiType.includes('OutputEndpoint')) {
-			window.console.log("rrewarawr");
 			newVertex = new mxCell(defiType, new mxGeometry(0, 0, 160, 50), `endpoint_node`);
 			newVertex.data = {
 				definition: null
@@ -1225,6 +1224,7 @@
 		box-shadow: 0px 1px 8px 0px #ebebeb;
 	}
 	.graph-container {
+		position: relative;
 		height: 100%;
 		flex: 1;
 		box-shadow: 0px 1px 4px 0px #dcdcdc;

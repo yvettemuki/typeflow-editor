@@ -143,71 +143,15 @@
 						</div>
 					</div>
 				</div>
-				<div class="graph-container">
-					<div id="mxContainer"></div>
-				</div>
-<!--				<ul id="definitionList">-->
-<!--					<span class="left-elements-title"><b>Definitions</b></span>-->
-<!--					<div class="left-basic-li">-->
-<!--						<li-->
-<!--							v-for="(ele, idx) in resElements"-->
-<!--							:key="idx">-->
-<!--							<div-->
-<!--								v-if="ele.defiType == 'PureFunction'"-->
-<!--								:data-type="ele.defiType"-->
-<!--								class="mxResElement leftElement"-->
-<!--								id="pureFunctionElement">-->
-<!--								{{ele.defiType}}-->
-<!--							</div>-->
-<!--							<div-->
-<!--								v-else-->
-<!--								:data-type="ele.defiType"-->
-<!--								class="mxResElement leftElement"-->
-<!--								id="endpointElement">-->
-<!--								{{ele.defiType}}-->
-<!--							</div>-->
-<!--						</li>-->
-<!--					</div>-->
-<!--					<span class="left-elements-title"><b>Resources</b></span>-->
-<!--					<div class="left-basic-li">-->
-<!--						<li-->
-<!--							class="mxResElement leftElement resourceElement"-->
-<!--							:data-type="'Resource'">Resource-->
-<!--						</li>-->
-<!--					</div>-->
-<!--					<span class="left-elements-title"><b>Tools</b></span>-->
-<!--					<div class="left-basic-li function-div">-->
-<!--						<li class="leftElement functionElement deleteSelected" @click="_deleteSelected">Delete</li>-->
-<!--						<li class="leftElement functionElement save" @click="_undoModel">Undo</li>-->
-<!--						<li class="leftElement functionElement save" @click="_saveModel">Save Model</li>-->
-<!--						<li class="leftElement functionElement save" @click="_generateCode">Generate Code</li>-->
-<!--						<li class="leftElement functionElement export" @click="_importModel">Import Model</li>-->
-<!--						<li class="leftElement functionElement export" @click="_exportSvg">Export SVG</li>-->
-<!--						<li class="leftElement functionElement export" @click="_exportPNG">Export PNG</li>-->
-<!--						<li class="leftElement functionElement export" @click="_exportXMLFile">Export XML</li>-->
-<!--						<input class="file-input" @change="_readFile" type="file" ref="importFile"/>-->
-<!--					</div>-->
-<!--					<span class="left-elements-title"><b>Zoom</b></span>-->
-<!--					<li class="zoom-li">-->
-<!--						<Add weight="4" size="16" radius="100" color="#000000" @click.native="_zoomIn"></Add>-->
-<!--						<Delete height="4" width="16" radius="999" color="#000000" @click.native="_zoomOut"></Delete>-->
-<!--					</li>-->
-<!--				</ul>-->
-<!--				<div class="right-elements-div">-->
-<!--					<div class="container-border">-->
-<!--						<div id="mxContainer"></div>-->
-<!--					</div>-->
-<!--				</div>-->
+				<div class="graph-container" id="mxContainer"></div>
 			</div>
-
 		</div>
-		<!--    <div id="test-font-width"></div>-->
 	</div>
 </template>
 <script>
 	import mxgraph from "../graph/index";
 	import FillForm from "./FillForm";
-	import {genGraph, destroyGraph, Graph} from "../graph/Graph";
+	import {genGraph} from "../graph/Graph";
 	import {resElements} from "../common/data";
 	import Add from "./Add";
 	import Delete from "./Delete";
@@ -991,7 +935,6 @@
 					loading.close();
 				})
 			},
-
 		},
 
 
@@ -1021,13 +964,6 @@
 	.title {
 		font-size: 22px;
 		margin: 20px 0 20px 0;
-	}
-
-	#mxContainer {
-		background: #efefef;
-		width: 100%;
-		overflow: scroll;
-		height: 100%;
 	}
 
 	.container-border {
@@ -1294,6 +1230,7 @@
 		box-shadow: 0px 1px 4px 0px #dcdcdc;
 		background: #f7f7f7;
 		margin: 0 20px 0px 14px;
+		overflow: auto;
 	}
 	.element-item {
 		display: flex;

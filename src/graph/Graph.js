@@ -14,18 +14,13 @@ const {
     mxEdgeHandler,
     mxShape,
     mxConnectionConstraint,
-    mxConstraintHandler,
-    mxConnectionHandler,
     mxPoint,
     mxEventObject,
     mxCodec,
-    mxEdgeStyle,
-    mxObjectCodec,
     mxUtils,
     mxImageExport,
     mxXmlCanvas2D,
     mxSvgCanvas2D,
-    mxCodecRegistry,
 } = mxgraph;
 
 Object.assign(mxEvent, {

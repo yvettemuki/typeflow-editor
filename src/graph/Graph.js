@@ -37,7 +37,7 @@ export class Graph extends mxGraph {
 
     _init() {
         this._setDefaultConfig();
-        this._setCanvasConfig();
+        //this._setCanvasConfig();
         this._configConstituent();
         this._putVertexStyle();
         this._setDefaultEdgeStyle();

@@ -37,7 +37,7 @@ export class Graph extends mxGraph {
 
     _init() {
         this._setDefaultConfig();
-        //this._setCanvasConfig();
+        this._setCanvasConfig();
         this._configConstituent();
         this._putVertexStyle();
         this._setDefaultEdgeStyle();
@@ -76,16 +76,12 @@ export class Graph extends mxGraph {
     }
 
     _setCanvasConfig() {
-        // //可以平移
-        this.panningHandler.ignoreCell = true;
-        this.setPanning(true);
 
         this.scrollTileSize = new mxRectangle(0, 0, 400, 400);
 
         //返回padding
         this.getPagePadding = function () {
-            return new mxPoint(Math.max(0, Math.round(this.container.offsetWidth - 34)),
-              Math.max(0, Math.round(this.container.offsetHeight - 34)));
+            return new mxPoint(10,10);
         };
 
         /**

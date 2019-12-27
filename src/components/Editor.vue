@@ -143,7 +143,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="graph-container" id="mxContainer"></div>
+				<div class="graph-container" id="mxContainer">
+<!--					<div class="mxBackground"></div>-->
+				</div>
 			</div>
 		</div>
 	</div>
@@ -1341,6 +1343,15 @@
 	}
 	.delete-btn:hover {
 		background-image: url("../assets/close_btn_hover.png");
+	}
+	.mxBackground {
+		height: 100%;
+		width: 100%;
+		position: relative;
+		overflow: hidden;
+		left: 0px;
+		right: 0px;
+		background: #ffffff;
 	}
 </style>
 <style>

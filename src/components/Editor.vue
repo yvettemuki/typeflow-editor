@@ -186,7 +186,6 @@
 
 	const initGraph = () => {
 		graph = genGraph(document.getElementById('mxContainer'));
-		// makeDraggable(document.getElementsByClassName('mxResElement'));
 		makeDraggable(document.getElementsByClassName('element-li'));
 		listenGraphEvent();
 	}

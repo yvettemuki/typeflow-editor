@@ -94,6 +94,7 @@ export class Graph extends mxGraph {
     _setBackgroundDefault() {
         this.transparentBackground = false;
         this.pageVisible = true;
+        this.preferPageSize = false;
     }
 
     _setCanvasConfig() {
@@ -163,8 +164,8 @@ export class Graph extends mxGraph {
 
                         this.backgroundPageShape.scale = 1;
                         this.backgroundPageShape.bounds = currentPageBounds;
+                        graph.pageFormat = currentPageBounds;
                         this.backgroundPageShape.redraw();  //mxShape function to redraw the page(actually the canvas of the editor)
-                        graph.container.style.overflow = 'auto';
                     }
                 } else if (this.backgroundPageShape != null) {
                     this.backgroundPageShape.destroy();
@@ -174,6 +175,36 @@ export class Graph extends mxGraph {
                 //this.validateBackgroundStyles(); //设置backgroundPage的样式，注销表示没有格子样式
             }
         };
+
+        mxGraphView.prototype.getBackgroundPageBounds = function () {
+            window.console.log("test in the ")
+            var gb = this.getGraphBounds();
+
+            // Computes unscaled, untranslated graph bounds
+            window.console.log(gb.x + " " + this.translate.x);
+            var x = (gb.width > 0) ? gb.x / this.scale - this.translate.x : 0;
+            var y = (gb.height > 0) ? gb.y / this.scale - this.translate.y : 0;
+            var w = gb.width / this.scale;
+            var h = gb.height / this.scale;
+
+            var fmt = this.graph.pageFormat;
+            var ps = this.graph.pageScale;
+
+            var pw = fmt.width * ps;
+            var ph = fmt.height * ps;
+
+            var x0 = Math.floor(Math.min(0, x) / pw);
+            var y0 = Math.floor(Math.min(0, y) / ph);
+            var xe = Math.ceil(Math.max(1, x + w) / pw);
+            var ye = Math.ceil(Math.max(1, y + h) / ph);
+
+            var rows = xe - x0;
+            var cols = ye - y0;
+
+            var bounds = new mxRectangle(this.scale * (this.translate.x + x0 * pw), this.scale *
+              (this.translate.y + y0 * ph), this.scale * rows * pw, this.scale * cols * ph);
+            return bounds;
+        }
     }
 
     _setDefaultConfig() {
@@ -569,7 +600,7 @@ export class Graph extends mxGraph {
 }
 
 let graph = {};
-let currentPageBounds = null;
+let currentPageBounds = mxConstants.PAGE_FORMAT_A4_PORTRAIT;
 
 export const destroyGraph = () => {
     graph.destroy();

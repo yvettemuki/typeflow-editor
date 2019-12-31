@@ -136,10 +136,22 @@
 							<span class="ele-tool-top-item">Redo</span>
 							<span class="ele-tool-top-item" id="delete-item" @click="_deleteSelected">Delete</span>
 						</div>
-						<span class="zoom-title">Zoom</span>
-						<div class="zoom">
-							<Add weight="4" size="16" radius="100" color="#000000" @click.native="_zoomIn"></Add>
-							<Delete height="4" width="16" radius="999" color="#000000" @click.native="_zoomOut"></Delete>
+						<div class="ele-tool-bottom">
+							<div class="bottom-item">
+								<span class="zoom-title">Zoom</span>
+								<div class="zoom">
+									<Add weight="4" size="16" radius="100" color="#000000" @click.native="_zoomIn"></Add>
+									<Delete height="4" width="16" radius="999" color="#000000" @click.native="_zoomOut"></Delete>
+								</div>
+							</div>
+							<div class="bottom-item">
+								<span class="zoom-title">Size</span>
+								<select class="zoom" v-model="selected" @change="_sizeSelected">
+									<option value="a4">A4 (210 mm x 297 mm)</option>
+									<option value="a5">A5 (148 mm x 210 mm)</option>
+									<option value="custom">length and width</option>
+								</select>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -493,6 +505,7 @@
 				isSelectViewShow: false,
 				isModelSave: false,
 				isExportShow: false,
+				selected: 'a4'
 			};
 		},
 
@@ -922,6 +935,10 @@
 					})
 			},
 
+			_sizeSelected: function() {
+				graph.updateBackgroundPage(this.selected);
+			},
+
 			loading: function () {
 				return this.$loading({
 					target: 'typeflow-container',
@@ -1313,7 +1330,7 @@
 		align-items: center;
 		background: #ffffff;
 		padding: 0px 10px 0px 10px;
-		margin: 10px 20px 10px 20px;
+		margin: 10px 0;
 		border-radius: 999px;
 		box-shadow: 0px 1px 2px 1.5px #e3e3e3;
 	}
@@ -1341,6 +1358,18 @@
 	}
 	.delete-btn:hover {
 		background-image: url("../assets/close_btn_hover.png");
+	}
+	.ele-tool-bottom {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		margin-left: 20px;
+		margin-right: 20px;
+	}
+	.bottom-item {
+		display: flex;
+		flex-direction: column;
+		width: 45%;
 	}
 </style>
 <style>

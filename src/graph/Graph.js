@@ -51,11 +51,11 @@ export class Graph extends mxGraph {
         this._setAnchors();
         this._configCustomEvent();
         this._restoreModel();
-        this._updateGraph();
+        this._updateCanvas();
     }
 
 
-    _updateGraph() {
+    _updateCanvas() {
         let graph = this;
         if (graph.container != null) {
             graph.view.validateBackground();
@@ -556,6 +556,20 @@ export class Graph extends mxGraph {
         return false;
     }
 
+    updateBackgroundPage(selected) {
+        window.console.log("in the update");
+        let newBounds;
+        if (selected.includes('a4')) {
+            newBounds = new mxRectangle(0, 0, 827, 1169);
+        } else if (selected.includes('a5')) {
+            newBounds = new mxRectangle(0, 0, 583, 827);
+        } else {
+            newBounds = new mxRectangle(0, 0, 400, 400);
+        }
+        graph.view.backgroundPageShape.bounds = newBounds;
+        graph.view.backgroundPageShape.scale = 1;
+        graph.view.backgroundPageShape.redraw();
+    }
 
 }
 

@@ -138,10 +138,33 @@ export class Graph extends mxGraph {
                         }
                     } else {
                         window.console.log("in the not null");
-                        bounds = currentPageBounds;
+                        let graphBounds = this.getGraphBounds();
+                        let scale = this.scale;
+                        let gw = graphBounds.width;
+                        let gh = graphBounds.height;
+                        let gx = graphBounds.x;
+                        let gy = graphBounds.y;
+
+                        let pw = currentPageBounds.width;
+                        let ph = currentPageBounds.height;
+
+                        let dx = Math.ceil(gw + gx);
+                        let dy = Math.ceil(gh + gy);
+
+                        if (dx >= pw || dy >= ph) {
+                            if (dx >= pw && dy < ph) {
+                                currentPageBounds = new mxRectangle(0, 0, dx * 2, ph);
+                            } else if (dx < pw && dy >= ph) {
+                                currentPageBounds = new mxRectangle(0, 0, pw, dy*2);
+                            } else {
+                                currentPageBounds = new mxRectangle(0, 0, dx * 2, dy * 2);
+                            }
+                        }
+
                         this.backgroundPageShape.scale = 1;
-                        this.backgroundPageShape.bounds = bounds;
+                        this.backgroundPageShape.bounds = currentPageBounds;
                         this.backgroundPageShape.redraw();  //mxShape function to redraw the page(actually the canvas of the editor)
+                        graph.container.style.overflow = 'auto';
                     }
                 } else if (this.backgroundPageShape != null) {
                     this.backgroundPageShape.destroy();

@@ -94,6 +94,7 @@ export class Graph extends mxGraph {
     _setBackgroundDefault() {
         this.transparentBackground = false;
         this.pageVisible = true;
+        this.pageScale = 1;
         this.preferPageSize = false;
     }
 
@@ -105,6 +106,7 @@ export class Graph extends mxGraph {
             if (graph.container != null && !graph.transparentBackground) {
                 if (graph.pageVisible) {
                     window.console.log("validate background page && is page visible");
+                    graph.pageFormat = mxConstants.PAGE_FORMAT_A4_PORTRAIT;
                     var bounds = this.getBackgroundPageBounds();
                     //console.log("the bound of background page is: " + bounds.height + " " + bounds.width);
 
@@ -148,17 +150,27 @@ export class Graph extends mxGraph {
 
                         let pw = currentPageBounds.width;
                         let ph = currentPageBounds.height;
-
                         let dx = Math.ceil(gw + gx);
                         let dy = Math.ceil(gh + gy);
 
+                        let conW = graph.container.clientWidth;
+                        let conH = graph.container.clientHeight;
+                        let px = (conW - pw) / 2;
+                        let py = (conH - ph) / 2;
+                        window.console.log(px);
+                        window.console.log(py);
+                        let conScale = graph.view.scale;
+                        // graph.container.scrollLeft = px * conScale;
+                        // graph.container.scrollTop = py * conScale;
+
+                        //adjust the page size
                         if (dx >= pw || dy >= ph) {
                             if (dx >= pw && dy < ph) {
-                                currentPageBounds = new mxRectangle(0, 0, dx * 2, ph);
+                                currentPageBounds = new mxRectangle(0, 0, dx + 20, ph);
                             } else if (dx < pw && dy >= ph) {
-                                currentPageBounds = new mxRectangle(0, 0, pw, dy*2);
+                                currentPageBounds = new mxRectangle(0, 0, pw, dy + 20);
                             } else {
-                                currentPageBounds = new mxRectangle(0, 0, dx * 2, dy * 2);
+                                currentPageBounds = new mxRectangle(0, 0, dx + 20, dy + 20);
                             }
                         }
 
@@ -176,35 +188,25 @@ export class Graph extends mxGraph {
             }
         };
 
-        mxGraphView.prototype.getBackgroundPageBounds = function () {
-            window.console.log("test in the ")
-            var gb = this.getGraphBounds();
 
-            // Computes unscaled, untranslated graph bounds
-            window.console.log(gb.x + " " + this.translate.x);
-            var x = (gb.width > 0) ? gb.x / this.scale - this.translate.x : 0;
-            var y = (gb.height > 0) ? gb.y / this.scale - this.translate.y : 0;
-            var w = gb.width / this.scale;
-            var h = gb.height / this.scale;
+    }
 
-            var fmt = this.graph.pageFormat;
-            var ps = this.graph.pageScale;
+    _resetScrollBars() {
+        let conScale = this.view.scale;
 
-            var pw = fmt.width * ps;
-            var ph = fmt.height * ps;
+        let pw = currentPageBounds.width;
+        let ph = currentPageBounds.height;
+        let conW = this.container.width;
+        let conH = this.container.height;
 
-            var x0 = Math.floor(Math.min(0, x) / pw);
-            var y0 = Math.floor(Math.min(0, y) / ph);
-            var xe = Math.ceil(Math.max(1, x + w) / pw);
-            var ye = Math.ceil(Math.max(1, y + h) / ph);
+        let px = (conW - pw) / 2;
+        let py = (conH - ph) / 2;
 
-            var rows = xe - x0;
-            var cols = ye - y0;
+        this.container.scrollLeft = px * conScale;
+        this.container.scrollTop = py * conScale;
 
-            var bounds = new mxRectangle(this.scale * (this.translate.x + x0 * pw), this.scale *
-              (this.translate.y + y0 * ph), this.scale * rows * pw, this.scale * cols * ph);
-            return bounds;
-        }
+
+
     }
 
     _setDefaultConfig() {
@@ -593,6 +595,7 @@ export class Graph extends mxGraph {
         }
         graph.view.backgroundPageShape.bounds = newBounds;
         graph.view.backgroundPageShape.scale = 1;
+        graph.pageFormat = newBounds;
         graph.view.backgroundPageShape.redraw();
         currentPageBounds = newBounds;
     }

@@ -106,9 +106,7 @@ export class Graph extends mxGraph {
             if (graph.container != null && !graph.transparentBackground) {
                 if (graph.pageVisible) {
                     window.console.log("validate background page && is page visible");
-                    graph.pageFormat = mxConstants.PAGE_FORMAT_A4_PORTRAIT;
-                    var bounds = this.getBackgroundPageBounds();
-                    //console.log("the bound of background page is: " + bounds.height + " " + bounds.width);
+                    currentPageBounds = this.getBackgroundPageBounds();
 
                     if (this.backgroundPageShape == null) {
                         window.console.log("in the null");
@@ -123,7 +121,8 @@ export class Graph extends mxGraph {
 
                         if (firstChild != null) {
                             window.console.log("in the not null child2");
-                            this.backgroundPageShape = this.createBackgroundPageShape(bounds);
+                            //this.resetPagePosition();
+                            this.backgroundPageShape = this.createBackgroundPageShape(currentPageBounds);
                             this.backgroundPageShape.scale = 1;
 
                             // Shadow filter causes problems in outline window in quirks mode. IE8 standards
@@ -153,16 +152,6 @@ export class Graph extends mxGraph {
                         let dx = Math.ceil(gw + gx);
                         let dy = Math.ceil(gh + gy);
 
-                        let conW = graph.container.clientWidth;
-                        let conH = graph.container.clientHeight;
-                        let px = (conW - pw) / 2;
-                        let py = (conH - ph) / 2;
-                        window.console.log(px);
-                        window.console.log(py);
-                        let conScale = graph.view.scale;
-                        // graph.container.scrollLeft = px * conScale;
-                        // graph.container.scrollTop = py * conScale;
-
                         //adjust the page size
                         if (dx >= pw || dy >= ph) {
                             if (dx >= pw && dy < ph) {
@@ -175,6 +164,7 @@ export class Graph extends mxGraph {
                         }
 
                         this.backgroundPageShape.scale = 1;
+                        //this.resetPagePosition();
                         this.backgroundPageShape.bounds = currentPageBounds;
                         graph.pageFormat = currentPageBounds;
                         this.backgroundPageShape.redraw();  //mxShape function to redraw the page(actually the canvas of the editor)
@@ -188,25 +178,15 @@ export class Graph extends mxGraph {
             }
         };
 
-
-    }
-
-    _resetScrollBars() {
-        let conScale = this.view.scale;
-
-        let pw = currentPageBounds.width;
-        let ph = currentPageBounds.height;
-        let conW = this.container.width;
-        let conH = this.container.height;
-
-        let px = (conW - pw) / 2;
-        let py = (conH - ph) / 2;
-
-        this.container.scrollLeft = px * conScale;
-        this.container.scrollTop = py * conScale;
-
-
-
+        mxGraphView.prototype.resetPagePosition = function () {
+            var graph = this.graph;
+            let conScale = this.scale;
+            let pw = currentPageBounds.width;
+            let conW = graph.container.clientWidth;
+            let px = (conW - pw) / 2;
+            window.console.log("test in the reset page function " + px);
+            currentPageBounds = new mxRectangle(px, 0, currentPageBounds.width, currentPageBounds.height);
+        };
     }
 
     _setDefaultConfig() {

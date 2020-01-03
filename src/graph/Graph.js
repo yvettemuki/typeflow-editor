@@ -303,13 +303,16 @@ export class Graph extends mxGraph {
                     // if zoom method is always used to set the current scale on the graph.
                     this.translate.x = pad.x / this.scale - (this.x0 || 0) * size.width; //34
                     this.translate.y = pad.y / this.scale - (this.y0 || 0) * size.height; //34
-
-                    window.console.log("the translate x is: " + this.translate.x);
-
                 }
+
+                this.backgroundPageShape.node.style.boxShadow = '0px 2px 8px 0px #dcdcdc';
+                this.backgroundPageShape.node.style.border = 'none';
+                this.backgroundPageShape.node.style.backgroundColor = '#ffffff';
             }
         };
+
         this.view.validateBackgroundPage();
+
     }
 
     _setDefaultConfig() {

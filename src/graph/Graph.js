@@ -22,10 +22,8 @@ const {
     mxXmlCanvas2D,
     mxSvgCanvas2D,
     mxRectangle,
-    mxMouseEvent,
     mxClient,
     mxGraphView,
-    Base64,
 
 } = mxgraph;
 
@@ -121,7 +119,6 @@ export class Graph extends mxGraph {
 
                         if (firstChild != null) {
                             window.console.log("in the not null child2");
-                            //this.resetPagePosition();
                             this.backgroundPageShape = this.createBackgroundPageShape(currentPageBounds);
                             this.backgroundPageShape.scale = 1;
 
@@ -135,7 +132,6 @@ export class Graph extends mxGraph {
                             firstChild.style.position = 'absolute';
                             graph.container.insertBefore(this.backgroundPageShape.node, firstChild);
                             this.backgroundPageShape.redraw();
-
                             this.backgroundPageShape.node.className = 'geBackgroundPage';
                         }
                     } else {
@@ -164,7 +160,6 @@ export class Graph extends mxGraph {
                         }
 
                         this.backgroundPageShape.scale = 1;
-                        //this.resetPagePosition();
                         this.backgroundPageShape.bounds = currentPageBounds;
                         graph.pageFormat = currentPageBounds;
                         this.backgroundPageShape.redraw();  //mxShape function to redraw the page(actually the canvas of the editor)
@@ -174,18 +169,7 @@ export class Graph extends mxGraph {
                     this.backgroundPageShape = null;
                 }
 
-                //this.validateBackgroundStyles(); //设置backgroundPage的样式，注销表示没有格子样式
             }
-        };
-
-        mxGraphView.prototype.resetPagePosition = function () {
-            var graph = this.graph;
-            let conScale = this.scale;
-            let pw = currentPageBounds.width;
-            let conW = graph.container.clientWidth;
-            let px = (conW - pw) / 2;
-            window.console.log("test in the reset page function " + px);
-            currentPageBounds = new mxRectangle(px, 0, currentPageBounds.width, currentPageBounds.height);
         };
     }
 

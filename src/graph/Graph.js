@@ -41,7 +41,7 @@ export class Graph extends mxGraph {
     _init() {
         this._setDefaultConfig();
         this._setBackgroundDefault();
-        this._testNewExpand();
+        this._canvasPaddingConfig();
         this._setCanvasConfig();
         this._updateCanvas();
         this._configConstituent();
@@ -54,7 +54,7 @@ export class Graph extends mxGraph {
     }
 
 
-    _testNewExpand() {
+    _canvasPaddingConfig() {
         let graph = this;
         graph.scrollTileSize = new mxRectangle(0, 0, 400, 400);
 
@@ -64,15 +64,15 @@ export class Graph extends mxGraph {
         graph.getPagePadding = function () {
             window.console.log("container width: " + graph.container.offsetWidth);
             window.console.log("container height: " + graph.container.offsetHeight);
-            return new mxPoint(Math.max(0, 34), //321-34
-              Math.max(0, 34)); //241-34
+            return new mxPoint(Math.max(0, 20), //321-34
+              Math.max(0, 20)); //241-34
         };
 
         /**
          * Returns the size of the page format scaled with the page size.
          */
         graph.getPageSize = function () {
-            window.console.log("is the new expand graph visible: " + this.pageVisible);
+            window.console.log("is the new expand graph visible and the page scale is: " + this.pageScale);
             return (this.pageVisible) ? new mxRectangle(0, 0, this.pageFormat.width * this.pageScale,
               this.pageFormat.height * this.pageScale) : this.scrollTileSize; //400 * 400
         };
@@ -175,18 +175,6 @@ export class Graph extends mxGraph {
                 graphSizeDidChange.apply(this, arguments);
             }
         };
-
-        // Enables rubberband selection
-        new mxRubberband(graph);
-
-        // Sets initial scrollbar positions
-        // window.setTimeout(function () {
-        //     var bounds = graph.getGraphBounds();
-        //     var width = Math.max(bounds.width, graph.scrollTileSize.width * graph.view.scale);
-        //     var height = Math.max(bounds.height, graph.scrollTileSize.height * graph.view.scale);
-        //     graph.container.scrollTop = Math.floor(Math.max(0, bounds.y - Math.max(20, (graph.container.clientHeight - height) / 4)));
-        //     graph.container.scrollLeft = Math.floor(Math.max(0, bounds.x - Math.max(0, (graph.container.clientWidth - width) / 2)));
-        // }, 0);
     }
 
     _updateCanvas() {
@@ -307,9 +295,9 @@ export class Graph extends mxGraph {
                 }
 
                 //set the padding of canvas
-                if (this.graph.container != null && mxUtils.hasScrollbars(this.graph.container)) {
-                    var pad = this.graph.getPagePadding(); //width - 34
-                    var size = this.graph.getPageSize(); //dafault is A4
+                if (graph.container != null && mxUtils.hasScrollbars(this.graph.container)) {
+                    var pad = graph.getPagePadding(); //width - 34
+                    var size = graph.getPageSize(); //dafault is A4
 
                     // Updating scrollbars here causes flickering in quirks and is not needed
                     // if zoom method is always used to set the current scale on the graph.
@@ -712,8 +700,9 @@ export class Graph extends mxGraph {
         graph.view.backgroundPageShape.bounds = newBounds;
         graph.view.backgroundPageShape.scale = 1;
         graph.pageFormat = newBounds;
-        graph.view.backgroundPageShape.redraw();
         currentPageBounds = newBounds;
+        graph.view.backgroundPageShape.redraw();
+        graph._updateCanvas();
     }
 
 }

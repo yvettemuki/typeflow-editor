@@ -688,6 +688,7 @@ export class Graph extends mxGraph {
             graph.getModel().endUpdate();
         }
         this._restoreModel();
+        this._updateCanvas();
     }
 
     isGraphEmpty() {

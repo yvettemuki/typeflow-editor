@@ -41,8 +41,9 @@ export class Graph extends mxGraph {
     _init() {
         this._setDefaultConfig();
         this._setBackgroundDefault();
-        this._setCanvasConfig();
         this._testNewExpand();
+        this._setCanvasConfig();
+        this._updateCanvas();
         this._configConstituent();
         this._putVertexStyle();
         this._setDefaultEdgeStyle();
@@ -50,7 +51,6 @@ export class Graph extends mxGraph {
         this._setAnchors();
         this._configCustomEvent();
         this._restoreModel();
-        this._updateCanvas();
     }
 
 
@@ -112,7 +112,6 @@ export class Graph extends mxGraph {
         // Fits the number of background pages to the graph //unused here
         graph.view.getBackgroundPageBounds = function () {
             var layout = this.graph.getPageLayout();
-            window.console.log("get page layout: " + layout);
             var page = this.graph.getPageSize();
 
             return new mxRectangle(this.scale * (this.translate.x + layout.x * page.width),
@@ -128,27 +127,10 @@ export class Graph extends mxGraph {
             return new mxRectangle(0, 0, pages.width * size.width, pages.height * size.height);
         };
 
-        /**
-         * Guesses autoTranslate to avoid another repaint (see below).
-         * Works if only the scale of the graph changes or if pages
-         * are visible and the visible pages do not change.
-         */
-        var graphViewValidate = graph.view.validate;
-        graph.view.validate = function () {
-            if (this.graph.container != null && mxUtils.hasScrollbars(this.graph.container)) {
-                var pad = this.graph.getPagePadding(); //width - 34
-                var size = this.graph.getPageSize(); //dafault is A4
-
-                // Updating scrollbars here causes flickering in quirks and is not needed
-                // if zoom method is always used to set the current scale on the graph.
-                this.translate.x = pad.x / this.scale - (this.x0 || 0) * size.width; //34
-                this.translate.y = pad.y / this.scale - (this.y0 || 0) * size.height; //34
-            }
-            graphViewValidate.apply(this, arguments);
-        };
-
+        //在拖拽产生cell的时候才会被调用
         var graphSizeDidChange = graph.sizeDidChange;
         graph.sizeDidChange = function () {
+            window.console.log("size did change function");
             if (this.container != null && mxUtils.hasScrollbars(this.container)) {
                 var pages = this.getPageLayout();
                 var pad = this.getPagePadding();
@@ -211,6 +193,7 @@ export class Graph extends mxGraph {
         let graph = this;
         if (graph.container != null) {
             graph.view.validateBackground();
+            graph.sizeDidChange();
         }
     }
 
@@ -323,8 +306,22 @@ export class Graph extends mxGraph {
                     this.backgroundPageShape = null;
                 }
 
+                //set the padding of canvas
+                if (this.graph.container != null && mxUtils.hasScrollbars(this.graph.container)) {
+                    var pad = this.graph.getPagePadding(); //width - 34
+                    var size = this.graph.getPageSize(); //dafault is A4
+
+                    // Updating scrollbars here causes flickering in quirks and is not needed
+                    // if zoom method is always used to set the current scale on the graph.
+                    this.translate.x = pad.x / this.scale - (this.x0 || 0) * size.width; //34
+                    this.translate.y = pad.y / this.scale - (this.y0 || 0) * size.height; //34
+
+                    window.console.log("the translate x is: " + this.translate.x);
+
+                }
             }
         };
+        this.view.validateBackgroundPage();
     }
 
     _setDefaultConfig() {

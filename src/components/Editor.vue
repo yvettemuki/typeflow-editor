@@ -12,6 +12,11 @@
 			<li class="tool-btn" @click="_deleteSelected"><img class="tool-btn-img-3" src="../assets/delete.png"/></li>
 		</ul>
 		<div
+			v-if="isHelpMapShow"
+			class="help-cover">
+			<HelpMap/>
+		</div>
+		<div
 			v-if="isSizeFormShow"
 			class="form-cover">
 			<CustomForm v-on="{
@@ -87,7 +92,7 @@
 				<div class="nav-content">
 					<span class="nav-item"><b>Model: <span class="info-value">{{modelName}}</span></b></span>
 					<span class="nav-item"><b>Status: <span class="info-value">{{isModelSave}}</span></b></span>
-					<img class="nav-item nav-info" src="../assets/wenhao.png"/>
+					<img class="nav-item nav-info" src="../assets/wenhao.png" @click="_getHelp"/>
 				</div>
 			</div>
 			<div class="tool-bar">
@@ -181,6 +186,7 @@
 	import BasicLine from "./BasicLine";
 	import Selector from "./Selector";
 	import CustomForm from "./CustomForm";
+	import HelpMap from "./HelpMap";
 
 	const {
 		mxEvent,
@@ -516,10 +522,12 @@
 				isSizeFormShow: false,
 				sizeWidth: '',
 				sizeHeight: '',
+				isHelpMapShow: false,
 			};
 		},
 
 		components: {
+			HelpMap,
 			CustomForm,
 			Selector,
 			ModelSvg,
@@ -967,6 +975,10 @@
 				this.isSizeFormShow = false;
 			},
 
+			_getHelp: function () {
+				this.isHelpMapShow = true;
+			},
+
 			loading: function () {
 				return this.$loading({
 					target: 'typeflow-container',
@@ -1110,7 +1122,20 @@
 		z-index: 999;
 		background: rgba(0, 0, 0, 0.5);
 	}
-
+	.help-cover {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 999;
+		background: rgba(255, 255, 255, 0.5);
+	}
 	.zoom-li {
 		height: 40px;
 		display: flex;
@@ -1209,6 +1234,10 @@
 	.nav-info {
 		height: 28px;
 		width: 28px;
+		cursor: pointer;
+	}
+	.nav-info:hover {
+		content: url("../assets/wenhao_hover.png");
 	}
 	.nav-content {
 		display: flex;

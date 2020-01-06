@@ -1,5 +1,10 @@
 <template>
 	<div class="typeflow-container">
+		<ul class="float-tool-bar">
+			<li class="tool-btn"><img class="tool-btn-img-1" src="../assets/undo.png"/></li>
+			<li class="tool-btn"><img class="tool-btn-img-2" src="../assets/redo.png"/></li>
+			<li class="tool-btn"><img class="tool-btn-img-3" src="../assets/delete.png"/></li>
+		</ul>
 		<div
 			v-if="isFormShow"
 			class="form-cover">
@@ -1370,6 +1375,49 @@
 		display: flex;
 		flex-direction: column;
 		width: 45%;
+	}
+	.float-tool-bar {
+		position: fixed;
+		z-index: 999;
+		bottom: 20px;
+		right: 40px;
+		width: 40px;
+		height: 134px;
+		height: 150px;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+
+	}
+	.tool-btn {
+		width: 40px;
+		height: 40px;
+		border-radius: 999px;
+		background: #ffffff;
+		box-shadow: 0 2px 8px 0 #dcdcdc;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+	}
+	.tool-btn:hover .tool-btn-img-1 {
+		content: url("../assets/undo_hover.png");
+	}
+	.tool-btn:hover .tool-btn-img-2 {
+		content: url("../assets/redo_hover.png");
+	}
+	.tool-btn:hover .tool-btn-img-3 {
+		content: url("../assets/delete_hover2.png");
+	}
+	.tool-btn-img-1 {
+		width: 50%;
+	}
+	.tool-btn-img-2 {
+		width: 50%;
+	}
+	.tool-btn-img-3 {
+		width: 35%;
 	}
 </style>
 <style>

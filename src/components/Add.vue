@@ -57,6 +57,6 @@
 
 <style lang="less" scoped>
 	.add:hover .add-ele {
-		background: #f28633 !important;
+		background: #1C86EE !important;
 	}
 </style>

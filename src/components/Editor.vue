@@ -1,9 +1,15 @@
 <template>
 	<div class="typeflow-container">
 		<ul class="float-tool-bar">
-			<li class="tool-btn"><img class="tool-btn-img-1" src="../assets/undo.png"/></li>
+			<li class="tool-btn" @click="_zoomIn">
+				<Add weight="4" size="16" radius="100" color="#315B96"></Add>
+			</li>
+			<li class="tool-btn" @click="_zoomOut">
+				<Delete height="4" width="16" radius="999" color="#315B96"></Delete>
+			</li>
+			<li class="tool-btn" @click="_undoModel"><img class="tool-btn-img-1" src="../assets/undo.png"/></li>
 			<li class="tool-btn"><img class="tool-btn-img-2" src="../assets/redo.png"/></li>
-			<li class="tool-btn"><img class="tool-btn-img-3" src="../assets/delete.png"/></li>
+			<li class="tool-btn" @click="_deleteSelected"><img class="tool-btn-img-3" src="../assets/delete.png"/></li>
 		</ul>
 		<div
 			v-if="isFormShow"
@@ -136,27 +142,12 @@
 					</div>
 					<div class="element-tool-bar">
 						<BasicLine color="#EDEDED"/>
-						<div class="ele-tool-top">
-							<span class="ele-tool-top-item" @click="_undoModel">Undo</span>
-							<span class="ele-tool-top-item">Redo</span>
-							<span class="ele-tool-top-item" id="delete-item" @click="_deleteSelected">Delete</span>
-						</div>
-						<div class="ele-tool-bottom">
-							<div class="bottom-item">
-								<span class="zoom-title">Zoom</span>
-								<div class="zoom">
-									<Add weight="4" size="16" radius="100" color="#000000" @click.native="_zoomIn"></Add>
-									<Delete height="4" width="16" radius="999" color="#000000" @click.native="_zoomOut"></Delete>
-								</div>
-							</div>
-							<div class="bottom-item">
-								<span class="zoom-title">Size</span>
-								<select class="zoom" v-model="selected" @change="_sizeSelected">
-									<option value="a4">A4 (210 mm x 297 mm)</option>
-									<option value="a5">A5 (148 mm x 210 mm)</option>
-									<option value="custom">length and width</option>
-								</select>
-							</div>
+						<div class="bottom-item">
+							<select class="page-size-selected" v-model="selected" @change="_sizeSelected">
+								<option value="a4">A4 (210 mm x 297 mm)</option>
+								<option value="a5">A5 (148 mm x 210 mm)</option>
+								<option value="custom">length and width</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -1298,51 +1289,6 @@
 	.purefunction-item {
 		background: #42B982;
 	}
-	.element-tool-bar {
-		height: 170px;
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-end;
-	}
-	.ele-tool-top {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		padding: 10px 20px;
-	}
-	.ele-tool-top-item {
-		font-size: 12px;
-		width: 70px;
-		height: 30px;
-		line-height: 30px;
-		background: #1C86EE;
-		border-radius: 4px;
-		color: #ffffff;
-		font-weight: bold;
-		cursor: pointer;
-	}
-	.ele-tool-top-item:hover {
-		background: #1a7edf;
-	}
-	#delete-item:hover {
-		background: #E35351;
-	}
-	.zoom {
-		height: 40px;
-		display: flex;
-		flex-direction: row;
-		justify-content: space-evenly;
-		align-items: center;
-		background: #ffffff;
-		padding: 0px 10px 0px 10px;
-		margin: 10px 0;
-		border-radius: 999px;
-		box-shadow: 0px 1px 2px 1.5px #e3e3e3;
-	}
-	.zoom-title {
-		font-size: 14px;
-		font-weight: bold;
-	}
 	.shade-layer {
 		position: fixed;
 		height: 100%;
@@ -1364,17 +1310,16 @@
 	.delete-btn:hover {
 		background-image: url("../assets/close_btn_hover.png");
 	}
-	.ele-tool-bottom {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		margin-left: 20px;
-		margin-right: 20px;
-	}
 	.bottom-item {
 		display: flex;
 		flex-direction: column;
-		width: 45%;
+		padding: 20px;
+	}
+	.page-size-selected {
+		height: 40px;
+		background-color: #ffffff;
+		box-shadow: 0 2px 8px 0 #dcdcdc;
+		border-radius: 100px !important;
 	}
 	.float-tool-bar {
 		position: fixed;
@@ -1382,8 +1327,7 @@
 		bottom: 20px;
 		right: 40px;
 		width: 40px;
-		height: 134px;
-		height: 150px;
+		height: 240px;
 		padding: 0;
 		display: flex;
 		flex-direction: column;

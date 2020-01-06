@@ -50,6 +50,6 @@
 
 <style scoped>
 	.delDiv:hover .del {
-		background: #f28633 !important;
+		background: #1C86EE !important;
 	}
 </style>

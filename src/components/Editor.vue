@@ -136,16 +136,26 @@
 							<span class="ele-tool-top-item">Redo</span>
 							<span class="ele-tool-top-item" id="delete-item" @click="_deleteSelected">Delete</span>
 						</div>
-						<span class="zoom-title">Zoom</span>
-						<div class="zoom">
-							<Add weight="4" size="16" radius="100" color="#000000" @click.native="_zoomIn"></Add>
-							<Delete height="4" width="16" radius="999" color="#000000" @click.native="_zoomOut"></Delete>
+						<div class="ele-tool-bottom">
+							<div class="bottom-item">
+								<span class="zoom-title">Zoom</span>
+								<div class="zoom">
+									<Add weight="4" size="16" radius="100" color="#000000" @click.native="_zoomIn"></Add>
+									<Delete height="4" width="16" radius="999" color="#000000" @click.native="_zoomOut"></Delete>
+								</div>
+							</div>
+							<div class="bottom-item">
+								<span class="zoom-title">Size</span>
+								<select class="zoom" v-model="selected" @change="_sizeSelected">
+									<option value="a4">A4 (210 mm x 297 mm)</option>
+									<option value="a5">A5 (148 mm x 210 mm)</option>
+									<option value="custom">length and width</option>
+								</select>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="graph-container" id="mxContainer">
-<!--					<div class="mxBackground"></div>-->
-				</div>
+				<div class="graph-container" id="mxContainer"></div>
 			</div>
 		</div>
 	</div>
@@ -186,6 +196,7 @@
 
 	const initGraph = () => {
 		graph = genGraph(document.getElementById('mxContainer'));
+		// makeDraggable(document.getElementsByClassName('mxResElement'));
 		makeDraggable(document.getElementsByClassName('element-li'));
 		listenGraphEvent();
 	}
@@ -494,6 +505,7 @@
 				isSelectViewShow: false,
 				isModelSave: false,
 				isExportShow: false,
+				selected: 'a4'
 			};
 		},
 
@@ -693,29 +705,29 @@
 					},
 					responseType: 'blob',
 				})
-				.then(res => {
-					if(res.data) {
-						let blob = new Blob([res.data], {type: "image/png"})
-						let objectUrl = URL.createObjectURL(blob);
-						let link = document.createElement('a');
-						link.href = objectUrl;
-						link.download = "model.png";
-						link.click();
+					.then(res => {
+						if(res.data) {
+							let blob = new Blob([res.data], {type: "image/png"})
+							let objectUrl = URL.createObjectURL(blob);
+							let link = document.createElement('a');
+							link.href = objectUrl;
+							link.download = "model.png";
+							link.click();
+							this.closeLoading(loading);
+						} else {
+							this.closeLoading(loading);
+							this.$message.warning({
+								duration: 1000,
+								iconClass: 'icon',
+								message: "download failed!",
+								customClass: 'warning-msg'
+							});
+						}
+					})
+					.catch(err => {
 						this.closeLoading(loading);
-					} else {
-						this.closeLoading(loading);
-						this.$message.warning({
-							duration: 1000,
-							iconClass: 'icon',
-							message: "download failed!",
-							customClass: 'warning-msg'
-						});
-					}
-				})
-				.catch(err => {
-					this.closeLoading(loading);
-					window.console.log(err);
-				})
+						window.console.log(err);
+					})
 
 			},
 
@@ -761,37 +773,37 @@
 						svgXml: svgXml
 					}
 				})
-				.then(res => {
-					if (res.data.success) {
+					.then(res => {
+						if (res.data.success) {
+							this.$message.warning({
+								duration: 1500,
+								iconClass: 'icon-info',
+								message: "save successfully!",
+								customClass: 'warning-msg'
+							});
+							this.isModelSave = true;
+							this.closeLoading(loading);
+							this.isSaveFormShow = false;
+						} else {
+							this.closeLoading(loading);
+							this.$message.warning({
+								duration: 1500,
+								iconClass: 'icon-warn',
+								message: "failed to save, model name is duplicate!",
+								customClass: 'warning-msg'
+							});
+						}
+					})
+					.catch(err => {
+						this.closeLoading(loading);
 						this.$message.warning({
 							duration: 1500,
-							iconClass: 'icon-info',
-							message: "save successfully!",
+							iconClass: 'icon',
+							message: "Network error! make sure you have connect to database!",
 							customClass: 'warning-msg'
 						});
-						this.isModelSave = true;
-						this.closeLoading(loading);
-						this.isSaveFormShow = false;
-					} else {
-						this.closeLoading(loading);
-						this.$message.warning({
-							duration: 1500,
-							iconClass: 'icon-warn',
-							message: "failed to save, model name is duplicate!",
-							customClass: 'warning-msg'
-						});
-					}
-				})
-				.catch(err => {
-					this.closeLoading(loading);
-					this.$message.warning({
-						duration: 1500,
-						iconClass: 'icon',
-						message: "Network error! make sure you have connect to database!",
-						customClass: 'warning-msg'
-					});
-					window.console.log(err);
-				})
+						window.console.log(err);
+					})
 			},
 
 			_importModel: function () {
@@ -832,22 +844,22 @@
 					method: 'get',
 					url: '/getModels',
 				})
-				.then(res => {
-					window.console.log(res.status);
-					this.modelList = res.data;
-					this.closeLoading(loading);
-					this.isImportModelShow = true;
-				})
-				.catch(err => {
-					window.console.log(err);
-					this.closeLoading(loading);
-					this.$message.warning({
-						duration: 2000,
-						iconClass: 'icon',
-						message: "Network error! make sure you have connect to database!",
-						customClass: 'warning-msg'
-					});
-				})
+					.then(res => {
+						window.console.log(res.status);
+						this.modelList = res.data;
+						this.closeLoading(loading);
+						this.isImportModelShow = true;
+					})
+					.catch(err => {
+						window.console.log(err);
+						this.closeLoading(loading);
+						this.$message.warning({
+							duration: 2000,
+							iconClass: 'icon',
+							message: "Network error! make sure you have connect to database!",
+							customClass: 'warning-msg'
+						});
+					})
 
 			},
 
@@ -914,13 +926,17 @@
 					url: '/deleteModel',
 					data: name
 				})
-				.then(res => {
-					window.console.log(res);
-					if (res.data.success) {
-						let index = this.modelList.indexOf(model);
-						this.modelList.splice(index, 1);
-					}
-				})
+					.then(res => {
+						window.console.log(res);
+						if (res.data.success) {
+							let index = this.modelList.indexOf(model);
+							this.modelList.splice(index, 1);
+						}
+					})
+			},
+
+			_sizeSelected: function() {
+				graph.updateBackgroundPage(this.selected);
 			},
 
 			loading: function () {
@@ -1314,7 +1330,7 @@
 		align-items: center;
 		background: #ffffff;
 		padding: 0px 10px 0px 10px;
-		margin: 10px 20px 10px 20px;
+		margin: 10px 0;
 		border-radius: 999px;
 		box-shadow: 0px 1px 2px 1.5px #e3e3e3;
 	}
@@ -1343,14 +1359,17 @@
 	.delete-btn:hover {
 		background-image: url("../assets/close_btn_hover.png");
 	}
-	.mxBackground {
-		height: 100%;
-		width: 100%;
-		position: relative;
-		overflow: hidden;
-		left: 0px;
-		right: 0px;
-		background: #ffffff;
+	.ele-tool-bottom {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		margin-left: 20px;
+		margin-right: 20px;
+	}
+	.bottom-item {
+		display: flex;
+		flex-direction: column;
+		width: 45%;
 	}
 </style>
 <style>

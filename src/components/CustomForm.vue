@@ -12,7 +12,7 @@
 			</div>
 		</div>
 		<button class="close-btn" @click="_closeCustomForm"></button>
-		<input class="confirm-btn" type="button" value="Confirm" @click="_sendSizeToEditor"/>
+		<input class="confirm-btn" type="button" value="Confirm" @click="_confirmInput"/>
 	</div>
 </template>
 
@@ -28,6 +28,21 @@
 		},
 
 		methods: {
+			_confirmInput: function () {
+				let numReg = /^[0-9]+$/;
+				let numRe = new RegExp(numReg);
+				if (!numRe.test(this.width) || !numRe.test(this.height)) {
+					this.$message.warning({
+						duration: 2000,
+						iconClass: 'icon',
+						message: "please input number!",
+						customClass: 'warning-msg'
+					});
+				} else {
+					this._sendSizeToEditor();
+				}
+			},
+
 			_sendSizeToEditor: function () {
 				this.$emit('updateCustomPageSize', this.width, this.height);
 			},
@@ -62,8 +77,9 @@
 		width: 60px;
 		margin-left: 5px;
 		border-radius: 4px;
-		height: 20px;
+		height: 16px;
 		outline-style: none;
+		padding: 4px;
 		border: 1px solid #333333;
 	}
 	.title {
@@ -107,5 +123,26 @@
 
 	.confirm-btn:hover {
 		background: #3eae7b;
+	}
+</style>
+<style>
+	.warning-msg {
+		background-color: #ffffff !important;
+		font-weight: bold;
+		font-family: Arial;
+	}
+
+	.el-message__content {
+		color: #C94F4F !important;
+	}
+
+	.icon-warn {
+		background-image: url("../assets/warning.png");
+		height: 15px;
+		width: 15px;
+		margin-top: 2px;
+		background-repeat: no-repeat;
+		background-size: 100%;
+		margin-right: 10px;
 	}
 </style>

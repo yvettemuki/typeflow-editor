@@ -156,7 +156,7 @@
 								<option value="a4">A4 (210 mm x 297 mm)</option>
 								<option value="a5">A5 (148 mm x 210 mm)</option>
 								<option value="40"> (40 mm x 40 mm)</option>
-								<option value="custom">Custom</option>
+								<option value="custom">Custom ({{this.sizeWidth}} mm x {{this.sizeHeight}} mm)</option>
 							</select>
 						</div>
 					</div>

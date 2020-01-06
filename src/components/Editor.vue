@@ -143,7 +143,7 @@
 					<div class="element-tool-bar">
 						<BasicLine color="#EDEDED"/>
 						<div class="bottom-item">
-							<select class="page-size-selected" v-model="selected" @change="_sizeSelected">
+							<select class="size-selected" v-model="selected" @change="_sizeSelected">
 								<option value="a4">A4 (210 mm x 297 mm)</option>
 								<option value="a5">A5 (148 mm x 210 mm)</option>
 								<option value="custom">length and width</option>
@@ -1310,16 +1310,24 @@
 	.delete-btn:hover {
 		background-image: url("../assets/close_btn_hover.png");
 	}
-	.bottom-item {
+	.element-tool-bar {
+		height: 170px;
 		display: flex;
 		flex-direction: column;
-		padding: 20px;
+		justify-content: flex-end;
 	}
-	.page-size-selected {
+	.bottom-item {
+		margin: 20px;
 		height: 40px;
 		background-color: #ffffff;
 		box-shadow: 0 2px 8px 0 #dcdcdc;
-		border-radius: 100px !important;
+		border-radius: 999px;
+		line-height: 40px;
+		position: relative;
+		bottom: 0px;
+	}
+	.size-selected {
+		background-color: #ffffff;
 	}
 	.float-tool-bar {
 		position: fixed;

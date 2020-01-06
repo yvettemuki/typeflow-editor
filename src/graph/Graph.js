@@ -697,9 +697,20 @@ export class Graph extends mxGraph {
             newBounds = new mxRectangle(0, 0, 827, 1169);
         } else if (selected.includes('a5')) {
             newBounds = new mxRectangle(0, 0, 583, 827);
-        } else {
+        } else if (selected.includes('40')) {
             newBounds = new mxRectangle(0, 0, 400, 400);
         }
+        this.refreshBackgroundPage(newBounds);
+    }
+
+    updateCustomBackgroundPage(width, height) {
+        window.console.log("in the custom page update");
+        window.console.log("the width and height: " + width + " " + height);
+        let newBounds = new mxRectangle(0, 0, width, height);
+        this.refreshBackgroundPage(newBounds);
+    }
+
+    refreshBackgroundPage(newBounds) {
         graph.view.backgroundPageShape.bounds = newBounds;
         graph.view.backgroundPageShape.scale = 1;
         graph.pageFormat = newBounds;
@@ -707,6 +718,7 @@ export class Graph extends mxGraph {
         graph.view.backgroundPageShape.redraw();
         graph._updateCanvas();
     }
+
 
 }
 

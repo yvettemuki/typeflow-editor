@@ -12,6 +12,15 @@
 			<li class="tool-btn" @click="_deleteSelected"><img class="tool-btn-img-3" src="../assets/delete.png"/></li>
 		</ul>
 		<div
+			v-if="isSizeFormShow"
+			class="form-cover">
+			<CustomForm v-on="{
+				updateCustomPageSize: _updateCustomPageSize,
+				closeCustomForm: _closeCustomForm,
+			}"/>
+
+		</div>
+		<div
 			v-if="isFormShow"
 			class="form-cover">
 			<FillForm :type="nowDefiType" :id="nowVertexId" :formType="'ADD_FORM_TYPE'" v-on="{
@@ -146,7 +155,8 @@
 							<select class="size-selected" v-model="selected" @change="_sizeSelected">
 								<option value="a4">A4 (210 mm x 297 mm)</option>
 								<option value="a5">A5 (148 mm x 210 mm)</option>
-								<option value="custom">length and width</option>
+								<option value="40"> (40 mm x 40 mm)</option>
+								<option value="custom">Custom</option>
 							</select>
 						</div>
 					</div>
@@ -170,6 +180,7 @@
 	import ModelSvg from "./ModelSvg";
 	import BasicLine from "./BasicLine";
 	import Selector from "./Selector";
+	import CustomForm from "./CustomForm";
 
 	const {
 		mxEvent,
@@ -501,11 +512,15 @@
 				isSelectViewShow: false,
 				isModelSave: false,
 				isExportShow: false,
-				selected: 'a4'
+				selected: 'a4',
+				isSizeFormShow: false,
+				sizeWidth: '',
+				sizeHeight: '',
 			};
 		},
 
 		components: {
+			CustomForm,
 			Selector,
 			ModelSvg,
 			ImportModelPanel,
@@ -932,7 +947,24 @@
 			},
 
 			_sizeSelected: function() {
+				if (this.selected.includes('custom')) {
+					this.isSizeFormShow = true;
+				} else {
+					graph.updateBackgroundPage(this.selected);
+				}
+			},
+
+			_updateCustomPageSize: function (width, height) {
+				this.sizeWidth = width;
+				this.sizeHeight = height;
+				graph.updateCustomBackgroundPage(this.sizeWidth, this.sizeHeight);
+				this.isSizeFormShow = false;
+			},
+
+			_closeCustomForm: function () {
+				this.selected = 'a4';
 				graph.updateBackgroundPage(this.selected);
+				this.isSizeFormShow = false;
 			},
 
 			loading: function () {
@@ -1328,10 +1360,12 @@
 	}
 	.size-selected {
 		background-color: #ffffff;
+		font-size: 11px;
+		font-weight: bold;
 	}
 	.float-tool-bar {
 		position: fixed;
-		z-index: 999;
+		z-index: 998;
 		bottom: 20px;
 		right: 40px;
 		width: 40px;

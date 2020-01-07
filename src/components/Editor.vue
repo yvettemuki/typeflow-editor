@@ -1005,7 +1005,10 @@
 			},
 
 			_clearCanvas: function () {
-
+				graph.getModel().clear();
+				this.modelName = 'no name';
+				this.selected = 'a4';
+				graph.updateBackgroundPage(this.selected);
 			},
 
 			loading: function () {

@@ -14,7 +14,9 @@
 		<div
 			v-if="isHelpMapShow"
 			class="help-cover">
-			<HelpMap/>
+			<HelpMap v-on="{
+				nextPage: _nextPage
+			}"/>
 		</div>
 		<div
 			v-if="isSizeFormShow"
@@ -979,6 +981,10 @@
 				this.isHelpMapShow = true;
 			},
 
+			_nextPage: function (currentPageNum) {
+				window.console.log("the current page num : " + currentPageNum);
+			},
+
 			loading: function () {
 				return this.$loading({
 					target: 'typeflow-container',
@@ -1040,11 +1046,6 @@
 		height: calc(88vh);
 		width: 100%;
 	}
-	/*.main-container {*/
-	/*	display: flex;*/
-	/*	flex-direction: row;*/
-	/*	padding: 0 30px 10px 30px;*/
-	/*}*/
 
 	.leftElement {
 		height: 40px;

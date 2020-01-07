@@ -8,20 +8,20 @@
 
 		props: {
 			width: {
-				default: 100,
-				type: Number,
+				default: '100',
+				type: String,
 			},
 			height: {
-				default: 100,
-				type: Number,
+				default: '100',
+				type: String,
 			},
 			borderWidth: {
-				default: 1,
-				type: Number
+				default: '1',
+				type: String
 			},
 			radius: {
-				default: 4,
-				type: Number
+				default: '4',
+				type: String
 			},
 			color: {
 				default: '#000000',

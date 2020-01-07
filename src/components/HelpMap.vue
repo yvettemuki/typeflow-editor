@@ -1,5 +1,9 @@
 <template>
 	<div class="help-container">
+		<div class="step-btn" @click="_toNextHelpPage">
+			<img class="step-img" src="../assets/arrow_next.png"/>
+			<span class="step-font">NEXT STEP</span>
+		</div>
 		<div class="drag-item">
 			<Rectangle color="#1C86EE" radius="4" height="700" width="250" border-width="2"/>
 			<img src="../assets/arrow.png" class="arrow-img"/>
@@ -32,7 +36,12 @@
 	import Rectangle from "./Rectangle";
 	export default {
 		name: "HelpMap",
-		components: {Rectangle}
+		components: {Rectangle},
+		methods: {
+			_toNextHelpPage: function () {
+				this.$emit('nextPage', 1); // 1 is the current page number
+			}
+		}
 	}
 </script>
 
@@ -100,5 +109,29 @@
 		align-items: center;
 		right: 10px;
 		top: 6px;
+	}
+	.step-btn {
+		position: absolute;
+		top: 50%;
+		right: 80px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		cursor: pointer;
+	}
+	.step-btn:hover {
+		filter: drop-shadow(0 0 0 #C94F4F);
+	}
+	.step-btn:hover .step-font {
+		font-size: 19px;
+	}
+	.step-img {
+		width: 60px;
+		margin-bottom: 20px;
+	}
+	.step-font {
+		font-size: 18px;
+		font-weight: bold;
+		color: #EA5E5E;
 	}
 </style>

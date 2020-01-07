@@ -697,7 +697,7 @@ export class Graph extends mxGraph {
             newBounds = new mxRectangle(0, 0, 827, 1169);
         } else if (selected.includes('a5')) {
             newBounds = new mxRectangle(0, 0, 583, 827);
-        } else if (selected.includes('40')) {
+        } else if (selected.includes('106')) {
             newBounds = new mxRectangle(0, 0, 400, 400);
         }
         this.refreshBackgroundPage(newBounds);

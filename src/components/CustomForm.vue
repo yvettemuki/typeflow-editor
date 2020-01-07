@@ -3,11 +3,11 @@
 		<span class="title">Custom Page Size</span>
 		<div class="input-div">
 			<div class="input-item">
-				<span class="input-font">width: </span>
+				<span class="input-font">Width:(mm) </span>
 				<input class="size-input" v-model="width"/>
 			</div>
 			<div class="input-item">
-				<span class="input-font">height: </span>
+				<span class="input-font">Height:(mm) </span>
 				<input class="size-input" v-model="height"/>
 			</div>
 		</div>
@@ -80,7 +80,7 @@
 		height: 16px;
 		outline-style: none;
 		padding: 4px;
-		border: 1px solid #333333;
+		border: 2px solid #e1e1e1;
 	}
 	.title {
 		font-size: 16px;
@@ -88,7 +88,7 @@
 		margin-top: 30px;
 	}
 	.input-font {
-		font-size: 14px;
+		font-size: 12px;
 		font-weight: bold;
 	}
 	.close-btn {

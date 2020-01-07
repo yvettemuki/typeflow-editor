@@ -164,7 +164,7 @@
 							<select class="size-selected" v-model="selected" @change="_sizeSelected">
 								<option value="a4">A4 (210 mm x 297 mm)</option>
 								<option value="a5">A5 (148 mm x 210 mm)</option>
-								<option value="40"> (40 mm x 40 mm)</option>
+								<option value="106"> (106 mm x 106 mm)</option>
 								<option value="custom">Custom ({{this.sizeWidth}} mm x {{this.sizeHeight}} mm)</option>
 							</select>
 						</div>
@@ -970,7 +970,7 @@
 			_updateCustomPageSize: function (width, height) {
 				this.sizeWidth = width;
 				this.sizeHeight = height;
-				graph.updateCustomBackgroundPage(this.sizeWidth, this.sizeHeight);
+				graph.updateCustomBackgroundPage(Math.round(this.sizeWidth * 3.78), Math.round(this.sizeHeight * 3.78));
 				this.isSizeFormShow = false;
 			},
 

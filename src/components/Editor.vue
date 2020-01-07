@@ -10,6 +10,7 @@
 			<li class="tool-btn" @click="_undoModel"><img class="tool-btn-img-1" src="../assets/undo.png"/></li>
 			<li class="tool-btn"><img class="tool-btn-img-2" src="../assets/redo.png"/></li>
 			<li class="tool-btn" @click="_deleteSelected"><img class="tool-btn-img-3" src="../assets/delete.png"/></li>
+			<li class="tool-btn" @click="_clearCanvas"><img class="tool-btn-img-4" src="../assets/clean_icon.png"/></li>
 		</ul>
 		<div
 			v-if="isHelpMapShow"
@@ -1003,6 +1004,10 @@
 				this.isHelpMapShow = false;
 			},
 
+			_clearCanvas: function () {
+
+			},
+
 			loading: function () {
 				return this.$loading({
 					target: 'typeflow-container',
@@ -1417,7 +1422,7 @@
 		bottom: 20px;
 		right: 40px;
 		width: 40px;
-		height: 240px;
+		height: 300px;
 		padding: 0;
 		display: flex;
 		flex-direction: column;
@@ -1444,6 +1449,9 @@
 	.tool-btn:hover .tool-btn-img-3 {
 		content: url("../assets/delete_hover2.png");
 	}
+	.tool-btn:hover .tool-btn-img-4 {
+		content: url("../assets/clean_icon_hover.png");
+	}
 	.tool-btn-img-1 {
 		width: 50%;
 	}
@@ -1451,6 +1459,9 @@
 		width: 50%;
 	}
 	.tool-btn-img-3 {
+		width: 35%;
+	}
+	.tool-btn-img-4 {
 		width: 35%;
 	}
 </style>

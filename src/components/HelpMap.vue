@@ -1,7 +1,7 @@
 <template>
 	<div class="help-container">
 		<div v-if="pageNumber == 1">
-			<div class="step-btn" @click="_toNextHelpPage">
+			<div class="step-btn step-btn-next" @click="_toNextHelpPage">
 				<img class="step-img" src="../assets/arrow_next.png"/>
 				<span class="step-font">NEXT STEP</span>
 			</div>
@@ -32,7 +32,17 @@
 			</div>
 		</div>
 
-		<SimpleDescription v-if="pageNumber == 2" pic-width="400" font-size="18" font-weight="bold" container-width="600" :pic-url="require('../assets/connection.png')" desc="After drag the left elements into the page, only the Output of one Element can connect to another Element with the same name Input"/>
+		<div class="page-2-container" v-if="pageNumber == 2">
+			<div class="step-btn step-btn-pre" @click="_toPreHelpPage">
+				<img class="step-img" src="../assets/arrow_pre.png"/>
+				<span class="step-font">PREVIOUS STEP</span>
+			</div>
+			<div class="step-btn step-btn-next" @click="_toNextHelpPage">
+				<img class="step-img" src="../assets/arrow_next.png"/>
+				<span class="step-font">NEXT STEP</span>
+			</div>
+			<SimpleDescription pic-width="360" font-size="18" font-weight="bold" container-width="600" :pic-url="require('../assets/connection.png')" desc="After drag the left elements into the page, only the Output of one Element can connect to another Element with the same name Input"/>
+		</div>
 	</div>
 
 </template>
@@ -51,28 +61,33 @@
 		},
 		data() {
 			return {
-				currentPage: 0,
 			}
 		},
 		methods: {
 			_toNextHelpPage: function () {
-				this.$emit('nextPage', this.currentPage); // 1 is the current page number
+				this.$emit('nextPage', this.pageNumber); // 1 is the current page number
+			},
+			_toPreHelpPage: function () {
+				this.$emit('prePage', this.pageNumber);
 			}
 		},
 		mounted() {
-			this.currentPage = this.pageNumber;
 		}
 	}
 </script>
 
 <style lang="less" scoped>
+	.page-2-container {
+		display: flex;
+		flex-direction: row;
+	}
 	.help-container {
 		position: relative;
 		height: 100%;
 		width: 100%;
 		display: flex;
-		align-items: center;
 		justify-content: center;
+		align-items: center;
 	}
 	.rectangle {
 		height: 700px;
@@ -133,10 +148,17 @@
 		right: 10px;
 		top: 6px;
 	}
-	.step-btn {
+	.step-btn-pre {
+		position: absolute;
+		top: 50%;
+		left: 80px;
+	}
+	.step-btn-next {
 		position: absolute;
 		top: 50%;
 		right: 80px;
+	}
+	.step-btn {
 		display: flex;
 		flex-direction: column;
 		align-items: center;

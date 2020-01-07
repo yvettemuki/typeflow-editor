@@ -15,7 +15,8 @@
 			v-if="isHelpMapShow"
 			class="help-cover">
 			<HelpMap :page-number="currentPage" v-on="{
-				nextPage: _nextPage
+				nextPage: _nextPage,
+				prePage: _prePage,
 			}"/>
 		</div>
 		<div
@@ -984,9 +985,17 @@
 			},
 
 			_nextPage: function (currentPageNum) {
-				this.isHelpMapShow = false;
-				this.currentPage = 2;
-				this.isHelpMapShow = true;
+				if (currentPageNum == 1) {
+					this.currentPage = 2;
+				} else if (currentPageNum == 2) {
+					this.currentPage = 3;
+				}
+			},
+
+			_prePage: function (currentPageNum) {
+				if (currentPageNum == 2) {
+					this.currentPage = 1;
+				}
 			},
 
 			loading: function () {

@@ -1,46 +1,66 @@
 <template>
 	<div class="help-container">
-		<div class="step-btn" @click="_toNextHelpPage">
-			<img class="step-img" src="../assets/arrow_next.png"/>
-			<span class="step-font">NEXT STEP</span>
+		<div v-if="pageNumber == 1">
+			<div class="step-btn" @click="_toNextHelpPage">
+				<img class="step-img" src="../assets/arrow_next.png"/>
+				<span class="step-font">NEXT STEP</span>
+			</div>
+			<div class="drag-item">
+				<Rectangle color="#1C86EE" radius="4" height="700" width="250" border-width="2"/>
+				<img src="../assets/arrow.png" class="arrow-img"/>
+				<div class="font-area"><span class="help-type">Draggable Area</span><br>Elements is composed with 5 types: <br>Definiton, InputEndpoint, OutputEndpoint, Other Resources and Custom Components.</div>
+			</div>
+			<div class="size-item">
+				<Rectangle color="#1C86EE" radius="4" height="60" width="250" border-width="2"/>
+				<img src="../assets/arrow.png" class="arrow-img"/>
+				<div class="font-area"><span class="help-type">Size Area</span><br>Adjust the size by proportion or input your own custom size<br> to render page size.</div>
+			</div>
+			<div class="nav-item">
+				<div class="font-area"><span class="help-type">Navigation Area</span><br>Some information of the model and the help about typeflow editor.</div>
+				<img src="../assets/arrow_right.png" class="arrow-img"/>
+				<Rectangle color="#1C86EE" radius="4" height="46" width="380" border-width="2"/>
+			</div>
+			<div class="file-item">
+				<div class="font-area"><span class="help-type">File Area</span><br>File Import, Export(png/svg/xml), Generate and Save.</div>
+				<img src="../assets/arrow_right.png" class="arrow-img"/>
+				<Rectangle color="#1C86EE" radius="4" height="46" width="380" border-width="2"/>
+			</div>
+			<div class="tool-item">
+				<div class="font-area"><span class="help-type">Tool Area</span><br>Tools to use on the canvas or elements in the page<br>Zoom/Undo/Redo/Delete</div>
+				<img src="../assets/arrow_right.png" class="arrow-img"/>
+				<Rectangle color="#1C86EE" radius="4" height="280" width="60" border-width="2"/>
+			</div>
 		</div>
-		<div class="drag-item">
-			<Rectangle color="#1C86EE" radius="4" height="700" width="250" border-width="2"/>
-			<img src="../assets/arrow.png" class="arrow-img"/>
-			<div class="font-area"><span class="help-type">Draggable Area</span><br>Elements is composed with 5 types: <br>Definiton, InputEndpoint, OutputEndpoint, Other Resources and Custom Components.</div>
-		</div>
-		<div class="size-item">
-			<Rectangle color="#1C86EE" radius="4" height="60" width="250" border-width="2"/>
-			<img src="../assets/arrow.png" class="arrow-img"/>
-			<div class="font-area"><span class="help-type">Size Area</span><br>Adjust the size by proportion or input your own custom size<br> to render page size.</div>
-		</div>
-		<div class="nav-item">
-			<div class="font-area"><span class="help-type">Navigation Area</span><br>Some information of the model and the help about typeflow editor.</div>
-			<img src="../assets/arrow_right.png" class="arrow-img"/>
-			<Rectangle color="#1C86EE" radius="4" height="46" width="380" border-width="2"/>
-		</div>
-		<div class="file-item">
-			<div class="font-area"><span class="help-type">File Area</span><br>File Import, Export(png/svg/xml), Generate and Save.</div>
-			<img src="../assets/arrow_right.png" class="arrow-img"/>
-			<Rectangle color="#1C86EE" radius="4" height="46" width="380" border-width="2"/>
-		</div>
-		<div class="tool-item">
-			<div class="font-area"><span class="help-type">Tool Area</span><br>Tools to use on the canvas or elements in the page<br>Zoom/Undo/Redo/Delete</div>
-			<img src="../assets/arrow_right.png" class="arrow-img"/>
-			<Rectangle color="#1C86EE" radius="4" height="280" width="60" border-width="2"/>
-		</div>
+
+		<SimpleDescription v-if="pageNumber == 2" pic-width="400" font-size="18" font-weight="bold" container-width="600" :pic-url="require('../assets/connection.png')" desc="After drag the left elements into the page, only the Output of one Element can connect to another Element with the same name Input"/>
 	</div>
+
 </template>
 
 <script>
 	import Rectangle from "./Rectangle";
+	import SimpleDescription from "./SimpleDescription";
 	export default {
 		name: "HelpMap",
-		components: {Rectangle},
+		components: {SimpleDescription, Rectangle},
+		props: {
+			pageNumber: {
+				default: 1,
+				type: Number
+			}
+		},
+		data() {
+			return {
+				currentPage: 0,
+			}
+		},
 		methods: {
 			_toNextHelpPage: function () {
-				this.$emit('nextPage', 1); // 1 is the current page number
+				this.$emit('nextPage', this.currentPage); // 1 is the current page number
 			}
+		},
+		mounted() {
+			this.currentPage = this.pageNumber;
 		}
 	}
 </script>
@@ -50,6 +70,9 @@
 		position: relative;
 		height: 100%;
 		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 	.rectangle {
 		height: 700px;

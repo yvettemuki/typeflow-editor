@@ -1,7 +1,7 @@
 <template>
-	<div>
-		<img :style="picture" src="picUrl"/>
-		<div>{{desc}}</div>
+	<div class="desc-container" :style="container">
+		<img :style="picture" :src="picUrl"/>
+		<div class="desc-font" :style="fontStyle">{{desc}}</div>
 	</div>
 </template>
 
@@ -10,25 +10,44 @@
 		name: "SimpleDescription",
 		props: {
 			picUrl: {
-				default: '',
+				default: null,
 				type: String
 			},
 			picWidth: {
-				default: 100,
-				type: Number
+				default: '100',
+				type: String
 			},
 			desc: {
-				default: '',
+				default: null,
+				type: String
+			},
+			containerWidth: {
+				default: null,
+				type: String,
+			},
+			fontSize: {
+				default: '16',
+				type: String,
+			},
+			fontWeight: {
+				default: 'normal',
 				type: String
 			}
 		},
 		data() {
 			return {
 				picture: {
-					width: this.picWidth,
+					width: this.picWidth + "px",
+				},
+				container: {
+					width: this.containerWidth + "px",
+				},
+				fontStyle: {
+					fontSize: this.fontSize + "px",
+					fontWeight: this.fontWeight,
 				}
 			}
-		}
+		},
 	}
 </script>
 
@@ -38,4 +57,8 @@
 		flex-direction: column;
 		align-items: center;
 	}
+	.desc-font {
+		margin-top: 30px;
+	}
+
 </style>

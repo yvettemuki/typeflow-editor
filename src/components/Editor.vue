@@ -14,7 +14,7 @@
 		<div
 			v-if="isHelpMapShow"
 			class="help-cover">
-			<HelpMap v-on="{
+			<HelpMap :page-number="currentPage" v-on="{
 				nextPage: _nextPage
 			}"/>
 		</div>
@@ -525,6 +525,7 @@
 				sizeWidth: '',
 				sizeHeight: '',
 				isHelpMapShow: false,
+				currentPage: 0,
 			};
 		},
 
@@ -978,11 +979,14 @@
 			},
 
 			_getHelp: function () {
+				this.currentPage = 1;
 				this.isHelpMapShow = true;
 			},
 
 			_nextPage: function (currentPageNum) {
-				window.console.log("the current page num : " + currentPageNum);
+				this.isHelpMapShow = false;
+				this.currentPage = 2;
+				this.isHelpMapShow = true;
 			},
 
 			loading: function () {

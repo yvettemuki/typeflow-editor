@@ -1,5 +1,6 @@
 <template>
 	<div class="help-container">
+		<button class="close-btn" @click="_closeHelpPage">CLOSE</button>
 		<div v-if="pageNumber == 1">
 			<div class="step-btn step-btn-next" @click="_toNextHelpPage">
 				<img class="step-img" src="../assets/arrow_next.png"/>
@@ -69,6 +70,9 @@
 			},
 			_toPreHelpPage: function () {
 				this.$emit('prePage', this.pageNumber);
+			},
+			_closeHelpPage: function () {
+				this.$emit('closePage');
 			}
 		},
 		mounted() {
@@ -179,4 +183,22 @@
 		font-weight: bold;
 		color: #EA5E5E;
 	}
+	.close-btn {
+		width: 120px;
+		height: 60px;
+		position: fixed;
+		bottom: 0;
+		background: #ffffff;
+		font-weight: bold;
+		font-size: 18px;
+		color: #EA5E5E;
+		box-shadow: 0 0 8px 0 #dcdcdc;
+		border-radius: 999px 999px 0 0;
+		transition: height 0.2s;
+		cursor: pointer;
+	}
+	.close-btn:hover {
+		height: 80px;
+	}
+
 </style>

@@ -202,6 +202,7 @@
 		mxCodec,
 		mxEventObject,
 		mxUndoManager,
+		mxKeyHandler,
 	} = mxgraph;
 
 	const ADD_FORM_TYPE = "ADD_FROM_TYPE";
@@ -491,6 +492,25 @@
 			});
 			delete cell.data.output;
 		}
+	};
+
+	const bindKeyHandler = (vm) => {
+		let keyHandler = new mxKeyHandler(graph);
+		keyHandler.bindControlKey(8, function (evt) {
+			if (graph.isEnabled()) {
+				vm._deleteSelected();
+			}
+		});
+		keyHandler.bindControlKey(90, function (evt) {
+			if (graph.isEnabled()) {
+				vm._undoModel();
+			}
+		});
+		keyHandler.bindKey(46, function (evt) {
+			if (graph.isEnabled()) {
+				vm._clearCanvas();
+			}
+		});
 	};
 
 
@@ -1031,18 +1051,7 @@
 			initGraph();
 			this._listenEvent();
 			setConnectValidation(this);
-			let _this = this; //is a must represent vue
-			document.onkeydown = function (e) {
-				let key = e.code;
-				if (key == 'KeyZ') { //ctrl + z
-					e.preventDefault();
-					_this._undoModel();  //use `this` directly represent the document.onkeydown event
-				}
-				if (key == 'KeyD') { //ctrl + d
-					e.preventDefault();
-					_this._deleteSelected();
-				}
-			}
+			bindKeyHandler(this);
 		}
 	}
 

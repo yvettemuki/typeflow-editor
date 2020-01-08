@@ -2,7 +2,8 @@
 	<div class="import-view">
 		<span class="title"><b>History Model List</b></span>
 		<button class="close-btn" @click="_closePanel"></button>
-		<ul class="import-list-view">
+		<div v-if="modelList == null || modelList.length == 0" class="no-data-content">You still have not save any models</div>
+		<ul v-else class="import-list-view">
 			<li v-for="(model, idx) in modelList"
 				:key="idx"
 				class="model-li">
@@ -80,5 +81,14 @@
 	}
 	.close-btn:hover {
 		background-image: url("../assets/close_btn_hover.png");
+	}
+	.no-data-content {
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 16px;
+		color: #9e9e9e;
+		font-weight: bold;
 	}
 </style>

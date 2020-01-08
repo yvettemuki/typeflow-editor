@@ -8,7 +8,7 @@
 				<Delete height="4" width="16" radius="999" color="#315B96"></Delete>
 			</li>
 			<li class="tool-btn" @click="_undoModel"><img class="tool-btn-img-1" src="../assets/undo.png"/></li>
-			<li class="tool-btn"><img class="tool-btn-img-2" src="../assets/redo.png"/></li>
+			<li class="tool-btn" @click="_redoModel"><img class="tool-btn-img-2" src="../assets/redo.png"/></li>
 			<li class="tool-btn" @click="_deleteSelected"><img class="tool-btn-img-3" src="../assets/delete.png"/></li>
 			<li class="tool-btn" @click="_clearCanvas"><img class="tool-btn-img-4" src="../assets/clean_icon.png"/></li>
 		</ul>
@@ -496,17 +496,22 @@
 
 	const bindKeyHandler = (vm) => {
 		let keyHandler = new mxKeyHandler(graph);
-		keyHandler.bindControlKey(8, function (evt) {
+		keyHandler.bindControlKey(8, function (evt) { // ctrl + backspace
 			if (graph.isEnabled()) {
 				vm._deleteSelected();
 			}
 		});
-		keyHandler.bindControlKey(90, function (evt) {
+		keyHandler.bindControlKey(90, function (evt) { // ctrl + z/Z
 			if (graph.isEnabled()) {
 				vm._undoModel();
 			}
 		});
-		keyHandler.bindKey(46, function (evt) {
+		keyHandler.bindControlShiftKey(90, function () { // ctrl + shift + z/Z
+			if (graph.isEnabled()) {
+				vm._redoModel();
+			}
+		})
+		keyHandler.bindKey(46, function (evt) { // delete
 			if (graph.isEnabled()) {
 				vm._clearCanvas();
 			}
@@ -958,6 +963,10 @@
 
 			_undoModel: function () {
 				undoManager.undo();
+			},
+
+			_redoModel: function () {
+				undoManager.redo();
 			},
 
 			_hideSelector: function () {

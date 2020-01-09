@@ -659,6 +659,15 @@
 			},
 
 			_exportXMLFile: function () {
+				if (graph.isGraphEmpty()) {
+					this.$message.warning({
+						duration: 2000,
+						iconClass: 'icon-warn',
+						message: "Export model can not be empty!",
+						customClass: 'warning-msg'
+					});
+					return;
+				}
 				this.isExportShow = false;
 				const xml = graph.exportModelXML();
 				const blob = new Blob([xml], {type: "text/plain;charset=utf-8"});
@@ -729,6 +738,15 @@
 			},
 
 			_exportSvg: function() {
+				if (graph.isGraphEmpty()) {
+					this.$message.warning({
+						duration: 2000,
+						iconClass: 'icon-warn',
+						message: "Export model can not be empty!",
+						customClass: 'warning-msg'
+					});
+					return;
+				}
 				const svg = graph.exportModelSvg();
 				const blob = new Blob([svg], {type: 'image/svg+xml'});
 				window.console.log(blob);
@@ -741,7 +759,15 @@
 			},
 
 			_exportPNG: function () {
-				this.isExportShow = false;
+				if (graph.isGraphEmpty()) {
+					this.$message.warning({
+						duration: 2000,
+						iconClass: 'icon-warn',
+						message: "Export model can not be empty!",
+						customClass: 'warning-msg'
+					});
+					return;
+				}
 				let loading = this.loading();
 				let picture = graph.exportPicXML();
 				// window.console.log(picture.xml);
@@ -778,14 +804,13 @@
 						this.closeLoading(loading);
 						window.console.log(err);
 					})
-
 			},
 
 			_saveModel: function() {
 				if (graph.isGraphEmpty()) {
 					this.$message.warning({
 						duration: 2000,
-						iconClass: 'icon-info',
+						iconClass: 'icon-warn',
 						message: "Save model can not be empty!",
 						customClass: 'warning-msg'
 					});

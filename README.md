@@ -47,6 +47,10 @@
 ### To check some model information
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/model_info.png" width="30%">
 
+### When you click the "?" icon, you can get the guidance about how to use typeflow editor
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/help_msg.png" width="100%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/help_msg_2.png" width="100%">
+
 ## Project setup
 ```
 npm install

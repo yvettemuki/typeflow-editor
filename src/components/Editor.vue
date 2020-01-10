@@ -75,6 +75,7 @@
 			class="form-cover">
 			<ImportModelPanel
 				v-bind:modelList="modelList"
+				v-if="hackReset"
 				v-on="{
 					closeImportPanel: _closeImportPanel
 				}">
@@ -567,6 +568,7 @@
 				currentPage: 0,
 				isValidateShow: false,
 				currentModel: '',
+				hackReset: true
 			};
 		},
 
@@ -1032,6 +1034,10 @@
 							let index = this.modelList.indexOf(model);
 							this.modelList.splice(index, 1);
 							this.isValidateShow = false;
+							this.hackReset = false;
+							this.$nextTick(() => {
+								this.hackReset = true;
+							});
 						}
 					})
 			},

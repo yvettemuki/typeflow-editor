@@ -22,11 +22,6 @@
 				type: Array
 			}
 		},
-		data() {
-			return {
-
-			}
-		},
 		methods: {
 			_closePanel: function () {
 				this.$emit("closeImportPanel");

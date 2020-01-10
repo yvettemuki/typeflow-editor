@@ -1,5 +1,6 @@
 <template>
-	<div :id="model.name" @click="_chooseItem(model)"></div>
+	<div :id="model.name" @click="_chooseItem(model)">
+	</div>
 </template>
 
 <script>
@@ -11,6 +12,7 @@
 				type: Object
 			}
 		},
+
 		methods: {
 			_toSvgDom: function () {
 				let svg = this.model.svgXml;

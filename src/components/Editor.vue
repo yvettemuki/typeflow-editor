@@ -90,7 +90,7 @@
 				</template>
 			</ImportModelPanel>
 		</div>
-		<div v-if="isExportShow" class="shade-layer" @click="_hideSelector"></div>
+		<div v-show="isExportShow" class="shade-layer" id="selection-layer" @click="_hideSelector"></div>
 		<div class="main-container">
 			<div class="navigator">
 				<div class="title-logo"><b>TypeFlow Editor</b></div>
@@ -668,7 +668,6 @@
 					});
 					return;
 				}
-				this.isExportShow = false;
 				const xml = graph.exportModelXML();
 				const blob = new Blob([xml], {type: "text/plain;charset=utf-8"});
 				FileSaver.saveAs(blob, "model.xml");
@@ -755,7 +754,6 @@
 				link.href = url;
 				link.download = 'model.svg';
 				link.click();
-				this.isExportShow = false;
 			},
 
 			_exportPNG: function () {
@@ -770,7 +768,6 @@
 				}
 				let loading = this.loading();
 				let picture = graph.exportPicXML();
-				// window.console.log(picture.xml);
 				this.$axios({
 					method: 'post',
 					url: '/downloadPNG',
@@ -789,6 +786,7 @@
 							link.href = objectUrl;
 							link.download = "model.png";
 							link.click();
+							this.isExportShow = false;
 							this.closeLoading(loading);
 						} else {
 							this.closeLoading(loading);

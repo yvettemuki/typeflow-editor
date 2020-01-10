@@ -31,10 +31,6 @@
 			_closePanel: function () {
 				this.$emit("closeImportPanel");
 			},
-
-			// _sendSelectModel: function (model) {
-			// 	this.$emit("getValueFromImportPanel", model);
-			// }
 		}
 	}
 </script>

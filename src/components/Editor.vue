@@ -79,7 +79,7 @@
 					closeImportPanel: _closeImportPanel
 				}">
 				<template v-slot:model="{ model }">
-					<button class="delete-btn" @click="_deleteModel(model)"></button>
+					<button class="delete-btn" @click="_deleteValidate(model)"></button>
 					<ModelSvg
 						class="model-div"
 						:model = "model"
@@ -89,6 +89,16 @@
 					<span class="model-name"><b>{{model.name}}</b></span>
 				</template>
 			</ImportModelPanel>
+		</div>
+		<div
+			class="form-cover"
+			v-if="isValidateShow">
+			<ValidatePanel
+				:model="currentModel"
+				v-on="{
+					deleteModel: _deleteModel
+				}">
+			</ValidatePanel>
 		</div>
 		<div v-show="isExportShow" class="shade-layer" id="selection-layer" @click="_hideSelector"></div>
 		<div class="main-container">
@@ -192,6 +202,7 @@
 	import Selector from "./Selector";
 	import CustomForm from "./CustomForm";
 	import HelpMap from "./HelpMap";
+	import ValidatePanel from "./ValidatePanel";
 
 	const {
 		mxEvent,
@@ -554,10 +565,13 @@
 				sizeHeight: '',
 				isHelpMapShow: false,
 				currentPage: 0,
+				isValidateShow: false,
+				currentModel: '',
 			};
 		},
 
 		components: {
+			ValidatePanel,
 			HelpMap,
 			CustomForm,
 			Selector,
@@ -996,7 +1010,16 @@
 				this.isExportShow = false;
 			},
 
-			_deleteModel: function (model) {
+			_deleteValidate: function (model) {
+				this.currentModel = model;
+				this.isValidateShow = true;
+			},
+
+			_deleteModel: function (isDelete, model) {
+				if (!isDelete) {
+					this.isValidateShow = false;
+					return;
+				}
 				let name = model.name;
 				this.$axios({
 					method: 'post',
@@ -1008,6 +1031,7 @@
 						if (res.data.success) {
 							let index = this.modelList.indexOf(model);
 							this.modelList.splice(index, 1);
+							this.isValidateShow = false;
 						}
 					})
 			},

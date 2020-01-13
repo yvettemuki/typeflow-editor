@@ -130,7 +130,7 @@
 			<div class="core-container">
 				<div class="element-container">
 					<div class="element-item">
-						<span class="element-type">Definition</span>
+						<ElementHead title="Definition"></ElementHead>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
 							<li class="element-li purefunction-item" data-type="PureFunction" data-subtype="PureFunction"><span class="font-item">PureFunction</span></li>
@@ -138,7 +138,7 @@
 					</div>
 					<div class="element-item">
 						<BasicLine color="#EDEDED"/>
-						<span class="element-type">InputEndpoint</span>
+						<ElementHead title="InputEndpoint"></ElementHead>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
 							<li class="element-li" data-type="CommandLineArgsInputEndpoint"><span class="font-item">CommandLineArgsInputEndpoint</span></li>
@@ -148,7 +148,7 @@
 					</div>
 					<div class="element-item">
 						<BasicLine color="#EDEDED"/>
-						<span class="element-type">OutputEndpoint</span>
+						<ElementHead title="OutputEndpoint"></ElementHead>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
 							<li class="element-li" data-type="FileOutputEndpoint"><span class="font-item">FileOutputEndpoint</span></li>
@@ -156,7 +156,7 @@
 					</div>
 					<div class="element-item">
 						<BasicLine color="#EDEDED"/>
-						<span class="element-type">Others</span>
+						<ElementHead title="Resource"></ElementHead>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
 							<li class="element-li" data-type="Resource"><span class="font-item">Resource</span></li>
@@ -204,6 +204,7 @@
 	import CustomForm from "./CustomForm";
 	import HelpMap from "./HelpMap";
 	import ValidatePanel from "./ValidatePanel";
+	import ElementHead from "./ElementHead";
 
 	const {
 		mxEvent,
@@ -573,6 +574,7 @@
 		},
 
 		components: {
+			ElementHead,
 			ValidatePanel,
 			HelpMap,
 			CustomForm,

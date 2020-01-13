@@ -130,7 +130,9 @@
 			<div class="core-container">
 				<div class="element-container">
 					<div class="element-item">
-						<ElementHead title="Definition"></ElementHead>
+						<ElementHead title="PureFunction" v-on="{
+							addElement: _addElement
+						}"></ElementHead>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
 							<li class="element-li purefunction-item" data-type="PureFunction" data-subtype="PureFunction"><span class="font-item">PureFunction</span></li>
@@ -138,7 +140,9 @@
 					</div>
 					<div class="element-item">
 						<BasicLine color="#EDEDED"/>
-						<ElementHead title="InputEndpoint"></ElementHead>
+						<ElementHead title="InputEndpoint" v-on="{
+							addElement: _addElement
+						}"></ElementHead>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
 							<li class="element-li" data-type="CommandLineArgsInputEndpoint"><span class="font-item">CommandLineArgsInputEndpoint</span></li>
@@ -148,7 +152,9 @@
 					</div>
 					<div class="element-item">
 						<BasicLine color="#EDEDED"/>
-						<ElementHead title="OutputEndpoint"></ElementHead>
+						<ElementHead title="OutputEndpoint" v-on="{
+							addElement: _addElement
+						}"></ElementHead>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
 							<li class="element-li" data-type="FileOutputEndpoint"><span class="font-item">FileOutputEndpoint</span></li>
@@ -156,7 +162,9 @@
 					</div>
 					<div class="element-item">
 						<BasicLine color="#EDEDED"/>
-						<ElementHead title="Resource"></ElementHead>
+						<ElementHead title="Resource" v-on="{
+							addElement: _addElement
+						}"></ElementHead>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
 							<li class="element-li" data-type="Resource"><span class="font-item">Resource</span></li>
@@ -1093,6 +1101,18 @@
 				this.modelName = 'no name';
 				this.selected = 'a4';
 				graph.updateBackgroundPage(this.selected);
+			},
+
+			_addElement: function (type) {
+				if (type.includes('PureFunction')) {
+					window.console.log("add pure function");
+				} else if (type.includes('InputEndpoint')) {
+					window.console.log("add pure function");
+				} else if (type.includes('OutputEndpoint')) {
+					window.console.log("add pure function");
+				} else if (type.includes('Resource')) {
+					window.console.log("add pure function");
+				}
 			},
 
 			loading: function () {

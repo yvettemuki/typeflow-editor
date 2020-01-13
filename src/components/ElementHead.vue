@@ -1,7 +1,7 @@
 <template>
 	<div class="head-container">
 		<span>{{title}}</span>
-		<Add class="add-icon" color="#333333"></Add>
+		<Add class="add-icon" color="#333333" @click.native="_addElement"></Add>
 	</div>
 </template>
 
@@ -9,15 +9,26 @@
 	import Add from "./Add";
 	export default {
 		name: "ElementHead",
+		components: {
+			Add,
+		},
 		props: {
 			title: {
 				default: '',
 				type: String,
 			},
 		},
-		components: {
-			Add,
+		data() {
+			return {
+
+			}
+		},
+		methods: {
+			_addElement: function () {
+				this.$emit('addElement', this.title);
+			}
 		}
+
 	}
 </script>
 

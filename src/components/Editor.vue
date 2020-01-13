@@ -101,6 +101,16 @@
 				}">
 			</ValidatePanel>
 		</div>
+		<div
+			class="form-cover"
+			v-if="isAddElementFormShow">
+			<SimpleInput
+				:title="currentAddElementType"
+				v-on="{
+					getValueFromSimpleForm: _getNewElementName,
+					closeSimpleForm: _closeNewElementForm,
+				}"/>
+		</div>
 		<div v-show="isExportShow" class="shade-layer" id="selection-layer" @click="_hideSelector"></div>
 		<div class="main-container">
 			<div class="navigator">
@@ -135,10 +145,12 @@
 							setElement: _setElement,
 						}"></ElementHead>
 						<BasicLine color="#EDEDED"/>
-						<ul class="element-ul"
-								v-for="(item, idx) in pureFunctionList"
-								:key="idx">
-							<li class="element-li purefunction-item" data-type="PureFunction"><span class="font-item">{{item.name}}</span></li>
+						<ul class="element-ul">
+							<li v-for="(item, idx) in pureFunctionList"
+									:key="idx"
+									class="element-li purefunction-item"
+									data-type="PureFunction">
+								<span class="font-item">{{item}}</span></li>
 						</ul>
 					</div>
 					<div class="element-item">
@@ -585,10 +597,7 @@
 				currentModel: '',
 				hackReset: true,
 				pureFunctionList: [
-					{
-						idx: 0,
-						name: "PureFunction",
-					}
+					"PureFunction",
 				],
 				inputEndpointList: [
 					"CommandLineArgsInputEndpoint",
@@ -600,7 +609,9 @@
 				],
 				resourceList: [
 					"Resource",
-				]
+				],
+				isAddElementFormShow: false,
+				currentAddElementType: '',
 			};
 		},
 
@@ -1127,19 +1138,25 @@
 			},
 
 			_addElement: function (type) {
-				if (type.includes('PureFunction')) {
-					window.console.log("add pure function");
-				} else if (type.includes('InputEndpoint')) {
-					window.console.log("add InputEndpoint");
-				} else if (type.includes('OutputEndpoint')) {
-					window.console.log("add pure function");
-				} else if (type.includes('Resource')) {
-					window.console.log("add pure function");
-				}
+				this.currentAddElementType = type;
+				this.isAddElementFormShow = true;
 			},
 
 			_setElement: function (type) {
 				window.console.log("in the setting of " + type);
+			},
+
+			_getNewElementName: function (id, content) {
+				window.console.log(content);
+				if (this.currentAddElementType.includes('PureFunction')) {
+					this.pureFunctionList.push(content);
+					makeDraggable(document.getElementsByClassName('element-li'));
+				}
+				this.isAddElementFormShow = false;
+			},
+
+			_closeNewElementForm: function () {
+				this.isAddElementFormShow = false;
 			},
 
 			loading: function () {

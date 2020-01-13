@@ -131,17 +131,21 @@
 				<div class="element-container">
 					<div class="element-item">
 						<ElementHead title="PureFunction" v-on="{
-							addElement: _addElement
+							addElement: _addElement,
+							setElement: _setElement,
 						}"></ElementHead>
 						<BasicLine color="#EDEDED"/>
-						<ul class="element-ul">
-							<li class="element-li purefunction-item" data-type="PureFunction" data-subtype="PureFunction"><span class="font-item">PureFunction</span></li>
+						<ul class="element-ul"
+								v-for="(item, idx) in pureFunctionList"
+								:key="idx">
+							<li class="element-li purefunction-item" data-type="PureFunction"><span class="font-item">{{item.name}}</span></li>
 						</ul>
 					</div>
 					<div class="element-item">
 						<BasicLine color="#EDEDED"/>
 						<ElementHead title="InputEndpoint" v-on="{
-							addElement: _addElement
+							addElement: _addElement,
+							setElement: _setElement,
 						}"></ElementHead>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
@@ -153,7 +157,8 @@
 					<div class="element-item">
 						<BasicLine color="#EDEDED"/>
 						<ElementHead title="OutputEndpoint" v-on="{
-							addElement: _addElement
+							addElement: _addElement,
+							setElement: _setElement,
 						}"></ElementHead>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
@@ -163,7 +168,8 @@
 					<div class="element-item">
 						<BasicLine color="#EDEDED"/>
 						<ElementHead title="Resource" v-on="{
-							addElement: _addElement
+							addElement: _addElement,
+							setElement: _setElement,
 						}"></ElementHead>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
@@ -577,7 +583,24 @@
 				currentPage: 0,
 				isValidateShow: false,
 				currentModel: '',
-				hackReset: true
+				hackReset: true,
+				pureFunctionList: [
+					{
+						idx: 0,
+						name: "PureFunction",
+					}
+				],
+				inputEndpointList: [
+					"CommandLineArgsInputEndpoint",
+					"CommandLineInputEndpoint",
+					"AliyunHttpInputEndpoint"
+				],
+				outputEndpointList: [
+					"FileOutputEndpoint",
+				],
+				resourceList: [
+					"Resource",
+				]
 			};
 		},
 
@@ -1107,12 +1130,16 @@
 				if (type.includes('PureFunction')) {
 					window.console.log("add pure function");
 				} else if (type.includes('InputEndpoint')) {
-					window.console.log("add pure function");
+					window.console.log("add InputEndpoint");
 				} else if (type.includes('OutputEndpoint')) {
 					window.console.log("add pure function");
 				} else if (type.includes('Resource')) {
 					window.console.log("add pure function");
 				}
+			},
+
+			_setElement: function (type) {
+				window.console.log("in the setting of " + type);
 			},
 
 			loading: function () {

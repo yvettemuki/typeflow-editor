@@ -313,7 +313,7 @@
 	const insertVertex = (dom, target, x, y) => {
 		let defiType = dom.getAttribute('data-type');
 		let newVertex;
-		if (defiType == 'PureFunction') {
+		if (defiType.includes('PureFunction')) {
 			newVertex = new mxCell(defiType, new mxGeometry(0, 0, 160, 50), `function_node`);
 			//customize new type data, to store vertex id \ type \ content
 			newVertex.data = {
@@ -1169,22 +1169,15 @@
 
 			_getNewElementName: function (id, content) {
 				window.console.log(content);
-				let addBtn = document.createElement('div');
-				let container = document.getElementById('test-container');
-				addBtn.innerText = content;
-				addBtn.className = 'element-li purefunction-item';
-				addBtn.setAttribute('data-type', 'PureFunction');
-				addBtn.style.width = '100px';
-				addBtn.style.height = '40px';
-				addBtn.style.backgroundColor = '#dcdcdc';
-				container.appendChild(addBtn);
-				makeOneDraggable(addBtn);
-				// if (this.currentAddElementType.includes('PureFunction')) {
-				// 	this.pureFunctionList.push(content);
-				// 	let index = this.pureFunctionList.length - 1;
-				// 	let element = this.$refs.pureFunction[index];
-				// 	makeOneDraggable(element);
-				// }
+				if (this.currentAddElementType.includes('PureFunction')) {
+					this.pureFunctionList.push(content);
+					this.$nextTick(() => {
+						let index = this.pureFunctionList.length - 1;
+						let element = this.$refs.pureFunction[index];
+						window.console.log(element);
+						makeOneDraggable(element);
+					})
+				}
 				this.isAddElementFormShow = false;
 			},
 

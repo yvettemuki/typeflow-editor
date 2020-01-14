@@ -49,7 +49,7 @@
 		<div
 			v-if="isResFormShow"
 			class="form-cover">
-			<SimpleInput title="Resource" :id="nowVertexId" v-on="{
+			<SimpleInput :title="currentResourceType" :id="nowVertexId" v-on="{
 				getValueFromSimpleForm: _getValueFromResForm,
 				closeSimpleForm: _closeResForm
         }"/>
@@ -163,9 +163,13 @@
 						}"></ElementHead>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
-							<li class="element-li" data-type="CommandLineArgsInputEndpoint"><span class="font-item">CommandLineArgsInputEndpoint</span></li>
-							<li class="element-li" data-type="CommandLineInputEndpoint"><span class="font-item">CommandLineInputEndpoint</span></li>
-							<li class="element-li" data-type="AliyunHttpInputEndpoint"><span class="font-item">AliyunHttpInputEndpoint</span></li>
+							<li v-for="(item, idx) in inputEndpointList"
+									:key="idx"
+									class="element-li"
+									ref="inputEndpoint"
+									data-type="InputEndpoint">
+								<span class="font-item">{{item}}</span>
+							</li>
 						</ul>
 					</div>
 					<div class="element-item">
@@ -176,7 +180,13 @@
 						}"></ElementHead>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
-							<li class="element-li" data-type="FileOutputEndpoint"><span class="font-item">FileOutputEndpoint</span></li>
+							<li v-for="(item, idx) in outputEndpointList"
+									:key="idx"
+									class="element-li"
+									ref="outputEndpoint"
+									data-type="OutputEndpoint">
+								<span class="font-item">{{item}}</span>
+							</li>
 						</ul>
 					</div>
 					<div class="element-item">
@@ -187,7 +197,13 @@
 						}"></ElementHead>
 						<BasicLine color="#EDEDED"/>
 						<ul class="element-ul">
-							<li class="element-li" data-type="Resource"><span class="font-item">Resource</span></li>
+							<li v-for="(item, idx) in resourceList"
+									:key="idx"
+									class="element-li"
+									ref="resource"
+									data-type="Resource">
+								<span class="font-item">{{item}}</span>
+							</li>
 						</ul>
 					</div>
 					<div class="element-item">
@@ -423,7 +439,7 @@
 
 	};
 
-	const updateResVertex = (id, name) => {
+	const updateResVertex = (type, id, name) => {
 		let resVertex = graph.getModel().getCell(id);
 		graph.getModel().setValue(resVertex, name);
 
@@ -433,7 +449,7 @@
 		geo.width = width;
 		graph.getModel().setGeometry(resVertex, geo);
 
-		let typeVertex = graph.insertVertex(resVertex, null, "Resource",
+		let typeVertex = graph.insertVertex(resVertex, null, type,
 			0, 0, width, 20,
 			`defitype_node;constituent=1;`,
 			true);
@@ -635,6 +651,7 @@
 				],
 				isAddElementFormShow: false,
 				currentAddElementType: '',
+				currentResourceType: '',
 			};
 		},
 
@@ -689,6 +706,7 @@
 							this.isFormShow = true;
 						} else {
 							this.nowVertexId = cell.getId();
+							this.currentResourceType = cell.getValue();
 							this.isResFormShow = true;
 						}
 					}
@@ -810,8 +828,8 @@
 				this.isCheckShow = false;
 			},
 
-			_getValueFromResForm: function (id, name) {
-				updateResVertex(id, name);
+			_getValueFromResForm: function (type, id, name) {
+				updateResVertex(type, id, name);
 				this.isResFormShow = false;
 			},
 
@@ -1169,18 +1187,27 @@
 				window.console.log("in the setting of " + type);
 			},
 
-			_getNewElementName: function (id, content) {
+			_getNewElementName: function (type, id, content) {
 				window.console.log(content);
 				if (this.currentAddElementType.includes('PureFunction')) {
-					this.pureFunctionList.push(content);
-					this.$nextTick(() => {
-						let index = this.pureFunctionList.length - 1;
-						let element = this.$refs.pureFunction[index];
-						window.console.log(element);
-						makeOneDraggable(element);
-					})
+					this._addNewTypeElement(content, 'pureFunction', this.pureFunctionList);
+				} else if (this.currentAddElementType.includes('InputEndpoint')) {
+					this._addNewTypeElement(content, 'inputEndpoint', this.inputEndpointList);
+				} else if (this.currentAddElementType.includes('OutputEndpoint')) {
+					this._addNewTypeElement(content, 'outputEndpoint', this.outputEndpointList);
+				} else if (this.currentAddElementType.includes('Resource')) {
+					this._addNewTypeElement(content, 'resource', this.resourceList);
 				}
 				this.isAddElementFormShow = false;
+			},
+
+			_addNewTypeElement: function (content, refName, list) {
+				list.push(content);
+				this.$nextTick(() => {
+					let index = list.length - 1;
+					let element = this.$refs[refName][index];
+					makeOneDraggable(element);
+				});
 			},
 
 			_closeNewElementForm: function () {
@@ -1513,12 +1540,11 @@
 		padding: 0 20px 0px 20px;
 	}
 	.element-ul {
-		padding: 20px 20px 8px 20px;
+		padding: 20px 15px 8px 15px;
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
 		margin: 0px;
-		justify-content: space-between;
 		max-height: 96px;
 		overflow-y: scroll;
 	}
@@ -1528,7 +1554,6 @@
 		justify-content: center;
 		background: #34495D;
 		height: 36px;
-		//width: 100px;
 		padding: 0 8px 0 8px;
 		border-radius: 4px;
 		color: #ffffff;
@@ -1536,8 +1561,8 @@
 		font-weight: bold;
 		cursor: cell;
 		margin-bottom: 12px;
-		/*word-wrap:break-word;*/
-		/*word-break:break-all;*/
+		margin-left: 5px;
+		margin-right: 5px;
 	}
 	.purefunction-item {
 		background: #42B982;

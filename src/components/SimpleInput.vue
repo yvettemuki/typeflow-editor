@@ -33,7 +33,7 @@
 					});
 					return;
 				}
-				this.$emit('getValueFromSimpleForm', this.id, this.inputContent);
+				this.$emit('getValueFromSimpleForm', this.title, this.id, this.inputContent);
 			},
 			_sendToEditor: function () {
 				this.$emit('closeSimpleForm', this.id)

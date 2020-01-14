@@ -122,6 +122,7 @@
 				</div>
 			</div>
 			<div class="tool-bar">
+				<input class="file-input" @change="_readFile" type="file" ref="importFile"/>
 				<div class="tool-item general-item" @click="_importModel">Import</div>
 				<div class="tool-item general-item" @click="_exportModel">
 					<span>Export</span>
@@ -254,7 +255,6 @@
 
 	const initGraph = () => {
 		graph = genGraph(document.getElementById('mxContainer'));
-		// makeDraggable(document.getElementsByClassName('mxResElement'));
 		makeDraggable(document.getElementsByClassName('element-li'));
 		listenGraphEvent();
 	}
@@ -284,8 +284,29 @@
 			mxUtils.makeDraggable(ele, dropValidate, dropSuccessAndCreate, afterEle,
 				null, null, null, true);
 		});
+	}
 
+	const makeOneDraggable = (element) => {
+		//decide drop validate
+		let dropValidate = function (evt) {
+			const x = mxEvent.getClientX(evt);
+			const y = mxEvent.getClientY(evt);
+			//use x and y to attain the ele
+			const ele = document.elementFromPoint(x, y);
+			//decide whether is dropped inside the graph container
+			if (mxUtils.isAncestorNode(graph.container, ele)) {
+				return graph;
+			}
+			return null;
+		};
 
+		//after drop success, create something
+		let dropSuccessAndCreate = function (graph, evt, target, x, y) {
+			insertVertex(this.element, target, x, y);
+		};
+
+		//add the drag event for every definition element
+		mxUtils.makeDraggable(element, dropValidate, dropSuccessAndCreate, element, null, null, null, true);
 	}
 
 	const insertVertex = (dom, target, x, y) => {
@@ -303,7 +324,6 @@
 				definition: null
 			}
 		} else {
-			window.console.log("test");
 			newVertex = new mxCell(defiType, new mxGeometry(0, 0, 160, 50), `resource_node`);
 			newVertex.data = {
 				resource: null
@@ -1150,7 +1170,7 @@
 				window.console.log(content);
 				if (this.currentAddElementType.includes('PureFunction')) {
 					this.pureFunctionList.push(content);
-					makeDraggable(document.getElementsByClassName('element-li'));
+					// let element =
 				}
 				this.isAddElementFormShow = false;
 			},

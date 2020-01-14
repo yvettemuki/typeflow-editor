@@ -146,9 +146,10 @@
 							setElement: _setElement,
 						}"></ElementHead>
 						<BasicLine color="#EDEDED"/>
-						<ul class="element-ul">
+						<ul class="element-ul" id="test-container">
 							<li v-for="(item, idx) in pureFunctionList"
 									:key="idx"
+									ref="pureFunction"
 									class="element-li purefunction-item"
 									data-type="PureFunction">
 								<span class="font-item">{{item}}</span></li>
@@ -1168,10 +1169,22 @@
 
 			_getNewElementName: function (id, content) {
 				window.console.log(content);
-				if (this.currentAddElementType.includes('PureFunction')) {
-					this.pureFunctionList.push(content);
-					// let element =
-				}
+				let addBtn = document.createElement('div');
+				let container = document.getElementById('test-container');
+				addBtn.innerText = content;
+				addBtn.className = 'element-li purefunction-item';
+				addBtn.setAttribute('data-type', 'PureFunction');
+				addBtn.style.width = '100px';
+				addBtn.style.height = '40px';
+				addBtn.style.backgroundColor = '#dcdcdc';
+				container.appendChild(addBtn);
+				makeOneDraggable(addBtn);
+				// if (this.currentAddElementType.includes('PureFunction')) {
+				// 	this.pureFunctionList.push(content);
+				// 	let index = this.pureFunctionList.length - 1;
+				// 	let element = this.$refs.pureFunction[index];
+				// 	makeOneDraggable(element);
+				// }
 				this.isAddElementFormShow = false;
 			},
 

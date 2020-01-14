@@ -211,12 +211,12 @@
 						<BasicLine color="#EDEDED"/>
 						<span class="element-type">My Components</span>
 						<BasicLine color="#EDEDED"/>
-						<ul class="element-ul">
-							<li class="element-li" data-type="Customize"><span class="font-item">NumInput</span></li>
-						</ul>
+<!--						<ul class="element-ul">-->
+<!--							<li class="element-li" data-type="Customize"><span class="font-item">NumInput</span></li>-->
+<!--						</ul>-->
 					</div>
 					<div class="element-tool-bar">
-						<BasicLine color="#EDEDED"/>
+<!--						<BasicLine color="#EDEDED"/>-->
 						<div class="bottom-item">
 							<select class="size-selected" v-model="selected" @change="_sizeSelected">
 								<option value="a4">A4 (210 mm x 297 mm)</option>
@@ -1513,6 +1513,7 @@
 		height: calc(86vh);
 	}
 	.element-container {
+		position: relative;
 		height: 100%;
 		width: 270px;
 		box-shadow: 0px 1px 8px 0px #ebebeb;
@@ -1590,10 +1591,12 @@
 		background-image: url("../assets/close_btn_hover.png");
 	}
 	.element-tool-bar {
-		height: 170px;
+		width: 100%;
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;
+		position: absolute;
+		bottom: 0;
 	}
 	.bottom-item {
 		margin: 20px;

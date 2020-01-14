@@ -146,7 +146,7 @@
 							setElement: _setElement,
 						}"></ElementHead>
 						<BasicLine color="#EDEDED"/>
-						<ul class="element-ul" id="test-container">
+						<ul class="element-ul">
 							<li v-for="(item, idx) in pureFunctionList"
 									:key="idx"
 									ref="pureFunction"
@@ -312,20 +312,22 @@
 
 	const insertVertex = (dom, target, x, y) => {
 		let defiType = dom.getAttribute('data-type');
+		let defiTypeName = dom.innerText;
+		window.console.log(defiType + " " + defiTypeName);
 		let newVertex;
 		if (defiType.includes('PureFunction')) {
-			newVertex = new mxCell(defiType, new mxGeometry(0, 0, 160, 50), `function_node`);
+			newVertex = new mxCell(defiTypeName, new mxGeometry(0, 0, 160, 50), `function_node`);
 			//customize new type data, to store vertex id \ type \ content
 			newVertex.data = {
 				definition: null
 			}
 		} else if (defiType.includes('InputEndpoint') || defiType.includes('OutputEndpoint')) {
-			newVertex = new mxCell(defiType, new mxGeometry(0, 0, 160, 50), `endpoint_node`);
+			newVertex = new mxCell(defiTypeName, new mxGeometry(0, 0, 160, 50), `endpoint_node`);
 			newVertex.data = {
 				definition: null
 			}
 		} else {
-			newVertex = new mxCell(defiType, new mxGeometry(0, 0, 160, 50), `resource_node`);
+			newVertex = new mxCell(defiTypeName, new mxGeometry(0, 0, 160, 50), `resource_node`);
 			newVertex.data = {
 				resource: null
 			}
@@ -681,7 +683,7 @@
 						return;
 					}
 					if (cell.vertex) {
-						if (cell.value == 'PureFunction' || cell.value.includes('InputEndpoint') || cell.value.includes('OutputEndpoint')) {
+						if (cell.value.includes('PureFunction') || cell.value.includes('InputEndpoint') || cell.value.includes('OutputEndpoint')) {
 							this.nowDefiType = cell.getValue();
 							this.nowVertexId = cell.getId();
 							this.isFormShow = true;

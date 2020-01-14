@@ -2,6 +2,7 @@
 	<div class="form-div">
 		<label class="title"><b>{{title}}</b></label>
 		<input class="input-div" v-model="inputContent"/>
+		<span v-if="tips.length > 0" class="tips">{{tips}} "{{title}}"</span>
 		<button class="close-btn" @click="_sendToEditor"></button>
 		<input class="confirm-btn" type="button" value="Confirm" @click="_sendNameToEditor"/>
 	</div>
@@ -19,6 +20,10 @@
 			type: {
 				default: 0, // 0 create new vertex type ; 1 create new element type
 				type: Number,
+			},
+			tips: {
+				type: String,
+				default: ""
 			}
 		},
 		data() {
@@ -116,6 +121,13 @@
 
 	.confirm-btn:hover {
 		background: #3eae7b;
+	}
+
+	.tips {
+		margin-top: 4px;
+		font-size: 10px;
+		font-weight: bold;
+		color: #EA5E5E;
 	}
 </style>
 <style>

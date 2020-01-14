@@ -107,6 +107,7 @@
 			<SimpleInput
 				:title="currentAddElementType"
 				:type=1
+				tips="you new type name should include"
 				v-on="{
 					getValueFromSimpleForm: _getNewElementName,
 					closeSimpleForm: _closeNewElementForm,
@@ -1186,6 +1187,11 @@
 
 			_setElement: function (type) {
 				window.console.log("in the setting of " + type);
+				this.$message.warning({
+					duration: 1500,
+					message: "this function is still in building!",
+					customClass: 'warning-msg'
+				});
 			},
 
 			_getNewElementName: function (type, id, content) {

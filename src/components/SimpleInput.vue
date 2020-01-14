@@ -15,6 +15,10 @@
 			id: {
 				type: String,
 				default: "no-id"
+			},
+			type: {
+				default: 0, // 0 create new vertex type ; 1 create new element type
+				type: Number,
 			}
 		},
 		data() {
@@ -32,6 +36,17 @@
 						customClass: 'warning-msg'
 					});
 					return;
+				}
+				if (this.type == 1) {
+					if (!this.inputContent.includes(this.title)) {
+						this.$message.warning({
+							duration: 2000,
+							iconClass: 'icon',
+							message: "input should include \"" + this.title + "\"!",
+							customClass: 'warning-msg'
+						});
+						return;
+					}
 				}
 				this.$emit('getValueFromSimpleForm', this.title, this.id, this.inputContent);
 			},

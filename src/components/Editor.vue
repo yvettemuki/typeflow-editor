@@ -106,6 +106,7 @@
 			v-if="isAddElementFormShow">
 			<SimpleInput
 				:title="currentAddElementType"
+				:type=1
 				v-on="{
 					getValueFromSimpleForm: _getNewElementName,
 					closeSimpleForm: _closeNewElementForm,

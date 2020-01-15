@@ -22,6 +22,9 @@
 	body {
 		margin: 0;
 	}
+	span {
+		cursor: default;
+	}
 	#app {
 		font-family: Arial;
 		/*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/

@@ -1497,7 +1497,8 @@
 		margin-left: 10px;
 	}
 	.title-logo {
-		font-size: 22px
+		font-size: 22px;
+		cursor: default;
 	}
 	.tool-bar {
 		height: 50px;

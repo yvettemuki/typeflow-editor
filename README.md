@@ -4,8 +4,10 @@
 
 ## Introduction
 ### Core appearance
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/home2.0.png" width="100%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/home.png" width="100%">
 
+### Left side is the element bar including different types of draggable resources, and also including the graph page setting bar of its size
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/element_bar.png" width="100%">
 
 ### After drag the one of the elements in three types of Definition(PureFunction/InputEndpoint/OutputEndpoint), the form will display to fill 
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/inputForm.png" width="60%">
@@ -26,8 +28,8 @@
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update2.png" width="60%">
 
 
-### To *undo*, *redo*, *delete*, *zoom*(in/out), you can use the left side tools which are on the bottom of the panel
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/toolbar2.0.png" width="20%">
+### To *undo*, *redo*, *delete*, *zoom*(in/out), you can right side float toolbar
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/toolbar.png" width="20%">
 
 
 ### To *import model*, *export model*, *generate code* and *save model*, you can click the buttons on the top side

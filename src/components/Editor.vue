@@ -105,12 +105,22 @@
 			class="form-cover"
 			v-if="isAddElementFormShow">
 			<SimpleInput
-				:title="currentAddElementType"
+				:title="currentElementType"
 				:type=1
 				tips="you new type name should include"
 				v-on="{
 					getValueFromSimpleForm: _getNewElementName,
 					closeSimpleForm: _closeNewElementForm,
+				}"/>
+		</div>
+		<div
+			class="form-cover"
+			v-if="isElementSettingShow">
+			<ElementSetting
+				:type="currentElementType"
+				:element-list="currentElementList"
+				v-on="{
+					closeElementSetting: _closeElementSetting
 				}"/>
 		</div>
 		<div v-show="isExportShow" class="shade-layer" id="selection-layer" @click="_hideSelector"></div>
@@ -251,6 +261,7 @@
 	import HelpMap from "./HelpMap";
 	import ValidatePanel from "./ValidatePanel";
 	import ElementHead from "./ElementHead";
+	import ElementSetting from "./ElementSetting";
 
 	const {
 		mxEvent,
@@ -652,12 +663,15 @@
 					"Resource",
 				],
 				isAddElementFormShow: false,
-				currentAddElementType: '',
+				currentElementType: '',
+				currentElementList: null,
 				currentResourceType: '',
+				isElementSettingShow: false,
 			};
 		},
 
 		components: {
+			ElementSetting,
 			ElementHead,
 			ValidatePanel,
 			HelpMap,
@@ -927,7 +941,7 @@
 				}
 			},
 
-			_getValueFromSaveForm: function (id, name) {
+			_getValueFromSaveForm: function (type, id, name) {
 				this.modelName = name;
 				this._saveModelToServer();
 			},
@@ -1181,28 +1195,33 @@
 			},
 
 			_addElement: function (type) {
-				this.currentAddElementType = type;
+				this.currentElementType = type;
 				this.isAddElementFormShow = true;
 			},
 
 			_setElement: function (type) {
-				window.console.log("in the setting of " + type);
-				this.$message.warning({
-					duration: 1500,
-					message: "this function is still in building!",
-					customClass: 'warning-msg'
-				});
+				this.currentElementType = type;
+				if (type.includes('PureFunction')) {
+					this.currentElementList = this.pureFunctionList;
+				} else if (type.includes('InputEndpoint')) {
+					this.currentElementList = this.inputEndpointList;
+				} else if (type.includes('OutputEndpoint')) {
+					this.currentElementList = this.outputEndpointList;
+				} else if (type.includes('Resource')) {
+					this.currentElementList = this.resourceList;
+				}
+				this.isElementSettingShow = true;
 			},
 
 			_getNewElementName: function (type, id, content) {
 				window.console.log(content);
-				if (this.currentAddElementType.includes('PureFunction')) {
+				if (this.currentElementType.includes('PureFunction')) {
 					this._addNewTypeElement(content, 'pureFunction', this.pureFunctionList);
-				} else if (this.currentAddElementType.includes('InputEndpoint')) {
+				} else if (this.currentElementType.includes('InputEndpoint')) {
 					this._addNewTypeElement(content, 'inputEndpoint', this.inputEndpointList);
-				} else if (this.currentAddElementType.includes('OutputEndpoint')) {
+				} else if (this.currentElementType.includes('OutputEndpoint')) {
 					this._addNewTypeElement(content, 'outputEndpoint', this.outputEndpointList);
-				} else if (this.currentAddElementType.includes('Resource')) {
+				} else if (this.currentElementType.includes('Resource')) {
 					this._addNewTypeElement(content, 'resource', this.resourceList);
 				}
 				this.isAddElementFormShow = false;
@@ -1219,6 +1238,10 @@
 
 			_closeNewElementForm: function () {
 				this.isAddElementFormShow = false;
+			},
+
+			_closeElementSetting: function () {
+				this.isElementSettingShow = false;
 			},
 
 			loading: function () {

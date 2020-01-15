@@ -13,7 +13,7 @@
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/add_element.png" width="30%">
 
 ### To set the specific element type group, click the "gear" icon to open the element type setting panel
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/element_setting.png" width="80%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/element_setting.png" width="60%">
 
 ### After drag the one of the elements in three types of Definition(PureFunction/InputEndpoint/OutputEndpoint), the form will display to fill 
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/inputForm.png" width="60%">

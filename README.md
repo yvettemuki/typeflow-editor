@@ -13,7 +13,7 @@
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/add_element.png" width="30%">
 
 ### To set the specific element type group, click the "gear" icon to open the element type setting panel
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/element_setting.png" width="40%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/element_setting.png" width="80%">
 
 ### After drag the one of the elements in three types of Definition(PureFunction/InputEndpoint/OutputEndpoint), the form will display to fill 
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/inputForm.png" width="60%">
@@ -49,7 +49,7 @@
 
 
 ### When from *database*, and you can delete model when click the "delete" button on the right top side of each item
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/import_choose.png" width="60%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/import_choose.png" width="80%">
 
 
 ### To check some model information

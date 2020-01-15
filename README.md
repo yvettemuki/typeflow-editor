@@ -7,7 +7,13 @@
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/home.png" width="100%">
 
 ### Left side is the element bar including different types of draggable resources, and also including the graph page setting bar of its size
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/element_bar.png" width="100%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/element_bar.png" width="30%">
+
+### To add custom element, click the "+" icon in specific element bar and input the new type name to create new one
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/add_element.png" width="30%">
+
+### To set the specific element type group, click the "gear" icon to open the element type setting panel
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/element_setting.png" width="40%">
 
 ### After drag the one of the elements in three types of Definition(PureFunction/InputEndpoint/OutputEndpoint), the form will display to fill 
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/inputForm.png" width="60%">
@@ -24,12 +30,12 @@
 
 
 ### To check or update the created elements you can *double click* the Definition vertex (InputEndpoint, OutputEndpoint, PureFunction) 
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update1.png" width="60%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update1.png" width="50%">
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update2.png" width="60%">
 
 
 ### To *undo*, *redo*, *delete*, *zoom*(in/out), you can right side float toolbar
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/toolbar.png" width="20%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/toolbar.png" height="300px">
 
 
 ### To *import model*, *export model*, *generate code* and *save model*, you can click the buttons on the top side
@@ -43,7 +49,7 @@
 
 
 ### When from *database*, and you can delete model when click the "delete" button on the right top side of each item
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/import_choose.png" width="100%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/import_choose.png" width="60%">
 
 
 ### To check some model information

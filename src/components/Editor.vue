@@ -130,7 +130,7 @@
 				<div class="nav-content">
 					<span class="nav-item"><b>Model: <span class="info-value">{{modelName}}</span></b></span>
 					<span class="nav-item"><b>Status: <span class="info-value">{{isModelSave}}</span></b></span>
-					<img class="nav-item nav-info" src="../assets/wenhao.png" @click="_getHelp"/>
+					<img class="nav-info" src="../assets/wenhao.png" @click="_getHelp"/>
 				</div>
 			</div>
 			<div class="tool-bar">
@@ -1516,6 +1516,7 @@
 	.nav-info {
 		height: 28px;
 		width: 28px;
+		margin-left: 10px;
 		cursor: pointer;
 	}
 	.nav-info:hover {
@@ -1528,6 +1529,7 @@
 	}
 	.nav-item {
 		margin-left: 10px;
+		cursor: default;
 	}
 	.title-logo {
 		font-size: 22px;
@@ -1603,6 +1605,7 @@
 		font-size: 14px;
 		justify-content: flex-start;
 		padding: 0 20px 0px 20px;
+		cursor: default;
 	}
 	.element-ul {
 		padding: 20px 15px 8px 15px;
@@ -1670,11 +1673,13 @@
 		line-height: 40px;
 		position: relative;
 		bottom: 0px;
+		cursor: pointer;
 	}
 	.size-selected {
 		background-color: #ffffff;
 		font-size: 11px;
 		font-weight: bold;
+		cursor: pointer;
 	}
 	.float-tool-bar {
 		position: fixed;

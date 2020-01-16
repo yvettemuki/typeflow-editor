@@ -49,6 +49,7 @@
 		font-size: 14px;
 		justify-content: space-between;
 		padding: 0 20px 0px 20px;
+		cursor: default;
 	}
 	.tool-div {
 		display: flex;

@@ -670,6 +670,17 @@
 			};
 		},
 
+		computed: {
+			settings: function () {
+				return {
+					'pureFunctionList': this.pureFunctionList,
+					'inputEndpointList': this.inputEndpointList,
+					'outputEndpointList': this.outputEndpointList,
+					'resourceList': this.resourceList
+				}
+			},
+		},
+
 		components: {
 			ElementSetting,
 			ElementHead,
@@ -1230,6 +1241,7 @@
 			_addNewTypeElement: function (content, refName, list) {
 				list.push(content);
 				this.$nextTick(() => {
+					this.saveSettings();
 					let index = list.length - 1;
 					let element = this.$refs[refName][index];
 					makeOneDraggable(element);
@@ -1256,6 +1268,26 @@
 					loading.close();
 				})
 			},
+
+			loadLocalStorage: function () {
+				if (localStorage.getItem('settings')) {
+					try {
+						let settings = JSON.parse(localStorage.getItem('settings'));
+						this.pureFunctionList = settings.pureFunctionList;
+						this.inputEndpointList = settings.inputEndpointList;
+						this.outputEndpointList = settings.outputEndpointList;
+						this.resourceList = settings.resourceList;
+					} catch (e) {
+						localStorage.removeItem('settings');
+					}
+				}
+			},
+
+			saveSettings: function () {
+				window.console.log(this.settings);
+				const parsed = JSON.stringify(this.settings);
+				localStorage.setItem('settings', parsed);
+			},
 		},
 
 
@@ -1265,6 +1297,7 @@
 			this._listenEvent();
 			setConnectValidation(this);
 			bindKeyHandler(this);
+			this.loadLocalStorage();
 		}
 	}
 

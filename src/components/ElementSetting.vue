@@ -60,6 +60,7 @@
 				if (this.currentSelectItem != null && this.currentSelectIndex != -1) {
 					this.currentSelectItem.style.background = this.typeColor;
 					this.elementList.splice(this.currentSelectIndex, 1);
+					this.$parent.saveSettings();
 				}
 			}
 		},

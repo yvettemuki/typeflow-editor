@@ -1293,11 +1293,13 @@
 
 
 		mounted() {
-			initGraph();
-			this._listenEvent();
-			setConnectValidation(this);
-			bindKeyHandler(this);
 			this.loadLocalStorage();
+			this.$nextTick(() => {
+				initGraph();
+				this._listenEvent();
+				setConnectValidation(this);
+				bindKeyHandler(this);
+			});
 		}
 	}
 

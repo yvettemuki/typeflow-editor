@@ -1290,8 +1290,6 @@
 			},
 		},
 
-
-
 		mounted() {
 			this.loadLocalStorage();
 			this.$nextTick(() => {

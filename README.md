@@ -1,6 +1,6 @@
 # typeflow-editor
-### build with the vue and mxGraph
-### backend resource: https://github.com/yvettemuki/editor-service
+#### build with the vue and mxGraph
+#### backend resource: https://github.com/yvettemuki/editor-service
 
 ## Introduction
 ### Core appearance
@@ -15,12 +15,12 @@
 ### To set the specific element type group, click the "gear" icon to open the element type setting panel
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/element_setting.png" width="60%">
 
-### After drag the one of the elements in three types of Definition(PureFunction/InputEndpoint/OutputEndpoint), the form will display to fill 
+### After drag one of the elements in three types of Definition(PureFunction/InputEndpoint/OutputEndpoint), the form will display to fill 
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/inputForm.png" width="60%">
 
 
 ### After fill some Definition creating forms, you can connect them in the rule:
-###### only same the name output of one Definition instance can connect to another Definition instance's same name input
+###### only the same name output of one Definition instance can connect to another Definition instance's input with the same name
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/connection_1.png" width="30%">
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/connection_2.png" width="30%">
 
@@ -34,7 +34,7 @@
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update2.png" width="60%">
 
 
-### To *undo*, *redo*, *delete*, *zoom*(in/out), you can right side float toolbar
+### To *undo*, *redo*, *delete*, *zoom*(in/out), you can click the right-side float toolbar
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/toolbar.png" height="300px">
 
 
@@ -59,6 +59,10 @@
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/help_msg.png" width="100%">
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/help_msg_2.png" width="100%">
 
+## About vue-cli installation
+###### This project use vue-cli3, please make sure you have installed vue-cli3 and update node version to at least 8.9
+###### More details about installation, go to https://cli.vuejs.org/zh/guide/installation.html
+
 ## Project setup
 ```
 npm install
@@ -70,6 +74,6 @@ npm run serve
 ```
 
 ## Attention:
-Default port is 8080, if you need see vue cli3 document to change the default port
+Default port is 8080, if you need see vue-cli3 document to change the default port
 
 When you change the backend server address(port), you need to change the proxy in vue.config.js file 

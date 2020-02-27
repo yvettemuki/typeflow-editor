@@ -262,6 +262,7 @@
 	import ValidatePanel from "./ValidatePanel";
 	import ElementHead from "./ElementHead";
 	import ElementSetting from "./ElementSetting";
+	import inOutputSelections from "../configs/inOutputSelections";
 
 	const {
 		mxEvent,
@@ -667,6 +668,7 @@
 				currentElementList: null,
 				currentResourceType: '',
 				isElementSettingShow: false,
+				inOutputSelections: inOutputSelections
 			};
 		},
 
@@ -1281,6 +1283,17 @@
 						localStorage.removeItem('settings');
 					}
 				}
+
+				if (localStorage.getItem('inOutputSelections')) {
+					try {
+						let inOutputSelections = JSON.parse(localStorage.getItem('inOutputSelections'));
+						this.inOutputSelections = inOutputSelections;
+					} catch (e) {
+						localStorage.removeItem('inOutputSelections')
+					}
+				} else {
+					this.saveInOutputSelections();
+				}
 			},
 
 			saveSettings: function () {
@@ -1288,6 +1301,12 @@
 				const parsed = JSON.stringify(this.settings);
 				localStorage.setItem('settings', parsed);
 			},
+
+			saveInOutputSelections: function () {
+				window.console.log(this.inOutputSelections);
+				const parsed = JSON.stringify(this.inOutputSelections);
+				localStorage.setItem('inOutputSelections', parsed);
+			}
 		},
 
 		mounted() {

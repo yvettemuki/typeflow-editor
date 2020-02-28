@@ -37,7 +37,7 @@
 				default: "no assign title"
 			},
 			list: {
-				type: [],
+				type: Array,
 				default: null
 			}
 		},
@@ -115,14 +115,6 @@
 		overflow-y: scroll;
 		margin-top: 0;
 		margin-bottom: 10px;
-	}
-
-	.defi-main-content {
-		position: relative;
-		margin-top: 20px;
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
 	}
 
 	.input-desc {

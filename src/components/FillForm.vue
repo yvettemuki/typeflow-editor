@@ -3,102 +3,13 @@
 		<label class="defi-type"><b>{{this.defiType}}</b></label>
 		<input v-model="defiName" class="defi-name" placeholder="type the definition name"/>
 		<div class="defi-main-content">
-			<div class="defi-input-section">
-				<div class="defi-title-info-and-add">
-					<div class="defi-title-info">
-						<label class="defi-title"><b>input list</b></label>
-						<div class="defi-info">
-							<Info class="info" msg="Enter input variable types" height="40" width="100" x="20"></Info>
-						</div>
-					</div>
-					<div class="add" @click="_addOneInput"></div>
-				</div>
-				<div class="blank-block" v-if="inputs.length <= 0">
-					add one if you need
-				</div>
-				<ul v-else class="defi-input-ul">
-					<li
-						v-for="(input, idx) in inputs"
-						:key="idx"
-						class="input-desc">
-						<input v-model="input.id" class="inputs-field"/>
-						<div class="delete" @click="_deleteInput(idx)"></div>
-					</li>
-				</ul>
-			</div>
-			<div class="defi-input-section">
-				<div class="defi-title-info-and-add">
-					<div class="defi-title-info">
-						<label class="defi-title"><b>output list</b></label>
-						<div class="defi-info">
-							<Info class="info" msg="Enter normal output variable types" height="40" width="100" x="20"></Info>
-						</div>
-					</div>
-					<div class="add" @click="_addOneOutput"></div>
-				</div>
-				<div class="blank-block" v-if="outputs.length <= 0">
-					add one if you need
-				</div>
-				<ul v-else class="defi-input-ul">
-					<li
-						v-for="(output, idx) in outputs"
-						:key="idx"
-						class="input-desc">
-						<input v-model="output.id" class="inputs-field"/>
-						<div class="delete" @click="_deleteOutput(idx)"></div>
-					</li>
-				</ul>
-			</div>
+			<InfoInputList list-type="input" :list="this.inputs"></InfoInputList>
+			<InfoInputList list-type="output" :list="this.outputs"></InfoInputList>
 		</div>
 		<div class="defi-main-content">
-			<div class="defi-input-section">
-				<div class="defi-title-info-and-add">
-					<div class="defi-title-info">
-						<label class="defi-title"><b>alternative output list</b></label>
-						<div class="defi-info">
-							<Info class="info" msg="Enter alternative output variable types" height="40" width="100" x="20"></Info>
-						</div>
-					</div>
-					<div class="add" @click="_addOneAlterOutput"></div>
-				</div>
-				<div class="blank-block" v-if="alternativeOutputs.length <= 0">
-					add one if you need
-				</div>
-				<ul v-else class="defi-input-ul">
-					<li
-						v-for="(output, idx) in alternativeOutputs"
-						:key="idx"
-						class="input-desc">
-						<input v-model="output.id" class="inputs-field"/>
-						<div class="delete" @click="_deleteAlterOutput(idx)"></div>
-					</li>
-				</ul>
-			</div>
-			<div class="defi-input-section">
-				<div class="defi-title-info-and-add">
-					<div class="defi-title-info">
-						<label class="defi-title"><b>exception output list</b></label>
-						<div class="defi-info">
-							<Info class="info" msg="Enter exception output variable types" height="40" width="100" x="20"></Info>
-						</div>
-					</div>
-					<div class="add" @click="_addOneExceptOutput"></div>
-				</div>
-				<div class="blank-block" v-if="exceptionOutputs.length <= 0">
-					add one if you need
-				</div>
-				<ul v-else class="defi-input-ul">
-					<li
-						v-for="(output, idx) in exceptionOutputs"
-						:key="idx"
-						class="input-desc">
-						<input v-model="output.id" class="inputs-field"/>
-						<div class="delete" @click="_deleteExceptOutput(idx)"></div>
-					</li>
-				</ul>
-			</div>
+			<InfoInputList list-type="alternative output" :list="this.alternativeOutputs"></InfoInputList>
+			<InfoInputList list-type="exception output" :list="this.exceptionOutputs"></InfoInputList>
 		</div>
-		<InfoInputList list-type="test" :list="this.testList"></InfoInputList>
 		<button class="close-btn" @click="_sendToEditorWhenCancel"></button>
 		<input class="confirm-btn" type="button" value="Confirm" @click="_sendToEditor"/>
 
@@ -106,7 +17,6 @@
 </template>
 
 <script>
-	import Info from "./Info";
 	import InfoInputList from "./InfoInputList";
 
 	const ADD_FORM_TYPE = "ADD_FORM_TYPE";
@@ -114,7 +24,7 @@
 
 	export default {
 		name: "FillForm",
-		components: {InfoInputList, Info},
+		components: {InfoInputList},
 		props: {
 			id: String,
 			type: String,
@@ -214,62 +124,6 @@
 
 			},
 
-			_addOneInput() {
-				this.inputs.push({
-					index: this.inputs.length,
-					id: ""
-				})
-			},
-
-			_deleteInput(index) {
-				this.inputs.splice(index, 1)
-				this.inputs.map(ele => {
-					ele.index = this.inputs.indexOf(ele)
-				})
-			},
-
-			_addOneOutput() {
-				this.outputs.push({
-					index: this.outputs.length,
-					id: ""
-				})
-			},
-
-			_deleteOutput(index) {
-				this.outputs.splice(index, 1)
-				this.outputs.map(ele => {
-					ele.index = this.outputs.indexOf(ele)
-				})
-			},
-
-			_addOneAlterOutput() {
-				this.alternativeOutputs.push({
-					index: this.alternativeOutputs.length,
-					id: ""
-				})
-			},
-
-			_deleteAlterOutput(index) {
-				this.alternativeOutputs.splice(index, 1)
-				this.alternativeOutputs.map(ele => {
-					ele.index = this.alternativeOutputs.indexOf(ele)
-				})
-			},
-
-			_addOneExceptOutput() {
-				this.exceptionOutputs.push({
-					index: this.exceptionOutputs.length,
-					id: ""
-				})
-			},
-
-			_deleteExceptOutput(index) {
-				this.exceptionOutputs.splice(index, 1)
-				this.exceptionOutputs.map(ele => {
-					ele.index = this.exceptionOutputs.indexOf(ele)
-				})
-			},
-
 			_isDataChange(newDefinition, oldDefinition) {
 				//use lodash to deep compare
 				return !this._.isEqual(newDefinition, oldDefinition);
@@ -323,100 +177,12 @@
 		font-size: 12px;
 	}
 
-	.defi-input-section {
-		height: 165px;
-		width: 260px;
-		display: flex;
-		flex-direction: column;
-	}
-
-	.defi-title-info-and-add {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: space-between;
-		margin-bottom: 5px;
-	}
-
-	.defi-title-info {
-		position: relative;
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-	}
-
-	.defi-title {
-		font-size: 12px;
-	}
-
-	.defi-info {
-		position: relative;
-		display: inline-block;
-		height: 10px;
-		width: 10px;
-		margin-left: 5px;
-		background-size: 100%;
-		background-repeat: no-repeat;
-		background-image: url("../assets/info.png");
-	}
-
-	.defi-info:hover .info {
-		visibility: visible;
-	}
-
-	.info {
-		visibility: hidden;
-		font-size: 10px;
-		color: #4a4a4a;
-	}
-
-	.defi-input-ul {
-		height: 150px;
-		overflow-y: scroll;
-		margin-top: 0;
-		margin-bottom: 10px;
-	}
-
 	.defi-main-content {
 		position: relative;
 		margin-top: 20px;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
-	}
-
-	.input-desc {
-		width: 100%;
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: space-between;
-	}
-
-	.add-btn {
-		height: 10px;
-		width: 11px;
-		background-size: 100%;
-		background-image: url("../assets/add_2.png");
-		color: #ffffff;
-		cursor: pointer;
-	}
-
-	.add-btn:hover {
-		background-image: url("../assets/add_hover.png");
-	}
-
-	.minus-btn {
-		width: 10px;
-		height: 3px;
-		background-image: url("../assets/delete_btn_2.png");
-		background-repeat: no-repeat;
-		background-size: 100%;
-		cursor: pointer;
-	}
-
-	.minus-btn:hover {
-		background-image: url("../assets/delete_hover.png");
 	}
 
 	.close-btn {
@@ -435,16 +201,6 @@
 		background-image: url("../assets/close_btn_hover.png");
 	}
 
-	.inputs-field {
-		height: 30px;
-		width: 240px;
-		border-radius: 4px;
-		border: 2px solid #e1e1e1;
-		padding: 0 10px;
-		margin: 5px 5px 5px 0;
-		font-size: 12px;
-	}
-
 	.confirm-btn {
 		position: relative;
 		bottom: -30px;
@@ -461,70 +217,6 @@
 
 	.confirm-btn:hover {
 		background: #3eae7b;
-	}
-
-	.input-label {
-		color: #a5a5a5;
-	}
-
-	.blank-block {
-		margin-top: 5px;
-		width: 260px;
-		height: 140px;
-		border: 2px #e9e9e9 solid;
-		border-radius: 4px;
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: center;
-		font-size: 12px;
-		color: #9e9e9e;
-	}
-
-	.add {
-		width: 12px;
-		height: 12px;
-		transition: color .25s;
-		position: relative;
-		border: none;
-		cursor: pointer;
-	}
-
-	.add::before {
-		content: '';
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		width: 12px;
-		margin-left: -6px;
-		margin-top: -1.5px;
-		border-top: 3px solid #000000;
-	}
-
-	.add::after {
-		content: '';
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		height: 12px;
-		margin-top: -6px;
-		margin-left: -1.5px;
-		border-left: 3px solid #000000;
-	}
-
-	.add:hover::before, .add:hover::after {
-		border-color: #ec9b3b;
-	}
-
-	.delete {
-		height: 3px;
-		width: 12px;
-		background: #C94F4F;
-		cursor: pointer;
-	}
-
-	.delete:hover {
-		background: #a03e3e;
 	}
 
 </style>

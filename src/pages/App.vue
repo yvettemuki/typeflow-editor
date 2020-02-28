@@ -22,6 +22,9 @@
 	body {
 		margin: 0;
 	}
+	ul {
+		padding-left: 0px;
+	}
 	#app {
 		font-family: Arial;
 		/*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/

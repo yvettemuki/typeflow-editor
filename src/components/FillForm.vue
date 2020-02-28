@@ -98,6 +98,7 @@
 				</ul>
 			</div>
 		</div>
+		<InfoInputList list-type="test" :list="this.testList"></InfoInputList>
 		<button class="close-btn" @click="_sendToEditorWhenCancel"></button>
 		<input class="confirm-btn" type="button" value="Confirm" @click="_sendToEditor"/>
 
@@ -105,194 +106,201 @@
 </template>
 
 <script>
-		import Info from "./Info";
+	import Info from "./Info";
+	import InfoInputList from "./InfoInputList";
 
-    const ADD_FORM_TYPE = "ADD_FORM_TYPE";
-    const CHECK_OR_CHANGE_FORM_TYPE = "CHECK_OR_CHANGE_FORM_TYPE";
+	const ADD_FORM_TYPE = "ADD_FORM_TYPE";
+	const CHECK_OR_CHANGE_FORM_TYPE = "CHECK_OR_CHANGE_FORM_TYPE";
 
-    export default {
-        name: "FillForm",
-        components: {Info},
-        props: {
-            id: String,
-            type: String,
-            definition: Object,
-            formType: String
-        },
+	export default {
+		name: "FillForm",
+		components: {InfoInputList, Info},
+		props: {
+			id: String,
+			type: String,
+			definition: Object,
+			formType: String
+		},
 
-        data() {
-            return {
-                defiName: "",
-								defiType: "",
-                inputs: [
-                    {
-                        index: 0,
-                        id: ""
-                    },
-                ],
-                outputs: [
-                    {
-                        index: 0,
-                        id: ""
-                    },
-                ],
-                alternativeOutputs: [],
-                exceptionOutputs: [],
-                isValidate: true,
-            };
-        },
-
-        methods: {
-            _validateFillForm() {
-                this.isValidate = true;
-                if (this.defiName.replace(/\s*/g, "").length <= 0) {
-                    this.isValidate = false;
-                }
-                this._validate(this.inputs);
-                this._validate(this.outputs);
-                this._validate(this.alternativeOutputs);
-                this._validate(this.exceptionOutputs);
-            },
-
-            _validate(elements) {
-                if (elements.length <= 0) {
-                    return;
-                } else {
-                    elements.forEach(ele => {
-                        if (ele.id.replace(/\s*/g, "").length <= 0) {
-                            this.isValidate = false;
-                        }
-                    })
-                }
-            },
-
-            _sendToEditor() {
-                this._validateFillForm();
-                if (this.isValidate != true) {
-                    this.$message.warning({
-                        duration: 1000,
-                        iconClass: 'icon',
-                        message: "you have some blanks not filled!",
-                        customClass: 'warning-msg'
-                    });
-                    return;
-                }
-                if (this.formType === ADD_FORM_TYPE) {
-                    this.$emit('getValueFromForm', this.id, this.type, this.defiName, this.inputs, this.outputs, this.alternativeOutputs, this.exceptionOutputs);
-                } else if (this.formType === CHECK_OR_CHANGE_FORM_TYPE) {
-										let newDefinition = {
-											name: this.definition.name, //can not change
-											type: this.definition.type, //can not change
-											inputs: this.inputs,
-											outputs: this.outputs,
-											alternativeOutputs: this.alternativeOutputs,
-											exceptionOutputs: this.exceptionOutputs
-										}
-										if (this._isDataChange(newDefinition, this.definition)) {
-											this.$emit('changeValueFromForm', this.id, newDefinition);
-										} else {
-											return this.$emit('closeFormDoneNothing');
-										}
-
-                }
-            },
-
-            _sendToEditorWhenCancel() {
-                if (this.formType === ADD_FORM_TYPE) {
-                    this.$emit('closeForm', this.id, false);
-                } else if (this.formType === CHECK_OR_CHANGE_FORM_TYPE) {
-                    this.$emit('closeFormDoneNothing');
-                }
-
-            },
-
-            _addOneInput() {
-                this.inputs.push({
-                    index: this.inputs.length,
-                    id: ""
-                })
-            },
-
-            _deleteInput(index) {
-                this.inputs.splice(index, 1)
-                this.inputs.map(ele => {
-                    ele.index = this.inputs.indexOf(ele)
-                })
-            },
-
-            _addOneOutput() {
-                this.outputs.push({
-                    index: this.outputs.length,
-                    id: ""
-                })
-            },
-
-            _deleteOutput(index) {
-                this.outputs.splice(index, 1)
-                this.outputs.map(ele => {
-                    ele.index = this.outputs.indexOf(ele)
-                })
-            },
-
-            _addOneAlterOutput() {
-                this.alternativeOutputs.push({
-                    index: this.alternativeOutputs.length,
-                    id: ""
-                })
-            },
-
-            _deleteAlterOutput(index) {
-                this.alternativeOutputs.splice(index, 1)
-                this.alternativeOutputs.map(ele => {
-                    ele.index = this.alternativeOutputs.indexOf(ele)
-                })
-            },
-
-            _addOneExceptOutput() {
-                this.exceptionOutputs.push({
-                    index: this.exceptionOutputs.length,
-                    id: ""
-                })
-            },
-
-            _deleteExceptOutput(index) {
-                this.exceptionOutputs.splice(index, 1)
-                this.exceptionOutputs.map(ele => {
-                    ele.index = this.exceptionOutputs.indexOf(ele)
-                })
-            },
-
-						_isDataChange(newDefinition, oldDefinition) {
-								//use lodash to deep compare
-								return !this._.isEqual(newDefinition, oldDefinition);
-						}
-
-        },
-
-        mounted() {
-					//finish data init but not start ele created
-					if (this.formType === CHECK_OR_CHANGE_FORM_TYPE) {
-						if (this.definition) {
-							this.defiType = this.definition.type;
-							this.defiName = this.definition.name;
-							this.inputs = this.cloneDeep(this.definition.inputs);
-							this.outputs = this.cloneDeep(this.definition.outputs);
-							this.alternativeOutputs = this.cloneDeep(this.definition.alternativeOutputs);
-							this.exceptionOutputs = this.cloneDeep(this.definition.exceptionOutputs);
-						}
+		data() {
+			return {
+				defiName: "",
+				defiType: "",
+				inputs: [
+					{
+						index: 0,
+						id: ""
+					},
+				],
+				outputs: [
+					{
+						index: 0,
+						id: ""
+					},
+				],
+				alternativeOutputs: [],
+				exceptionOutputs: [],
+				isValidate: true,
+				testList: [
+					{
+						index: 0,
+						id: ""
 					}
-					if (this.formType === ADD_FORM_TYPE) {
-						this.defiType = this.type;
+				]
+			};
+		},
+
+		methods: {
+			_validateFillForm() {
+				this.isValidate = true;
+				if (this.defiName.replace(/\s*/g, "").length <= 0) {
+					this.isValidate = false;
+				}
+				this._validate(this.inputs);
+				this._validate(this.outputs);
+				this._validate(this.alternativeOutputs);
+				this._validate(this.exceptionOutputs);
+			},
+
+			_validate(elements) {
+				if (elements.length <= 0) {
+					return;
+				} else {
+					elements.forEach(ele => {
+						if (ele.id.replace(/\s*/g, "").length <= 0) {
+							this.isValidate = false;
+						}
+					})
+				}
+			},
+
+			_sendToEditor() {
+				this._validateFillForm();
+				if (this.isValidate != true) {
+					this.$message.warning({
+						duration: 1000,
+						iconClass: 'icon',
+						message: "you have some blanks not filled!",
+						customClass: 'warning-msg'
+					});
+					return;
+				}
+				if (this.formType === ADD_FORM_TYPE) {
+					this.$emit('getValueFromForm', this.id, this.type, this.defiName, this.inputs, this.outputs, this.alternativeOutputs, this.exceptionOutputs);
+				} else if (this.formType === CHECK_OR_CHANGE_FORM_TYPE) {
+					let newDefinition = {
+						name: this.definition.name, //can not change
+						type: this.definition.type, //can not change
+						inputs: this.inputs,
+						outputs: this.outputs,
+						alternativeOutputs: this.alternativeOutputs,
+						exceptionOutputs: this.exceptionOutputs
 					}
-        }
-    };
+					if (this._isDataChange(newDefinition, this.definition)) {
+						this.$emit('changeValueFromForm', this.id, newDefinition);
+					} else {
+						return this.$emit('closeFormDoneNothing');
+					}
+
+				}
+			},
+
+			_sendToEditorWhenCancel() {
+				if (this.formType === ADD_FORM_TYPE) {
+					this.$emit('closeForm', this.id, false);
+				} else if (this.formType === CHECK_OR_CHANGE_FORM_TYPE) {
+					this.$emit('closeFormDoneNothing');
+				}
+
+			},
+
+			_addOneInput() {
+				this.inputs.push({
+					index: this.inputs.length,
+					id: ""
+				})
+			},
+
+			_deleteInput(index) {
+				this.inputs.splice(index, 1)
+				this.inputs.map(ele => {
+					ele.index = this.inputs.indexOf(ele)
+				})
+			},
+
+			_addOneOutput() {
+				this.outputs.push({
+					index: this.outputs.length,
+					id: ""
+				})
+			},
+
+			_deleteOutput(index) {
+				this.outputs.splice(index, 1)
+				this.outputs.map(ele => {
+					ele.index = this.outputs.indexOf(ele)
+				})
+			},
+
+			_addOneAlterOutput() {
+				this.alternativeOutputs.push({
+					index: this.alternativeOutputs.length,
+					id: ""
+				})
+			},
+
+			_deleteAlterOutput(index) {
+				this.alternativeOutputs.splice(index, 1)
+				this.alternativeOutputs.map(ele => {
+					ele.index = this.alternativeOutputs.indexOf(ele)
+				})
+			},
+
+			_addOneExceptOutput() {
+				this.exceptionOutputs.push({
+					index: this.exceptionOutputs.length,
+					id: ""
+				})
+			},
+
+			_deleteExceptOutput(index) {
+				this.exceptionOutputs.splice(index, 1)
+				this.exceptionOutputs.map(ele => {
+					ele.index = this.exceptionOutputs.indexOf(ele)
+				})
+			},
+
+			_isDataChange(newDefinition, oldDefinition) {
+				//use lodash to deep compare
+				return !this._.isEqual(newDefinition, oldDefinition);
+			}
+
+		},
+
+		mounted() {
+			//finish data init but not start ele created
+			if (this.formType === CHECK_OR_CHANGE_FORM_TYPE) {
+				if (this.definition) {
+					this.defiType = this.definition.type;
+					this.defiName = this.definition.name;
+					this.inputs = this.cloneDeep(this.definition.inputs);
+					this.outputs = this.cloneDeep(this.definition.outputs);
+					this.alternativeOutputs = this.cloneDeep(this.definition.alternativeOutputs);
+					this.exceptionOutputs = this.cloneDeep(this.definition.exceptionOutputs);
+				}
+			}
+			if (this.formType === ADD_FORM_TYPE) {
+				this.defiType = this.type;
+			}
+		}
+	};
 </script>
 
 <style lang="less" scoped>
 	.defi-form {
 		position: relative;
-		height: 520px;
-		width: 580px;
+		height: 640px;
+		width: 866px;
 		min-width: 580px;
 		z-index: 1000;
 		background: #ffffff;
@@ -307,7 +315,7 @@
 	}
 
 	.defi-name {
-		height: 30px;
+		height: 40px;
 		border-radius: 4px;
 		border: 2px solid #e1e1e1;
 		margin-top: 30px;
@@ -435,10 +443,6 @@
 		padding: 0 10px;
 		margin: 5px 5px 5px 0;
 		font-size: 12px;
-	}
-
-	ul {
-		padding-left: 0px;
 	}
 
 	.confirm-btn {

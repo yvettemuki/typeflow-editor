@@ -1,5 +1,5 @@
 <template>
-	<div class="info-div" :style="info">{{this.msg}}</div>
+	<div class="info-div" :style="info">Enter {{this.msg}} variable types</div>
 </template>
 
 <script>

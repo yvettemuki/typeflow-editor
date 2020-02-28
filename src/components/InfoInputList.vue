@@ -9,12 +9,12 @@
 			</div>
 			<div class="add" @click="_addOne"></div>
 		</div>
-		<div class="blank-block" v-if="infoInputList.length <= 0">
+		<div class="blank-block" v-if="list.length <= 0">
 			add one if you need
 		</div>
 		<ul v-else class="defi-input-ul">
 			<li
-				v-for="(input, idx) in infoInputList"
+				v-for="(input, idx) in list"
 				:key="idx"
 				class="input-desc">
 				<input v-model="input.id" class="inputs-field"/>
@@ -43,22 +43,23 @@
 		},
 		data() {
 			return {
-				infoInputList: this.list
 			}
 		},
 		methods: {
 			_addOne: function () {
-				this.infoInputList.push({
-					index: this.infoInputList.length,
+				this.list.push({
+					index: this.list.length,
 					id: ""
 				})
 			},
-			_deleteOne: function (index) {
-				this.infoInputList.splice(index, 1)
-				this.infoInputList.map(ele => ele.index = ele.indexOf(ele))
-			}
 
-		}
+			_deleteOne: function (index) {
+				this.list.splice(index, 1)
+				this.list.map(ele => ele.index = ele.indexOf(ele))
+			},
+
+		},
+
 	}
 </script>
 

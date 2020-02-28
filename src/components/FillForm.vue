@@ -134,6 +134,7 @@
 		mounted() {
 			//finish data init but not start ele created
 			if (this.formType === CHECK_OR_CHANGE_FORM_TYPE) {
+				window.console.log("test in the ******* check and change type")
 				if (this.definition) {
 					this.defiType = this.definition.type;
 					this.defiName = this.definition.name;

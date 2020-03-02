@@ -1,5 +1,5 @@
 <template>
-	<el-select v-model="selected" placeholder="">
+	<el-select v-model="selected" placeholder="input the type">
 		<el-option-group
 			v-for="group in selections"
 			:key="group.label"
@@ -11,7 +11,6 @@
 				:value="option.value">
 				<span class="option-item-name">{{option.value}}</span>
 				<span v-if="option.value == 'Array'" class="option-item-icon">
-<!--					<Add color="#000000" size="10"></Add>-->
 					<i class="el-icon-arrow-right"></i>
 				</span>
 				<span v-if="option.value == 'Object'" class="option-item-icon">
@@ -64,11 +63,17 @@
 	.el-select {
 		margin-right: 10px;
 	}
+	.el-input {
+		font-size: 12px !important;
+	}
 	.el-input__inner {
 		width: 170px !important;
 		height: 34px !important;
 		line-height: 34px !important;
 		border: 2px solid #e1e1e1 !important;
+		color: #333333 !important;
+		font-size: 11px !important;
+		font-weight: bold;
 	}
 	.el-input__icon {
 		line-height: 30px !important;

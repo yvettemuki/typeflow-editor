@@ -175,7 +175,9 @@
 		border: 2px solid #e1e1e1;
 		padding: 0 10px;
 		margin: 5px 5px 5px 0;
-		font-size: 12px;
+		font-size: 11px;
+		color: #333333;
+		font-weight: bold;
 	}
 
 	.delete {

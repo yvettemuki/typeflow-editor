@@ -155,7 +155,7 @@
 	.defi-form {
 		position: relative;
 		height: 640px;
-		width: 866px;
+		width: 820px;
 		min-width: 580px;
 		z-index: 1000;
 		background: #ffffff;
@@ -180,7 +180,7 @@
 
 	.defi-main-content {
 		position: relative;
-		margin-top: 20px;
+		margin-top: 36px;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
@@ -204,7 +204,7 @@
 
 	.confirm-btn {
 		position: relative;
-		bottom: -30px;
+		bottom: -60px;
 		margin: 0 auto;
 		height: 30px;
 		width: 100px;
@@ -241,4 +241,5 @@
 		background-size: 100%;
 		margin-right: 10px;
 	}
+
 </style>

@@ -7,7 +7,6 @@ import axios from 'axios';
 import _ from 'lodash';
 import cloneDeep from 'clone-deep';
 
-
 Vue.use(ElementUI); //will mount `Vue.prototype.$message`
 Vue.prototype._ = _;
 Vue.prototype.cloneDeep = cloneDeep;

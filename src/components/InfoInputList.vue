@@ -17,6 +17,7 @@
 				v-for="(input, idx) in list"
 				:key="idx"
 				class="input-desc">
+				<TypeSelector></TypeSelector>
 				<input v-model="input.id" class="inputs-field"/>
 				<div class="delete" @click="_deleteOne(idx)"></div>
 			</li>
@@ -26,9 +27,11 @@
 
 <script>
 	import Info from './Info'
+	import TypeSelector from "./TypeSelector";
 	export default {
 		name: "InfoInputList",
 		components: {
+			TypeSelector,
 			Info
 		},
 		props: {
@@ -65,8 +68,7 @@
 
 <style lang="less" scoped>
 	.defi-input-section {
-		height: 165px;
-		width: 260px;
+		width: 367px;
 		display: flex;
 		flex-direction: column;
 	}
@@ -87,7 +89,7 @@
 	}
 
 	.defi-title {
-		font-size: 12px;
+		font-size: 14px;
 	}
 
 	.defi-info {
@@ -154,8 +156,8 @@
 
 	.blank-block {
 		margin-top: 5px;
-		width: 260px;
-		height: 140px;
+		width: 367px;
+		height: 156px;
 		border: 2px #e9e9e9 solid;
 		border-radius: 4px;
 		display: flex;
@@ -168,7 +170,7 @@
 
 	.inputs-field {
 		height: 30px;
-		width: 240px;
+		width: 146px;
 		border-radius: 4px;
 		border: 2px solid #e1e1e1;
 		padding: 0 10px;

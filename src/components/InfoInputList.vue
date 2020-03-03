@@ -226,4 +226,9 @@
 		border-color: #ec9b3b;
 	}
 
+	.type-selector {
+		position: relative;
+		background: #1C86EE;
+	}
+
 </style>

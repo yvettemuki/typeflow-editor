@@ -14,7 +14,11 @@ const inOutputSelections = [{
 		label: 'array',
 		options: [{
 			value: "Array",
-			status: 0
+			status: 0,
+			children: [{
+				value: 'test',
+				status: 0
+			}]
 		}]
 	}, {
 		label: 'object',

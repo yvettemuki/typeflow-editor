@@ -3,12 +3,12 @@
 		<label class="defi-type"><b>{{this.defiType}}</b></label>
 		<input v-model="defiName" class="defi-name" placeholder="type the definition name"/>
 		<div class="defi-main-content">
-			<InfoInputList list-type="input" :list="this.inputs"></InfoInputList>
-			<InfoInputList list-type="output" :list="this.outputs"></InfoInputList>
+			<InfoInputList :list-type="inOutputTypes[0]" :list="this.inputs"></InfoInputList>
+			<InfoInputList :list-type="inOutputTypes[1]" :list="this.outputs"></InfoInputList>
 		</div>
 		<div class="defi-main-content">
-			<InfoInputList list-type="alternative output" :list="this.alternativeOutputs"></InfoInputList>
-			<InfoInputList list-type="exception output" :list="this.exceptionOutputs"></InfoInputList>
+			<InfoInputList :list-type="inOutputTypes[2]" :list="this.alternativeOutputs"></InfoInputList>
+			<InfoInputList :list-type="inOutputTypes[3]" :list="this.exceptionOutputs"></InfoInputList>
 		</div>
 		<button class="close-btn" @click="_sendToEditorWhenCancel"></button>
 		<input class="confirm-btn" type="button" value="Confirm" @click="_sendToEditor"/>
@@ -18,6 +18,7 @@
 
 <script>
 	import InfoInputList from "./InfoInputList";
+	import inOutputTypes from "../configs/inOutputTypes";
 
 	const ADD_FORM_TYPE = "ADD_FORM_TYPE";
 	const CHECK_OR_CHANGE_FORM_TYPE = "CHECK_OR_CHANGE_FORM_TYPE";
@@ -56,7 +57,8 @@
 						index: 0,
 						id: ""
 					}
-				]
+				],
+				inOutputTypes: inOutputTypes
 			};
 		},
 
@@ -147,6 +149,7 @@
 			if (this.formType === ADD_FORM_TYPE) {
 				this.defiType = this.type;
 			}
+
 		}
 	};
 </script>

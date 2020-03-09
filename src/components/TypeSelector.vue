@@ -12,7 +12,7 @@
 				<div v-if="option.value != 'Array' && option.value != 'Object'" class="option-item">
 					<span class="option-item-name">{{option.value}}</span>
 				</div>
-				<div v-if="option.value == 'Array'" class="option-item" @mouseover="_showSecondSelector" @mouseout="_hideSecondSelector">
+				<div v-if="option.value == 'Array'" class="option-item">
 					<span class="option-item-name">{{option.value}}</span>
 					<span class="option-item-icon">
 						<i class="el-icon-arrow-right"></i>
@@ -30,72 +30,45 @@
 </template>
 
 <script>
-	import inOutputSelections from "../configs/inOutputSelections";
-
 
 	export default {
 		name: "TypeSelector",
-		props: {
 
+		props: {
+			selections: {
+				default: null,
+				type: Array
+			},
+			index: {
+				default: -1,
+				type: Number
+			},
+			listType: {
+				default: "",
+				type: String
+			}
 		},
 
 		data() {
 			return {
-				selections: inOutputSelections,
 				selected: '',
-				showSelector: 'second-selector-show',
-				hideSelector: 'second-selector-hide'
 			}
 		},
 
 		methods: {
-			_selectOne: function () {
-				window.console.log(this.selected);
+			_selectOne: function (e) {
 				if (this.selected.includes('Array')) {
-					window.console.log("in the Array");
+					this.$emit('showArrayTypeSelect', this.index, this.listType)
 				} else if (this.selected.includes('Object')) {
 					window.console.log("in the Object");
 				} else {
 					window.console.log("in the custom");
 				}
 			},
-			_showSecondSelector: function (e) {
-				window.console.log(e);
-				const relatedTarget = e.relatedTarget;
-				let res = this._searchScrollBar(relatedTarget.offsetParent);
-				window.console.log(res);
-				const fillForm = document.getElementsByClassName('defi-form')[0];
-				const selector = document.createElement('div');
-				selector.style.top = res.top;
-				let resLeft = res.left.substr(0, res.left.length - 2);
-				let left = parseFloat(resLeft) + 180 + 'px';
-				window.console.log(left);
-				selector.style.left = left;
-				selector.style.backgroundColor = '#eeeeee';
-				selector.style.height = '170px';
-				selector.style.width = '170px';
-				selector.style.position = 'fixed';
-				selector.style.marginTop = '12px';
-				selector.style.marginBottom = '5px';
-				selector.style.zIndex = '2005';
-				selector.className = this.showSelector
-				fillForm.appendChild(selector);
+		},
 
-			},
-			_hideSecondSelector: function () {
-				const selector = document.getElementsByClassName(this.showSelector);
-				selector.className = this.hideSelector;
-			},
-			_searchScrollBar: function (target) {
-				if (target.className.includes('el-select-dropdown el-popper')) {
-					let res = {
-						top: target.style.top,
-						left: target.style.left
-					}
-					return res;
-				}
-				return this._searchScrollBar(target.offsetParent);
-			}
+		mounted() {
+
 		}
 	}
 </script>

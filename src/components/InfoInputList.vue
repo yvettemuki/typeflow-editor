@@ -1,36 +1,54 @@
 <template>
-	<div class="defi-input-section">
-		<div class="defi-title-info-and-add">
-			<div class="defi-title-info">
-				<label class="defi-title"><b>{{this.listType}} list</b></label>
-				<div class="defi-info">
-					<Info class="info" :msg="this.listType" height="40" width="100" x="20"></Info>
+	<div class="info-input-list-container">
+		<div v-if="isArrayTypeSelectShow" @click="_hideArrayTypeSelector" class="array-selection-layer"></div>
+		<div class="defi-input-section">
+			<div class="defi-title-info-and-add">
+				<div class="defi-title-info">
+					<label class="defi-title"><b>{{this.listType}} list</b></label>
+					<div class="defi-info">
+						<Info class="info" :msg="this.listType" height="40" width="100" x="20"></Info>
+					</div>
 				</div>
+				<div class="add" @click="_addOne"></div>
 			</div>
-			<div class="add" @click="_addOne"></div>
+			<div class="blank-block" v-if="list.length <= 0">
+				add one if you need
+			</div>
+			<ul v-else class="defi-input-ul">
+				<li
+					v-for="(input, idx) in list"
+					:key="idx"
+					class="input-desc">
+					<TypeSelector
+						:list-type="listType"
+						:index="idx"
+						:selections = "selections"
+						v-on="{
+						showArrayTypeSelect: _showArrayTypeSelect
+					}"
+					></TypeSelector>
+					<ArrayTypeSelector
+						:y="y"
+						v-if="isArrayTypeSelectShow"
+						:selections="selections[0].options"
+					></ArrayTypeSelector>
+					<input v-model="input.id" class="inputs-field"/>
+					<div class="delete" @click="_deleteOne(idx)"></div>
+				</li>
+			</ul>
 		</div>
-		<div class="blank-block" v-if="list.length <= 0">
-			add one if you need
-		</div>
-		<ul v-else class="defi-input-ul">
-			<li
-				v-for="(input, idx) in list"
-				:key="idx"
-				class="input-desc">
-				<TypeSelector></TypeSelector>
-				<input v-model="input.id" class="inputs-field"/>
-				<div class="delete" @click="_deleteOne(idx)"></div>
-			</li>
-		</ul>
 	</div>
 </template>
 
 <script>
 	import Info from './Info'
 	import TypeSelector from "./TypeSelector";
+	import ArrayTypeSelector from "./ArrayTypeSelector";
+	import inOutputTypes from "../configs/inOutputTypes";
 	export default {
 		name: "InfoInputList",
 		components: {
+			ArrayTypeSelector,
 			TypeSelector,
 			Info
 		},
@@ -42,10 +60,14 @@
 			list: {
 				type: Array,
 				default: null
-			}
+			},
 		},
 		data() {
 			return {
+				isArrayTypeSelectShow: false,
+				selections: [],
+				x: 0,
+				y: 0
 			}
 		},
 		methods: {
@@ -61,13 +83,41 @@
 				this.list.map(ele => ele.index = ele.indexOf(ele))
 			},
 
+			_showArrayTypeSelect: function (idx, type) {
+				// const sectionIndex = inOutputTypes.indexOf(type);
+				// const section = document.getElementsByClassName('defi-input-section')[sectionIndex];
+				// const x = section.getClientRects()[0].x;
+				// const y = section.getClientRects()[0].y;
+				window.console.log(idx);
+				if (idx == 0) {
+					this.y = 66;
+				} else {
+					this.y = 106 + idx * (idx + 1);
+				}
+				this.isArrayTypeSelectShow = true;
+
+			},
+
+			_hideArrayTypeSelector: function () {
+				window.console.log("test int the xxxx");
+				this.isArrayTypeSelectShow = false;
+			}
+
 		},
+
+		mounted() {
+			this.selections = JSON.parse(localStorage.getItem('inOutputSelections'))
+		}
 
 	}
 </script>
 
 <style lang="less" scoped>
+	.info-input-list-container {
+		position: relative;
+	}
 	.defi-input-section {
+		position: relative;
 		width: 367px;
 		display: flex;
 		flex-direction: column;
@@ -229,6 +279,13 @@
 	.type-selector {
 		position: relative;
 		background: #1C86EE;
+	}
+	.array-selection-layer {
+		position: fixed;
+		height: 100%;
+		width: 100%;
+		z-index: 998;
+		background: transparent;
 	}
 
 </style>

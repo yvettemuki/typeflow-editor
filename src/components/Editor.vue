@@ -222,12 +222,8 @@
 						<BasicLine color="#EDEDED"/>
 						<span class="element-type">My Components</span>
 						<BasicLine color="#EDEDED"/>
-<!--						<ul class="element-ul">-->
-<!--							<li class="element-li" data-type="Customize"><span class="font-item">NumInput</span></li>-->
-<!--						</ul>-->
 					</div>
 					<div class="element-tool-bar">
-<!--						<BasicLine color="#EDEDED"/>-->
 						<div class="bottom-item">
 							<select class="size-selected" v-model="selected" @change="_sizeSelected">
 								<option value="a4">A4 (210 mm x 297 mm)</option>

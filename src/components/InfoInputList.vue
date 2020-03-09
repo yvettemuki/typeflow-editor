@@ -32,6 +32,9 @@
 						:y="y"
 						v-if="isArrayTypeSelectShow"
 						:selections="selections[0].options"
+						v-on="{
+						addArrayType: _addArrayType
+						}"
 					></ArrayTypeSelector>
 					<input v-model="input.id" class="inputs-field"/>
 					<div class="delete" @click="_deleteOne(idx)"></div>
@@ -99,8 +102,11 @@
 			},
 
 			_hideArrayTypeSelector: function () {
-				window.console.log("test int the xxxx");
 				this.isArrayTypeSelectShow = false;
+			},
+
+			_addArrayType: function (id, item) {
+				window.console.log(item.value)
 			}
 
 		},
@@ -282,6 +288,8 @@
 	}
 	.array-selection-layer {
 		position: fixed;
+		top: 0;
+		left: 0;
 		height: 100%;
 		width: 100%;
 		z-index: 998;

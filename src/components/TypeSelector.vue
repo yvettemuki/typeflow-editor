@@ -46,20 +46,20 @@
 			listType: {
 				default: "",
 				type: String
-			}
+			},
 		},
 
 		data() {
 			return {
-				selected: '',
+				selected: ''
 			}
 		},
 
 		methods: {
 			_selectOne: function (e) {
-				if (this.selected.includes('Array')) {
-					this.$emit('showArrayTypeSelect', this.index, this.listType)
-				} else if (this.selected.includes('Object')) {
+				if (this.selected === 'Array') {
+					this.$emit('showArrayTypeSelect', this.index, this.listType, this.selected)
+				} else if (this.selected === 'Object') {
 					window.console.log("in the Object");
 				} else {
 					window.console.log("in the custom");

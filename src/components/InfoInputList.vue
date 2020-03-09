@@ -71,7 +71,8 @@
 				isArrayTypeSelectShow: false,
 				selections: [],
 				x: 0,
-				y: 0
+				y: 0,
+				currentSelected: '',
 			}
 		},
 		methods: {
@@ -87,8 +88,10 @@
 				this.list.map(ele => ele.index = ele.indexOf(ele))
 			},
 
-			_showArrayTypeSelect: function (idx, type) {
+			_showArrayTypeSelect: function (idx, type, selected) {
+				window.console.log(selected);
 				window.console.log(idx);
+				this.currentSelected = selected;
 				const sectionIndex = inOutputTypes.indexOf(type);
 				const section = document.getElementsByClassName('defi-input-section')[sectionIndex];
 				const selector = section.childNodes[1].children[idx];
@@ -106,7 +109,13 @@
 			},
 
 			_addArrayType: function (id, item) {
+				this.currentSelected = `${this.currentSelected}(${item.value})`
+				this.selections[0].options.push({
+					value: this.currentSelected,
+					status: 0
+				})
 				window.console.log(item.value)
+				this.isArrayTypeSelectShow = false;
 			}
 
 		},

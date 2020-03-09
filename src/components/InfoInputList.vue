@@ -109,12 +109,14 @@
 			},
 
 			_addArrayType: function (id, item) {
-				this.currentSelected = `${this.currentSelected}(${item.value})`
-				this.selections[0].options.push({
-					value: this.currentSelected,
-					status: 0
-				})
-				window.console.log(item.value)
+				let newSelected = `${this.currentSelected}(${item.value})`
+				let selection = this.selections[0].options.find(item => item.value === newSelected)
+				if (selection == undefined) {
+					this.selections[0].options.push({
+						value: newSelected,
+						status: 0
+					})
+				}
 				this.isArrayTypeSelectShow = false;
 			}
 

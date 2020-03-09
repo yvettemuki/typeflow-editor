@@ -28,6 +28,7 @@
 					}"
 					></TypeSelector>
 					<ArrayTypeSelector
+						:x="x"
 						:y="y"
 						v-if="isArrayTypeSelectShow"
 						:selections="selections[0].options"
@@ -84,18 +85,17 @@
 			},
 
 			_showArrayTypeSelect: function (idx, type) {
-				// const sectionIndex = inOutputTypes.indexOf(type);
-				// const section = document.getElementsByClassName('defi-input-section')[sectionIndex];
-				// const x = section.getClientRects()[0].x;
-				// const y = section.getClientRects()[0].y;
 				window.console.log(idx);
-				if (idx == 0) {
-					this.y = 66;
-				} else {
-					this.y = 106 + idx * (idx + 1);
-				}
+				const sectionIndex = inOutputTypes.indexOf(type);
+				const section = document.getElementsByClassName('defi-input-section')[sectionIndex];
+				const selector = section.childNodes[1].children[idx];
+				const x = selector.getClientRects()[0].x;
+				const y = selector.getClientRects()[0].y;
+				window.console.log(x);
+				window.console.log(y);
+				this.x = x;
+				this.y = y + 44;
 				this.isArrayTypeSelectShow = true;
-
 			},
 
 			_hideArrayTypeSelector: function () {

@@ -46,7 +46,7 @@
 
 <style lang="less" scoped>
 	.array-type-selector {
-		position: absolute;
+		position: fixed;
 		height: 140px;
 		width: 130px;
 		padding: 20px;

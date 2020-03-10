@@ -3,7 +3,7 @@
 		<li v-for="(item, id) in selections"
 				:key="id"
 				class="array-type-selector-item"
-				@click="_selectArrayType(id, item, $event)">
+				@click="_selectArrayType(item, $event)">
 			{{item.value}}
 		</li>
 	</ul>
@@ -25,6 +25,10 @@
 			y: {
 				default: 0,
 				type: Number
+			},
+			index: {
+				default: -1,
+				type: Number
 			}
 		},
 
@@ -38,8 +42,8 @@
 		},
 
 		methods: {
-			_selectArrayType: function (id, item, event) {
-				this.$emit('addArrayType', id, item);
+			_selectArrayType: function (item, event) {
+				this.$emit('addArrayType', item, this.index);
 			}
 		},
 

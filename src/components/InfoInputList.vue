@@ -23,14 +23,16 @@
 						:list-type="listType"
 						:index="idx"
 						:selections = "selections"
+						:ref="listType + idx"
 						v-on="{
 						showArrayTypeSelect: _showArrayTypeSelect
 					}"
 					></TypeSelector>
 					<ArrayTypeSelector
+						v-if="isArrayTypeSelectShow"
 						:x="x"
 						:y="y"
-						v-if="isArrayTypeSelectShow"
+						:index="idx"
 						:selections="selections[0].options"
 						v-on="{
 						addArrayType: _addArrayType
@@ -89,10 +91,8 @@
 			},
 
 			_showArrayTypeSelect: function (idx, type, selected) {
-				window.console.log(selected);
-				window.console.log(idx);
 				this.currentSelected = selected;
-				const sectionIndex = inOutputTypes.indexOf(type);
+				const sectionIndex = inOutputTypes.indexOf(this.listType);
 				const section = document.getElementsByClassName('defi-input-section')[sectionIndex];
 				const selector = section.childNodes[1].children[idx];
 				const x = selector.getClientRects()[0].x;
@@ -108,7 +108,7 @@
 				this.isArrayTypeSelectShow = false;
 			},
 
-			_addArrayType: function (id, item) {
+			_addArrayType: function (item, index) {
 				let newSelected = `${this.currentSelected}(${item.value})`
 				let selection = this.selections[0].options.find(item => item.value === newSelected)
 				if (selection == undefined) {
@@ -117,6 +117,7 @@
 						status: 0
 					})
 				}
+				this.$refs[`${this.listType}${index}`][0].selected = newSelected
 				this.isArrayTypeSelectShow = false;
 			}
 

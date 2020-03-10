@@ -47,6 +47,7 @@
 				default: "",
 				type: String
 			},
+
 		},
 
 		data() {
@@ -54,6 +55,7 @@
 				selected: ''
 			}
 		},
+
 
 		methods: {
 			_selectOne: function (e) {

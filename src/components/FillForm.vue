@@ -40,24 +40,20 @@
 				inputs: [
 					{
 						index: 0,
-						id: ""
+						id: "",
+						value: ""
 					},
 				],
 				outputs: [
 					{
 						index: 0,
-						id: ""
+						id: "",
+						value: ""
 					},
 				],
 				alternativeOutputs: [],
 				exceptionOutputs: [],
 				isValidate: true,
-				testList: [
-					{
-						index: 0,
-						id: ""
-					}
-				],
 				inOutputTypes: inOutputTypes
 			};
 		},

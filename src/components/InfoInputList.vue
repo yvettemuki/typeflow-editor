@@ -22,10 +22,12 @@
 					<TypeSelector
 						:list-type="listType"
 						:index="idx"
-						:selections = "selections"
+						:selections="selections"
 						:ref="listType + idx"
 						v-on="{
-						showArrayTypeSelect: _showArrayTypeSelect
+						showArrayTypeSelect: _showArrayTypeSelect,
+						showObjectCreatePanel: _showObjectCreatePanel,
+						addCustomType: _addCustomType
 					}"
 					></TypeSelector>
 					<ArrayTypeSelector
@@ -38,7 +40,7 @@
 						addArrayType: _addArrayType
 						}"
 					></ArrayTypeSelector>
-					<input v-model="input.id" class="inputs-field"/>
+					<input v-model="input.value" class="inputs-field"/>
 					<div class="delete" @click="_deleteOne(idx)"></div>
 				</li>
 			</ul>
@@ -109,18 +111,27 @@
 			},
 
 			_addArrayType: function (item, index) {
-				let newSelected = `${this.currentSelected}(${item.value})`
-				let selection = this.selections[0].options.find(item => item.value === newSelected)
+				let newSelected = `${this.currentSelected}(${item.value})`;
+				let selection = this.selections[0].options.find(item => item.value === newSelected);
 				if (selection == undefined) {
 					this.selections[0].options.push({
 						value: newSelected,
 						status: 0
 					})
 				}
-				this.$refs[`${this.listType}${index}`][0].selected = newSelected
+				this.$refs[`${this.listType}${index}`][0].selected = newSelected;
+				this.list.find(item => item.index == index).id = newSelected;
+				window.console.log(this.list);
 				this.isArrayTypeSelectShow = false;
-			}
+			},
 
+			_showObjectCreatePanel: function () {
+				window.console.log("this is in the object panel")
+			},
+
+			_addCustomType: function (index, selected) {
+				this.list.find(item => item.index == index).id = selected;
+			}
 		},
 
 		mounted() {

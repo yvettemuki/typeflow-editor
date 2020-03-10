@@ -58,13 +58,13 @@
 
 
 		methods: {
-			_selectOne: function (e) {
+			_selectOne: function () {
 				if (this.selected === 'Array') {
 					this.$emit('showArrayTypeSelect', this.index, this.listType, this.selected)
 				} else if (this.selected === 'Object') {
-					window.console.log("in the Object");
+					this.$emit('showObjectCreatePanel')
 				} else {
-					window.console.log("in the custom");
+					this.$emit('addCustomType', this.index, this.selected)
 				}
 			},
 		},

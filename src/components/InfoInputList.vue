@@ -1,6 +1,15 @@
 <template>
 	<div class="info-input-list-container">
 		<div v-if="isArrayTypeSelectShow" @click="_hideArrayTypeSelector" class="array-selection-layer"></div>
+		<div v-if="isObjectCreatePanelShow" class="panel-layer">
+			<CustomObjectPanel
+				:selections="selections"
+				:index="currentIndex"
+				v-on="{
+					addNewObject: _addNewObject
+				}"
+			></CustomObjectPanel>
+		</div>
 		<div class="defi-input-section">
 			<div class="defi-title-info-and-add">
 				<div class="defi-title-info">
@@ -27,7 +36,7 @@
 						v-on="{
 						showArrayTypeSelect: _showArrayTypeSelect,
 						showObjectCreatePanel: _showObjectCreatePanel,
-						addCustomType: _addCustomType
+						addNormalType: _addNormalType
 					}"
 					></TypeSelector>
 					<ArrayTypeSelector
@@ -53,9 +62,11 @@
 	import TypeSelector from "./TypeSelector";
 	import ArrayTypeSelector from "./ArrayTypeSelector";
 	import inOutputTypes from "../configs/inOutputTypes";
+	import CustomObjectPanel from "./CustomObjectPanel";
 	export default {
 		name: "InfoInputList",
 		components: {
+			CustomObjectPanel,
 			ArrayTypeSelector,
 			TypeSelector,
 			Info
@@ -77,6 +88,8 @@
 				x: 0,
 				y: 0,
 				currentSelected: '',
+				isObjectCreatePanelShow: false,
+				currentIndex: -1
 			}
 		},
 		methods: {
@@ -125,12 +138,28 @@
 				this.isArrayTypeSelectShow = false;
 			},
 
-			_showObjectCreatePanel: function () {
-				window.console.log("this is in the object panel")
+			_showObjectCreatePanel: function (index) {
+				this.currentIndex = index;
+				this.isObjectCreatePanelShow = true;
 			},
 
-			_addCustomType: function (index, selected) {
+			_addNormalType: function (index, selected) {
 				this.list.find(item => item.index == index).id = selected;
+			},
+
+			_hideObjectCreatePanel: function () {
+				this.isObjectCreatePanelShow = false;
+			},
+
+			_addNewObject: function (index, customObjectName, resTypeList) {
+				this.$refs[`${this.listType}${index}`][0].selected = customObjectName;
+				this.list.find(item => item.index == index).id = customObjectName;
+				this.selections[0].options.push({
+					value: customObjectName,
+					status: 0,
+					attributes: resTypeList
+				})
+				this.isObjectCreatePanelShow = false;
 			}
 		},
 
@@ -317,6 +346,19 @@
 		width: 100%;
 		z-index: 998;
 		background: transparent;
+	}
+	.panel-layer {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 999;
 	}
 
 </style>

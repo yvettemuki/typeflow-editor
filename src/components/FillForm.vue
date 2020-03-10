@@ -78,6 +78,9 @@
 						if (ele.id.replace(/\s*/g, "").length <= 0) {
 							this.isValidate = false;
 						}
+						if (ele.value.replace(/\s*/g, "").length <= 0) {
+							this.isValidate = false;
+						}
 					})
 				}
 			},
@@ -175,6 +178,7 @@
 		margin-top: 30px;
 		padding: 0 10px 0 10px;
 		font-size: 12px;
+		font-weight: bold;
 	}
 
 	.defi-main-content {

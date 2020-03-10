@@ -62,9 +62,9 @@
 				if (this.selected === 'Array') {
 					this.$emit('showArrayTypeSelect', this.index, this.listType, this.selected)
 				} else if (this.selected === 'Object') {
-					this.$emit('showObjectCreatePanel')
+					this.$emit('showObjectCreatePanel', this.index)
 				} else {
-					this.$emit('addCustomType', this.index, this.selected)
+					this.$emit('addNormalType', this.index, this.selected)
 				}
 			},
 		},

@@ -8,7 +8,7 @@
 				:key="idx"
 				class="custom-object-type-item">
 				<span>{{item}}</span>
-				<button class="close-btn" @click="_deleteOneType(idx)"></button>
+				<button class="delete-btn" @click="_deleteOneType(idx)"></button>
 			</li>
 		</ul>
 		<ul class="custom-object-type-select">
@@ -20,6 +20,7 @@
 				{{item.value}}
 			</li>
 		</ul>
+		<button class="close-btn" @click="_closeCreateObjectPanel"></button>
 		<EditorButton @click.native="_confirmCreateObject"></EditorButton>
 	</div>
 </template>
@@ -83,6 +84,10 @@
 			
 			_deleteOneType: function (index) {
 				this.resTypeList.splice(index, 1);
+			},
+
+			_closeCreateObjectPanel: function () {
+				this.$emit('closeCreateObjectPanel')
 			}
 		},
 	}
@@ -161,13 +166,27 @@
 		background: #315B96;
 		color: #ffffff;
 	}
-	.close-btn {
+	.delete-btn {
 		position: absolute;
 		right: 3px;
 		top: 3px;
 		height: 8px;
 		width: 8px;
 		background-image: url("../assets/close_btn_red.png");
+		background-repeat: no-repeat;
+		background-size: 100%;
+		cursor: pointer;
+	}
+	.delete-btn:hover {
+		background-image: url("../assets/close_btn_hover.png");
+	}
+	.close-btn {
+		position: absolute;
+		right: 10px;
+		top: 10px;
+		height: 13px;
+		width: 13px;
+		background-image: url("../assets/close_btn_2.png");
 		background-repeat: no-repeat;
 		background-size: 100%;
 		cursor: pointer;

@@ -6,7 +6,8 @@
 				:selections="selections"
 				:index="currentIndex"
 				v-on="{
-					addNewObject: _addNewObject
+					addNewObject: _addNewObject,
+					closeCreateObjectPanel: _hideObjectCreatePanel
 				}"
 			></CustomObjectPanel>
 		</div>
@@ -160,7 +161,8 @@
 					attributes: resTypeList
 				})
 				this.isObjectCreatePanelShow = false;
-			}
+			},
+
 		},
 
 		mounted() {
@@ -357,7 +359,6 @@
 		position: fixed;
 		top: 0;
 		left: 0;
-		right: 0;
 		z-index: 999;
 	}
 

@@ -7,7 +7,8 @@
 				v-for="(item, idx) in resTypeList"
 				:key="idx"
 				class="custom-object-type-item">
-				{{item}}
+				<span>{{item}}</span>
+				<button class="close-btn" @click="_deleteOneType(idx)"></button>
 			</li>
 		</ul>
 		<ul class="custom-object-type-select">
@@ -78,8 +79,12 @@
 				} else {
 					return true;
 				}
+			},
+			
+			_deleteOneType: function (index) {
+				this.resTypeList.splice(index, 1);
 			}
-		}
+		},
 	}
 </script>
 
@@ -120,8 +125,9 @@
 		margin-top: 37px;
 	}
 	.custom-object-type-item {
+		position: relative;
 		height: 30px;
-		min-width: 80px;
+		min-width: 86px;
 		border-radius: 4px;
 		line-height: 30px;
 		text-align: center;
@@ -154,6 +160,20 @@
 	.custom-object-select-item:hover {
 		background: #315B96;
 		color: #ffffff;
+	}
+	.close-btn {
+		position: absolute;
+		right: 3px;
+		top: 3px;
+		height: 8px;
+		width: 8px;
+		background-image: url("../assets/close_btn_red.png");
+		background-repeat: no-repeat;
+		background-size: 100%;
+		cursor: pointer;
+	}
+	.close-btn:hover {
+		background-image: url("../assets/close_btn_hover.png");
 	}
 </style>
 <style>

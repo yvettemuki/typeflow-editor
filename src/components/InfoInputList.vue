@@ -153,13 +153,16 @@
 			},
 
 			_addNewObject: function (index, customObjectName, resTypeList) {
+				let selection = this.selections[0].options.find(item => item.value === customObjectName);
+				if (selection == undefined) {
+					this.selections[0].options.push({
+						value: customObjectName,
+						status: 0,
+						attributes: resTypeList
+					})
+				}
 				this.$refs[`${this.listType}${index}`][0].selected = customObjectName;
 				this.list.find(item => item.index == index).id = customObjectName;
-				this.selections[0].options.push({
-					value: customObjectName,
-					status: 0,
-					attributes: resTypeList
-				})
 				this.isObjectCreatePanelShow = false;
 			},
 

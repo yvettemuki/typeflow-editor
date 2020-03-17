@@ -97,7 +97,8 @@
 			_addOne: function () {
 				this.list.push({
 					index: this.list.length,
-					id: ""
+					id: "",
+					value: ""
 				})
 			},
 

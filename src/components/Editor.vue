@@ -259,6 +259,7 @@
 	import ElementHead from "./ElementHead";
 	import ElementSetting from "./ElementSetting";
 	import inOutputSelections from "../configs/inOutputSelections";
+	import store from "../store";
 
 	const {
 		mxEvent,
@@ -1302,6 +1303,10 @@
 				window.console.log(this.inOutputSelections);
 				const parsed = JSON.stringify(this.inOutputSelections);
 				localStorage.setItem('inOutputSelections', parsed);
+			},
+
+			refreshStore: function () {
+				store.setSelections(JSON.parse(localStorage.getItem('inOutputSelections')));
 			}
 		},
 
@@ -1310,6 +1315,7 @@
 				return "Your work will be lost."
 			}
 			this.loadLocalStorage();
+			this.refreshStore();
 			this.$nextTick(() => {
 				initGraph();
 				this._listenEvent();

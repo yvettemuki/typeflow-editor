@@ -29,6 +29,14 @@ const store = {
 		]
 	},
 
+	getSelections() {
+		return this.state.inOutputSelections;
+	},
+
+	setSelections(newSelections) {
+		this.state.inOutputSelections = newSelections
+	},
+
 	addNormalType(newType) {
 		this.state.inOutputSelections[0].options.push({
 			value: newType,

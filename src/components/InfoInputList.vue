@@ -87,7 +87,7 @@
 		data() {
 			return {
 				isArrayTypeSelectShow: false,
-				selections: store.state.inOutputSelections,
+				selections: store.getSelections(),
 				x: 0,
 				y: 0,
 				currentSelected: '',
@@ -132,6 +132,8 @@
 				let selection = store.findNormalType(newSelected);
 				if (selection == undefined) {
 					store.addNormalType(newSelected);
+					window.console.log(store.getSelections())
+					localStorage.setItem('inOutputSelections', JSON.stringify(store.getSelections()));
 				}
 				this.$refs[`${this.listType}${index}`][0].selected = newSelected; // manually change the select option
 				this.list.find(item => item.index == index).id = newSelected; // add the type 'id' to list

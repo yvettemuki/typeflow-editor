@@ -37,10 +37,18 @@ const store = {
 		this.state.inOutputSelections = newSelections
 	},
 
-	addNormalType(newType) {
+	addArrayType(newType) {
 		this.state.inOutputSelections[0].options.push({
 			value: newType,
 			status: 0
+		})
+	},
+
+	addObjectType(newType, attributes) {
+		this.state.inOutputSelections[0].options.push({
+			value: newType,
+			status: 0,
+			attributes: attributes
 		})
 	},
 

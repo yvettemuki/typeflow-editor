@@ -131,8 +131,7 @@
 				let newSelected = `${this.currentSelected}(${item.value})`;
 				let selection = store.findNormalType(newSelected);
 				if (selection == undefined) {
-					store.addNormalType(newSelected);
-					window.console.log(store.getSelections())
+					store.addArrayType(newSelected);
 					localStorage.setItem('inOutputSelections', JSON.stringify(store.getSelections()));
 				}
 				this.$refs[`${this.listType}${index}`][0].selected = newSelected; // manually change the select option
@@ -155,13 +154,10 @@
 			},
 
 			_addNewObject: function (index, customObjectName, resTypeList) {
-				let selection = this.selections[0].options.find(item => item.value === customObjectName);
+				let selection = store.findNormalType(customObjectName);
 				if (selection == undefined) {
-					this.selections[0].options.push({
-						value: customObjectName,
-						status: 0,
-						attributes: resTypeList
-					})
+					store.addObjectType(customObjectName, resTypeList);
+					localStorage.setItem('inOutputSelections', JSON.stringify(store.getSelections()));
 				}
 				this.$refs[`${this.listType}${index}`][0].selected = customObjectName;
 				this.list.find(item => item.index == index).id = customObjectName;
@@ -171,7 +167,6 @@
 		},
 
 		mounted() {
-			// this.selections = JSON.parse(localStorage.getItem('inOutputSelections'));
 			// if (this.list.length > 1) {
 			// 	window.console.log("test in the check");
 			// 	this.list.forEach((item,index) => {

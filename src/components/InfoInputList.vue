@@ -64,6 +64,8 @@
 	import ArrayTypeSelector from "./ArrayTypeSelector";
 	import inOutputTypes from "../configs/inOutputTypes";
 	import CustomObjectPanel from "./CustomObjectPanel";
+	import store from "../store";
+
 	export default {
 		name: "InfoInputList",
 		components: {
@@ -85,7 +87,7 @@
 		data() {
 			return {
 				isArrayTypeSelectShow: false,
-				selections: [],
+				selections: store.state.inOutputSelections,
 				x: 0,
 				y: 0,
 				currentSelected: '',
@@ -127,15 +129,12 @@
 
 			_addArrayType: function (item, index) {
 				let newSelected = `${this.currentSelected}(${item.value})`;
-				let selection = this.selections[0].options.find(item => item.value === newSelected);
+				let selection = store.findNormalType(newSelected);
 				if (selection == undefined) {
-					this.selections[0].options.push({
-						value: newSelected,
-						status: 0
-					})
+					store.addNormalType(newSelected);
 				}
-				this.$refs[`${this.listType}${index}`][0].selected = newSelected;
-				this.list.find(item => item.index == index).id = newSelected;
+				this.$refs[`${this.listType}${index}`][0].selected = newSelected; // manually change the select option
+				this.list.find(item => item.index == index).id = newSelected; // add the type 'id' to list
 				window.console.log(this.list);
 				this.isArrayTypeSelectShow = false;
 			},
@@ -170,7 +169,13 @@
 		},
 
 		mounted() {
-			this.selections = JSON.parse(localStorage.getItem('inOutputSelections'))
+			// this.selections = JSON.parse(localStorage.getItem('inOutputSelections'));
+			// if (this.list.length > 1) {
+			// 	window.console.log("test in the check");
+			// 	this.list.forEach((item,index) => {
+			// 		this.$refs[`${this.listType}${index}`][0].selected = this.list.id;
+			// 	})
+			// }
 		}
 
 	}

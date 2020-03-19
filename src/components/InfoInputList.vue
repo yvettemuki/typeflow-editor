@@ -167,12 +167,11 @@
 		},
 
 		mounted() {
-			// if (this.list.length > 1) {
-			// 	window.console.log("test in the check");
-			// 	this.list.forEach((item,index) => {
-			// 		this.$refs[`${this.listType}${index}`][0].selected = this.list.id;
-			// 	})
-			// }
+			if (this.list.length > 0 && this.list[0].value.length > 0) {
+				this.list.forEach((item,index) => {
+					this.$refs[`${this.listType}${index}`][0].selected = item.id;
+				})
+			}
 		}
 
 	}

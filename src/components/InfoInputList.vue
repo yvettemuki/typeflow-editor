@@ -167,12 +167,15 @@
 		},
 
 		mounted() {
-			if (this.list.length > 0 && this.list[0].value.length > 0) {
-				this.list.forEach((item,index) => {
-					this.$refs[`${this.listType}${index}`][0].selected = item.id;
-				})
-			}
-		}
+			window.console.log("definition check form")
+			this.$nextTick(() => {
+				if (this.list.length > 0 && this.list[0].value.length > 0) {
+					this.list.forEach((item,index) => {
+						this.$refs[`${this.listType}${index}`][0].selected = item.id;
+					})
+				}
+			})
+		},
 
 	}
 </script>

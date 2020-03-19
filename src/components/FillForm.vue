@@ -71,7 +71,6 @@
 			},
 
 			_validate(elements) {
-				window.console.log(elements)
 				if (elements.length <= 0) {
 					return;
 				} else {

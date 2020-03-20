@@ -20,10 +20,17 @@
 
 ### After drag one of the elements in three types of Definition(PureFunction/InputEndpoint/OutputEndpoint), the form will display to fill 
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/fill_form_1.png" width="80%">
+
+##### You should select the variable type in the type selector and input the variable value 
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/type_select.png" width="25%">
+
+##### If you create the Array type, you need to choose the Array type in second type selector 
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/array_select.png" width="25%">
+
+##### If you create Object type, you need to click "Object" option and you will get into the create panel
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/add_object.png" width="80%">
 
+###### note: all the array type and object type you create will be saved in default (Type Setting function will soon be available)
 
 ### After fill some Definition creating forms, you can connect them in the rule:
 ###### only the same name output of one Definition instance can connect to another Definition instance's input with the same name
@@ -36,8 +43,8 @@
 
 
 ### To check or update the created elements you can *double click* the Definition vertex (InputEndpoint, OutputEndpoint, PureFunction) 
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update1.png" width="50%">
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update2.png" width="60%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update_graph.png" width="50%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/update_form.png" width="80%">
 
 
 ### To *undo*, *redo*, *delete*, *zoom*(in/out), you can click the right-side float toolbar

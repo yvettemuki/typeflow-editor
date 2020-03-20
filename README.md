@@ -19,10 +19,10 @@
 <img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/element_setting.png" width="60%">
 
 ### After drag one of the elements in three types of Definition(PureFunction/InputEndpoint/OutputEndpoint), the form will display to fill 
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/fill_form_1.png" width="60%">
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/type_select.png" width="60%">
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/array_select.png" width="30%">
-<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/add_object.png" width="60%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/fill_form_1.png" width="80%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/type_select.png" width="25%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/array_select.png" width="25%">
+<img src="https://github.com/yvettemuki/typeflow-editor/raw/master/static/images/add_object.png" width="80%">
 
 
 ### After fill some Definition creating forms, you can connect them in the rule:

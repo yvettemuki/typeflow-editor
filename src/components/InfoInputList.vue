@@ -16,7 +16,7 @@
 				<div class="defi-title-info">
 					<label class="defi-title"><b>{{this.listType}} list</b></label>
 					<div class="defi-info">
-						<Info class="info" :msg="this.listType" height="40" width="100" x="20"></Info>
+						<Info class="info" :msg="this.listType" height="50" width="100" x="20"></Info>
 					</div>
 				</div>
 				<div class="add" @click="_addOne"></div>
@@ -50,7 +50,7 @@
 						addArrayType: _addArrayType
 						}"
 					></ArrayTypeSelector>
-					<input v-model="input.value" class="inputs-field"/>
+					<input v-model="input.value" class="inputs-field" placeholder="input the value"/>
 					<div class="delete" @click="_deleteOne(idx)"></div>
 				</li>
 			</ul>

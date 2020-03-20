@@ -1,5 +1,5 @@
 <template>
-	<el-select v-model="selected" placeholder="input the type" @change="_selectOne">
+	<el-select v-model="selected" placeholder="select the type" @change="_selectOne">
 		<el-option-group
 			v-for="group in selections"
 			:key="group.label"

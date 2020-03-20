@@ -99,7 +99,7 @@
 		z-index: 1000;
 		width: 820px;
 		height: 560px;
-		background: rgba(255, 255, 255, 0.9);
+		background: rgba(255, 255, 255, 0.92);
 		border-radius: 10px;
 		padding: 70px 70px;
 		display: flex;
@@ -122,12 +122,13 @@
 	}
 	.custom-object-type-list {
 		width: 80%;
-		height: 200px;
+		max-height: 150px;
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
 		justify-content: center;
 		margin-top: 37px;
+		overflow-y: scroll;
 	}
 	.custom-object-type-item {
 		position: relative;
@@ -138,13 +139,16 @@
 		text-align: center;
 		box-shadow: 0 0 8px 0 #dcdcdc;
 		margin: 7.5px;
+		padding: 7.5px;
 		cursor: pointer;
 		font-size: 12px;
 		font-weight: bold;
 	}
 	.custom-object-type-select {
+		position: absolute;
+		bottom: 200px;
 		width: 80%;
-		height: 200px;
+		max-height: 150px;
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;

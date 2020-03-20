@@ -25,6 +25,19 @@
 	ul {
 		padding-left: 0px;
 	}
+	::placeholder {
+		color: #8d8d8d !important;
+		opacity: 1 !important; /* Firefox */
+		font-weight: normal;
+	}
+	:-ms-input-placeholder {
+		color: #8d8d8d !important;
+		font-weight: normal;
+	}
+	::-ms-input-placeholder {
+		color: #8d8d8d !important;
+		font-weight: normal;
+	}
 	#app {
 		font-family: Arial;
 		/*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/

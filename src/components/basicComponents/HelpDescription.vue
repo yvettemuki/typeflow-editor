@@ -7,7 +7,7 @@
 
 <script>
 	export default {
-		name: "SimpleDescription",
+		name: "HelpDescription",
 		props: {
 			picUrl: {
 				default: null,

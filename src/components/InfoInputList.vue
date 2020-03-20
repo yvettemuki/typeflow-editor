@@ -59,7 +59,7 @@
 </template>
 
 <script>
-	import Info from './Info'
+	import Info from './basicComponents/Info'
 	import TypeSelector from "./TypeSelector";
 	import ArrayTypeSelector from "./ArrayTypeSelector";
 	import inOutputTypes from "../configs/inOutputTypes";

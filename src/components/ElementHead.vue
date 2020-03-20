@@ -9,7 +9,7 @@
 </template>
 
 <script>
-	import Add from "./Add";
+	import Add from "./basicComponents/Add";
 	export default {
 		name: "ElementHead",
 		components: {

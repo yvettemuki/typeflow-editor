@@ -165,14 +165,14 @@
 	import FillForm from "./FillForm";
 	import {genGraph} from "../graph/Graph";
 	import {resElements} from "../common/data";
-	import Add from "./Add";
-	import Delete from "./Delete";
-	import SimpleInput from "./SimpleInput";
+	import Add from "./basicComponents/Add";
+	import Delete from "./basicComponents/Delete";
+	import SimpleInput from "./basicComponents/SimpleInput";
 	import FileSaver from 'file-saver';
 	import SelectView from "./SelectView";
 	import ImportModelPanel from "./ImportModelPanel";
-	import ModelSvg from "./ModelSvg";
-	import BasicLine from "./BasicLine";
+	import ModelSvg from "./basicComponents/ModelSvg";
+	import BasicLine from "./basicComponents/BasicLine";
 	import Selector from "./Selector";
 
 	const {

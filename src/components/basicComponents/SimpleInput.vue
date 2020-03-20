@@ -95,14 +95,14 @@
 		right: 10px;
 		height: 13px;
 		width: 13px;
-		background-image: url("../assets/close_btn_2.png");
+		background-image: url("../../assets/close_btn_2.png");
 		background-repeat: no-repeat;
 		background-size: 100%;
 		cursor: pointer;
 	}
 
 	.close-btn:hover {
-		background-image: url("../assets/close_btn_hover.png");
+		background-image: url("../../assets/close_btn_hover.png");
 	}
 
 	.confirm-btn {
@@ -142,7 +142,7 @@
 	}
 
 	.icon {
-		background-image: url("../assets/warning.png");
+		background-image: url("../../assets/warning.png");
 		height: 15px;
 		width: 15px;
 		margin-top: 2px;

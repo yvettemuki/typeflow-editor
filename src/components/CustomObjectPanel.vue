@@ -26,7 +26,7 @@
 </template>
 
 <script>
-	import EditorButton from "./EditorButton";
+	import EditorButton from "./basicComponents/EditorButton";
 	export default {
 		name: "CustomObjectPanel",
 		components: {EditorButton},

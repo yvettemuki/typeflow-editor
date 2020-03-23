@@ -21,7 +21,7 @@
 			</li>
 		</ul>
 		<button class="close-btn" @click="_closeCreateObjectPanel"></button>
-		<EditorButton @click.native="_confirmCreateObject"></EditorButton>
+		<EditorButton @click.native="_confirmCreateObject" text="Confirm"></EditorButton>
 	</div>
 </template>
 

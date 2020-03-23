@@ -1,10 +1,41 @@
 <template>
-	<input class="confirm-btn" type="button" value="Confirm"/>
+	<input class="confirm-btn" type="button" :value="text" :style="buttonStyle"/>
 </template>
 
 <script>
 	export default {
-		name: "EditorButton"
+		name: "EditorButton",
+
+		props: {
+			text: {
+				default: "none_value",
+				type: String
+			},
+			bgColor: {
+				default: "#42b983",
+				type: String
+			},
+			bgColorHover: {
+				default: "#3eae7b",
+				type: String
+			}
+		},
+
+		data() {
+			return {
+
+			}
+		},
+
+		computed: {
+			buttonStyle: function () {
+				return {
+					'--button-background-color': this.bgColor,
+					'--button-background-color-hover': this.bgColorHover
+				};
+			}
+		}
+
 	}
 </script>
 
@@ -16,7 +47,7 @@
 		height: 30px;
 		width: 100px;
 		font-weight: bold;
-		background: #42b983;
+		background-color: var(--button-background-color);
 		border-radius: 4px;
 		border: none;
 		color: #ffffff;
@@ -24,7 +55,7 @@
 	}
 
 	.confirm-btn:hover {
-		background: #3eae7b;
+		background-color: var(--button-background-color-hover);
 	}
 
 </style>

@@ -18,6 +18,14 @@
 			bgColorHover: {
 				default: "#3eae7b",
 				type: String
+			},
+			posiBottom: {
+				default: "50",
+				type: String,
+			},
+			btnPosition: {
+				default: "absolute",
+				type: String
 			}
 		},
 
@@ -31,7 +39,9 @@
 			buttonStyle: function () {
 				return {
 					'--button-background-color': this.bgColor,
-					'--button-background-color-hover': this.bgColorHover
+					'--button-background-color-hover': this.bgColorHover,
+					'--button-bottom': this.posiBottom + "px",
+					'--button-position': this.btnPosition,
 				};
 			}
 		}
@@ -41,8 +51,8 @@
 
 <style lang="less" scoped>
 	.confirm-btn {
-		position: absolute;
-		bottom: 50px;
+		position: var(--button-position);
+		bottom: var(--button-bottom);
 		margin: 0 auto;
 		height: 30px;
 		width: 100px;

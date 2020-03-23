@@ -11,21 +11,22 @@
 			<InfoInputList :list-type="inOutputTypes[3]" :list="this.exceptionOutputs"></InfoInputList>
 		</div>
 		<button class="close-btn" @click="_sendToEditorWhenCancel"></button>
-		<input class="confirm-btn" type="button" value="Confirm" @click="_sendToEditor"/>
-
+<!--		<input class="confirm-btn" type="button" value="Confirm" @click="_sendToEditor"/>-->
+		<EditorButton @click.native="_sendToEditor" text="Confirm" posi-bottom="-60" btn-position="relative"></EditorButton>
 	</div>
 </template>
 
 <script>
 	import InfoInputList from "./InfoInputList";
 	import inOutputTypes from "../configs/inOutputTypes";
+	import EditorButton from "./basicComponents/EditorButton";
 
 	const ADD_FORM_TYPE = "ADD_FORM_TYPE";
 	const CHECK_OR_CHANGE_FORM_TYPE = "CHECK_OR_CHANGE_FORM_TYPE";
 
 	export default {
 		name: "FillForm",
-		components: {InfoInputList},
+		components: {EditorButton, InfoInputList},
 		props: {
 			id: String,
 			type: String,
@@ -203,24 +204,6 @@
 
 	.close-btn:hover {
 		background-image: url("../assets/close_btn_hover.png");
-	}
-
-	.confirm-btn {
-		position: relative;
-		bottom: -60px;
-		margin: 0 auto;
-		height: 30px;
-		width: 100px;
-		font-weight: bold;
-		background: #42b983;
-		border-radius: 4px;
-		border: none;
-		color: #ffffff;
-		cursor: pointer;
-	}
-
-	.confirm-btn:hover {
-		background: #3eae7b;
 	}
 
 </style>

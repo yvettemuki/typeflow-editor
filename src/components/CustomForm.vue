@@ -12,14 +12,15 @@
 			</div>
 		</div>
 		<button class="close-btn" @click="_closeCustomForm"></button>
-		<input class="confirm-btn" type="button" value="Confirm" @click="_confirmInput"/>
+		<EditorButton @click.native="_confirmInput" text="Confirm" posi-bottom="40"/>
 	</div>
 </template>
 
 <script>
+	import EditorButton from "./basicComponents/EditorButton";
 	export default {
 		name: "CustomForm",
-
+		components: {EditorButton},
 		data() {
 			return {
 				width: '',
@@ -107,23 +108,6 @@
 		background-image: url("../assets/close_btn_hover.png");
 	}
 
-	.confirm-btn {
-		position: absolute;
-		bottom: 40px;
-		margin: 0 auto;
-		height: 30px;
-		width: 100px;
-		font-weight: bold;
-		background: #42b983;
-		border-radius: 4px;
-		border: none;
-		color: #ffffff;
-		cursor: pointer;
-	}
-
-	.confirm-btn:hover {
-		background: #3eae7b;
-	}
 </style>
 <style>
 	.warning-msg {

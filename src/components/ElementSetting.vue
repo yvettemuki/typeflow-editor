@@ -13,13 +13,19 @@
 				</li>
 			</ul>
 		</div>
-		<button class="delete-btn" @click="_deleteItem">Delete</button>
+		<EditorButton
+			@click.native="_deleteItem"
+			bg-color="#315B96"
+			bg-color-hover="#EA5E5E"
+			text="Delete"/>
 	</div>
 </template>
 
 <script>
+	import EditorButton from "./basicComponents/EditorButton";
 	export default {
 		name: "ElementSetting",
+		components: {EditorButton},
 		props: {
 			type: {
 				default: "",
@@ -136,18 +142,6 @@
 	}
 	.element-li:hover {
 		border: 2px solid #1c86ee;
-	}
-	.delete-btn {
-		height: 30px;
-		width: 100px;
-		color: #ffffff;
-		font-weight: bold;
-		border-radius: 4px;
-		background: #315B96;
-		cursor: pointer;
-	}
-	.delete-btn:hover {
-		background: #EA5E5E;
 	}
 
 </style>

@@ -4,13 +4,15 @@
 		<input class="input-div" v-model="inputContent"/>
 		<span v-if="tips.length > 0" class="tips">{{tips}} "{{title}}"</span>
 		<button class="close-btn" @click="_sendToEditor"></button>
-		<input class="confirm-btn" type="button" value="Confirm" @click="_sendNameToEditor"/>
+		<EditorButton @click.native="_sendNameToEditor" text="Confirm" posi-bottom="40"/>
 	</div>
 </template>
 
 <script>
+	import EditorButton from "./EditorButton";
 	export default {
 		name: "SimpleInput",
+		components: {EditorButton},
 		props: {
 			title: String,
 			id: {
@@ -103,24 +105,6 @@
 
 	.close-btn:hover {
 		background-image: url("../../assets/close_btn_hover.png");
-	}
-
-	.confirm-btn {
-		position: absolute;
-		bottom: 40px;
-		margin: 0 auto;
-		height: 30px;
-		width: 100px;
-		font-weight: bold;
-		background: #42b983;
-		border-radius: 4px;
-		border: none;
-		color: #ffffff;
-		cursor: pointer;
-	}
-
-	.confirm-btn:hover {
-		background: #3eae7b;
 	}
 
 	.tips {

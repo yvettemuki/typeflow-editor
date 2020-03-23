@@ -11,7 +11,6 @@
 			<InfoInputList :list-type="inOutputTypes[3]" :list="this.exceptionOutputs"></InfoInputList>
 		</div>
 		<button class="close-btn" @click="_sendToEditorWhenCancel"></button>
-<!--		<input class="confirm-btn" type="button" value="Confirm" @click="_sendToEditor"/>-->
 		<EditorButton @click.native="_sendToEditor" text="Confirm" posi-bottom="-60" btn-position="relative"></EditorButton>
 	</div>
 </template>

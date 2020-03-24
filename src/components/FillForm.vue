@@ -10,7 +10,7 @@
 			<InfoInputList :list-type="inOutputTypes[2]" :list="this.alternativeOutputs"></InfoInputList>
 			<InfoInputList :list-type="inOutputTypes[3]" :list="this.exceptionOutputs"></InfoInputList>
 		</div>
-		<button class="close-btn" @click="_sendToEditorWhenCancel"></button>
+		<CloseIcon @click.native="_sendToEditorWhenCancel" top="10" right="10" size="24"></CloseIcon>
 		<EditorButton @click.native="_sendToEditor" text="Confirm" posi-bottom="-60" btn-position="relative"></EditorButton>
 	</div>
 </template>
@@ -19,13 +19,14 @@
 	import InfoInputList from "./InfoInputList";
 	import inOutputTypes from "../configs/inOutputTypes";
 	import EditorButton from "./basicComponents/EditorButton";
+	import CloseIcon from "./basicComponents/CloseIcon";
 
 	const ADD_FORM_TYPE = "ADD_FORM_TYPE";
 	const CHECK_OR_CHANGE_FORM_TYPE = "CHECK_OR_CHANGE_FORM_TYPE";
 
 	export default {
 		name: "FillForm",
-		components: {EditorButton, InfoInputList},
+		components: {CloseIcon, EditorButton, InfoInputList},
 		props: {
 			id: String,
 			type: String,

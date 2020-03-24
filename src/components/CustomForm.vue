@@ -11,16 +11,17 @@
 				<input class="size-input" v-model="height"/>
 			</div>
 		</div>
-		<button class="close-btn" @click="_closeCustomForm"></button>
+		<CloseIcon @click.native="_closeCustomForm" top="10" right="10" size="24"></CloseIcon>
 		<EditorButton @click.native="_confirmInput" text="Confirm" posi-bottom="40"/>
 	</div>
 </template>
 
 <script>
 	import EditorButton from "./basicComponents/EditorButton";
+	import CloseIcon from "./basicComponents/CloseIcon";
 	export default {
 		name: "CustomForm",
-		components: {EditorButton},
+		components: {CloseIcon, EditorButton},
 		data() {
 			return {
 				width: '',
@@ -91,21 +92,6 @@
 	.input-font {
 		font-size: 12px;
 		font-weight: bold;
-	}
-	.close-btn {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-		height: 13px;
-		width: 13px;
-		background-image: url("../assets/close_btn_2.png");
-		background-repeat: no-repeat;
-		background-size: 100%;
-		cursor: pointer;
-	}
-
-	.close-btn:hover {
-		background-image: url("../assets/close_btn_hover.png");
 	}
 
 </style>

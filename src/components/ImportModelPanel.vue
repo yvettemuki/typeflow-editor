@@ -1,7 +1,7 @@
 <template>
 	<div class="import-view">
 		<span class="title"><b>History Model List</b></span>
-		<button class="close-btn" @click="_closePanel"></button>
+		<CloseIcon @click.native="_closePanel" top="10" right="10" size="24"></CloseIcon>
 		<div v-if="modelList == null || modelList.length == 0" class="no-data-content">You still have not save any models</div>
 		<ul v-else class="import-list-view">
 			<li v-for="(model, idx) in modelList"
@@ -14,8 +14,10 @@
 </template>
 
 <script>
+	import CloseIcon from "./basicComponents/CloseIcon";
 	export default {
 		name: "ImportModelPanel",
+		components: {CloseIcon},
 		props: {
 			modelList: {
 				default: null,
@@ -58,20 +60,6 @@
 		flex-direction: column;
 		align-items: center;
 		margin: 10px
-	}
-	.close-btn {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-		height: 13px;
-		width: 13px;
-		background-image: url("../assets/close_btn_2.png");
-		background-repeat: no-repeat;
-		background-size: 100%;
-		cursor: pointer;
-	}
-	.close-btn:hover {
-		background-image: url("../assets/close_btn_hover.png");
 	}
 	.no-data-content {
 		height: 100%;

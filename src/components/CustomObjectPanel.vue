@@ -20,16 +20,17 @@
 				{{item.value}}
 			</li>
 		</ul>
-		<button class="close-btn" @click="_closeCreateObjectPanel"></button>
+		<CloseIcon @click.native="_closeCreateObjectPanel" top="10" right="10" size="24"/>
 		<EditorButton @click.native="_confirmCreateObject" text="Confirm"></EditorButton>
 	</div>
 </template>
 
 <script>
 	import EditorButton from "./basicComponents/EditorButton";
+	import CloseIcon from "./basicComponents/CloseIcon";
 	export default {
 		name: "CustomObjectPanel",
-		components: {EditorButton},
+		components: {CloseIcon, EditorButton},
 		props: {
 			selections: {
 				default: null,

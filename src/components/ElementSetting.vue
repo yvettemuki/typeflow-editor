@@ -1,7 +1,7 @@
 <template>
 	<div class="setting-container">
 		<span class="title">{{type}} Setting</span>
-		<button class="close-btn" @click="_closeSetting"></button>
+		<CloseIcon @click.native="_closeSetting" top="10" right="10" size="24"></CloseIcon>
 		<div class="element-container">
 			<ul class="element-ul">
 				<li class="element-li"
@@ -23,9 +23,10 @@
 
 <script>
 	import EditorButton from "./basicComponents/EditorButton";
+	import CloseIcon from "./basicComponents/CloseIcon";
 	export default {
 		name: "ElementSetting",
-		components: {EditorButton},
+		components: {CloseIcon, EditorButton},
 		props: {
 			type: {
 				default: "",
@@ -94,20 +95,6 @@
 		font-size: 18px;
 		font-weight: bold;
 		color: #333333;
-	}
-	.close-btn {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-		height: 13px;
-		width: 13px;
-		background-image: url("../assets/close_btn_2.png");
-		background-repeat: no-repeat;
-		background-size: 100%;
-		cursor: pointer;
-	}
-	.close-btn:hover {
-		background-image: url("../assets/close_btn_hover.png");
 	}
 	.element-container {
 		width: 80%;

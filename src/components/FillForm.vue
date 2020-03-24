@@ -190,22 +190,6 @@
 		justify-content: space-between;
 	}
 
-	.close-btn {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-		height: 13px;
-		width: 13px;
-		background-image: url("../assets/close_btn_2.png");
-		background-repeat: no-repeat;
-		background-size: 100%;
-		cursor: pointer;
-	}
-
-	.close-btn:hover {
-		background-image: url("../assets/close_btn_hover.png");
-	}
-
 </style>
 <style>
 	.warning-msg {

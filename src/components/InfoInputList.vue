@@ -105,8 +105,15 @@
 			},
 
 			_deleteOne: function (index) {
-				this.list.splice(index, 1)
-				this.list.map(ele => ele.index = ele.indexOf(ele))
+				this.list.splice(index, 1);
+				this.list.map(ele => ele.index = this.list.indexOf(ele));
+				this.$nextTick(() => {
+					if (this.list.length > 0 && this.list[0].value.length > 0) {
+						this.list.forEach((item,index) => {
+							this.$refs[`${this.listType}${index}`][0].selected = item.id;
+						})
+					}
+				})
 			},
 
 			_showArrayTypeSelect: function (idx, type, selected) {

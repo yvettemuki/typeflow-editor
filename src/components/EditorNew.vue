@@ -378,7 +378,6 @@
 
 	const listenGraphEvent = () => {
 		graph.addListener(mxEvent.DOUBLE_CLICK, (sender, evt) => {
-			let e = evt.getProperty('event');
 			let cell = evt.getProperty('cell');
 
 			if (!cell) {
